@@ -3,12 +3,12 @@
 }
 
 body {
-    background-color: #05161F;
+    background-color: #05161F;    
+    color: white;
 }
 
 header {
     background-color: #092129;
-    color: white;
     margin: 0;
     height: 100px;
 }

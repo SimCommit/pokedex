@@ -12,7 +12,7 @@
     <script src="./script.js"></script>
 </head>
 
-<body>
+<body onload="init()">
     <header>
         <div class="header-container">
             <h1>Pokedex</h1>
@@ -21,13 +21,13 @@
 
     <main>
 
-        <div id="container-render-grid" class="pokemon-grid">
+        <div id="overview-container" class="pokemon-grid-overview">
             <!-- Hier werden ca. 20 Pokémon-Karten gerendert -->
         </div>
     
         <div class="pokemon-overlay hidden">
             <!-- Overlay-Dialog für die Detailansicht eines Pokémon -->
-            <div id="container-render-dialog"></div>
+            <div id="dialog-container"></div>
         </div>
 
     </main>
