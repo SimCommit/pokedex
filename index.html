@@ -1,17 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
 
+    <link rel="stylesheet" href="./assets/styles/standards.css">
     <link rel="stylesheet" href="./style.css">
 
     <script src="./script.js"></script>
 </head>
-<body>
-    
-    <h1>Pokedex</h1>
 
+<body>
+    <header>
+        <div class="header-container">
+            <h1>Pokedex</h1>
+        </div>
+    </header>
+
+    <main>
+
+        <div id="container-render-grid" class="pokemon-grid">
+            <!-- Hier werden ca. 20 Pokémon-Karten gerendert -->
+        </div>
+    
+        <div class="pokemon-overlay hidden">
+            <!-- Overlay-Dialog für die Detailansicht eines Pokémon -->
+            <div id="container-render-dialog"></div>
+        </div>
+
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>All visual content is obtained from <a href="https://pokeapi.co">https://pokeapi.co</a></p>
+        </div>
+    </footer>
 </body>
+
 </html>

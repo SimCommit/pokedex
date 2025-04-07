@@ -1,0 +1,35 @@
+* {
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #05161F;
+}
+
+header {
+    background-color: #092129;
+    color: white;
+    margin: 0;
+    height: 100px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    min-height: calc(100vh - 200px);
+}
+
+footer {
+    background-color: #092129;
+    color: white;
+    height: 100px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
