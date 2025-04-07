@@ -1,4 +1,4 @@
-let amountPerLoad = 6;
+let amountPerLoad = 24;
 let startPointLoad = 0;
 
 function init() {
@@ -139,7 +139,7 @@ function getTypeId(firstType) {
     case "fairy":
       return 18;
     default:
-      return 0; // unbekannter Typ
+      return 19; // unbekannter Typ
   }
 }
 
@@ -149,15 +149,13 @@ async function renderOverview(currentRequest) {
   for (let i = 0; i < amountPerLoad; i++) {
     const pokemon = currentRequest.results[i];
     const pokemonImage = await getImageData(i + 1);
-    const pokemonTypes = await getTypeData(i + 1);
+    const pokemonTypes = await getTypeDataAlternative(i + 1);
     const pokemonFirstType = pokemonTypes[0];
     const pokemonSecondType = pokemonTypes[1];
     const pokemonFirstTypeIndex = getTypeId(pokemonFirstType);
-    const pokemonSecondTypeIndex = getTypeId(pokemonSecondType);
-
-    const pokemonSecondTypeIcon = await getTypeIcon(pokemonSecondTypeIndex);
-
+    const pokemonSecondTypeIndex = getTypeId(pokemonSecondType);    
     const pokemonFirstTypeIcon = await getTypeIcon(pokemonFirstTypeIndex);
+    const pokemonSecondTypeIcon = await getTypeIcon(pokemonSecondTypeIndex);
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(i + 1, pokemon, pokemonImage, typeColor, pokemonFirstTypeIcon);
     
