@@ -7,8 +7,10 @@
     <title>Pokedex</title>
 
     <link rel="stylesheet" href="./assets/styles/standards.css">
+    <link rel="stylesheet" href="./assets/styles/card.css">
     <link rel="stylesheet" href="./style.css">
 
+    <script src="./assets/scripts/db.js"></script>
     <script src="./script.js"></script>
 </head>
 
@@ -21,11 +23,11 @@
 
     <main>
 
-        <div id="overview-container" class="pokemon-grid-overview">
+        <div id="overview-container" class="grid-overview">
             <!-- Hier werden ca. 20 Pokémon-Karten gerendert -->
         </div>
-    
-        <div class="pokemon-overlay hidden">
+
+        <div class="overlay hidden">
             <!-- Overlay-Dialog für die Detailansicht eines Pokémon -->
             <div id="dialog-container"></div>
         </div>
