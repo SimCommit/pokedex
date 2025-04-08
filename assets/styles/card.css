@@ -5,7 +5,13 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border-radius: 12px;
+    border-radius: 9px;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.4);
+    filter: brightness(1.2);
+    cursor: pointer;
 }
 
 .card-header {
@@ -25,8 +31,14 @@
 }
 
 .card-main img {
-    scale: 1.4;
+    scale: 1.2;
 }
+
+/* .card-main img:hover {
+    scale: 1.5;
+} */
+
+
 
 .card-footer {
     width: 100%;

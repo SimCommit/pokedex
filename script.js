@@ -1,4 +1,4 @@
-let amountPerLoad = 24;
+let amountPerLoad = 18;
 let startPointLoad = 0;
 
 function init() {
@@ -23,6 +23,15 @@ async function getImageData(pokeIndex) {
     console.error(error);
   }
 }
+
+// async function getImageDataAlternative(pokeIndex) {
+//     let url = `https://pokeapi.co/api/v2/pokemon/${pokeIndex}/`;
+//     let response = await fetch(url);
+//     let currentData = await response.json();
+//     let imageUrl = currentData.sprites.versions['generation-v']['black-white'].animated.front_default;
+//     console.log(imageUrl);
+//     return imageUrl;
+// }
 
 async function getTypeIcon(typeIndex) {
   let typeIconUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${typeIndex}.png`;
@@ -94,8 +103,8 @@ function cardBackgroundColor(firstType) {
   }
 }
 
-function getTypeId(firstType) {
-  switch (firstType) {
+function getTypeId(type) {
+  switch (type) {
     case "normal":
       return 1;
     case "fighting":
@@ -144,22 +153,11 @@ async function renderOverview(currentRequest) {
     const pokemon = currentRequest.results[i];
     const pokemonName = capitalizeFirstLetter(pokemon.name);
     const pokemonImage = await getImageData(i + 1);
-    const pokemonTypes = await getTypeDataAlternative(i + 1);
+    const pokemonTypes = await getTypeData(i + 1);
     const pokemonFirstType = pokemonTypes[0];
-    const pokemonSecondType = handleSecondType(pokemonTypes);
-    console.log(pokemonFirstType);
-    console.log(pokemonSecondType);
-    const pokemonFirstTypeIndex = getTypeId(pokemonFirstType);
-    const pokemonSecondTypeIndex = getTypeId(pokemonSecondType);
-    const pokemonFirstTypeIcon = await getTypeIcon(pokemonFirstTypeIndex);
-    const pokemonSecondTypeIcon = await getTypeIcon(pokemonSecondTypeIndex);
     const typeColor = cardBackgroundColor(pokemonFirstType);
-    container.innerHTML += renderOverviewTemplate(i + 1, pokemonName, pokemonImage, typeColor, pokemonFirstTypeIcon);
-
-    if (pokemonTypes.length === 2) {
-      // try catch statt if!!!
-      renderOverviewSecondType(i + 1, pokemonSecondTypeIcon);
-    }
+    container.innerHTML += renderOverviewTemplate(i + 1, pokemonName, pokemonImage, typeColor);
+    await renderOverviewTypes(i + 1, pokemonTypes);
   }
 }
 
@@ -172,7 +170,7 @@ function handleSecondType(pokemonTypes) {
   }
 }
 
-function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor, pokemonFirstTypeIcon) {
+function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor) {
   return /*html*/ `
     <div class="card" style="background-color: ${typeColor};">
         <div class="card-header">
@@ -184,19 +182,22 @@ function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor,
         </div>
         <div class="card-footer">
             <div id="types-container-${pokeIndex}" class="types">
-                <img src="${pokemonFirstTypeIcon}" alt="main type">
             </div>
         </div>
     </div>
     `;
 }
 
-function renderOverviewSecondType(pokeIndex, pokemonSecondTypeIcon) {
+async function renderOverviewTypes(pokeIndex, pokemonTypes) {
   let container = document.getElementById(`types-container-${pokeIndex}`);
 
-  container.innerHTML += `
-    <img src="${pokemonSecondTypeIcon}" alt="main type">
+  for (let indexTypes = 0; indexTypes < pokemonTypes.length; indexTypes++) {
+    let typeIcon = getTypeId(pokemonTypes[indexTypes]);
+    let typeIconUrl = await getTypeIcon(typeIcon);
+    container.innerHTML += `
+    <img src="${typeIconUrl}" alt="icon ${pokemonTypes[indexTypes]}">
   `;
+  }
 }
 
 function capitalizeFirstLetter(pokemonName) {
