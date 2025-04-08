@@ -2,16 +2,18 @@ let amountPerLoad = 18;
 let startPointLoad = 0;
 
 function init() {
-  getNameData();
+  getABunchOfPokemon();
 }
 
-async function getNameData() {
+// fetch a bunch of pokemon (names)
+async function getABunchOfPokemon() {
   let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${amountPerLoad}&offset=${startPointLoad}`;
   let response = await fetch(nameUrl);
   let currentRequest = await response.json();
   renderOverview(currentRequest);
 }
 
+// fetch pokemon picture from github with blob() and createObjectURL()
 async function getImageData(pokeIndex) {
   try {
     let imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokeIndex}.gif`;
@@ -24,6 +26,7 @@ async function getImageData(pokeIndex) {
   }
 }
 
+// fetch pokemon picture from 
 // async function getImageDataAlternative(pokeIndex) {
 //     let url = `https://pokeapi.co/api/v2/pokemon/${pokeIndex}/`;
 //     let response = await fetch(url);
@@ -33,6 +36,7 @@ async function getImageData(pokeIndex) {
 //     return imageUrl;
 // }
 
+// fetch type icon from github with blob() and createObjectURL()
 async function getTypeIcon(typeIndex) {
   let typeIconUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${typeIndex}.png`;
   let response = await fetch(typeIconUrl);
@@ -41,6 +45,7 @@ async function getTypeIcon(typeIndex) {
   return typeIconImageSrc;
 }
 
+// fetch type data from pokeapi for certain pokemon
 async function getTypeData(pokeIndex) {
   let detailsUrl = `https://pokeapi.co/api/v2/pokemon/${pokeIndex}/`;
   let response = await fetch(detailsUrl);
@@ -54,12 +59,14 @@ async function getTypeData(pokeIndex) {
   return types;
 }
 
+// loading type data from db.js for certain pokemon
 function getTypeDataAlternative(pokeIndex) {
   let currentPokemon = gen1Pokemon[pokeIndex];
   let firstType = currentPokemon.types;
   return firstType;
 }
 
+// type background colors
 function cardBackgroundColor(firstType) {
   switch (firstType) {
     case "normal":
@@ -99,10 +106,11 @@ function cardBackgroundColor(firstType) {
     case "fairy":
       return "#D685AD";
     default:
-      return "#777"; // fallback-Farbe
+      return "#777"; // fallback-color
   }
 }
 
+// Determine type ID to assign icons
 function getTypeId(type) {
   switch (type) {
     case "normal":
@@ -142,10 +150,11 @@ function getTypeId(type) {
     case "fairy":
       return 18;
     default:
-      return 19; // unbekannter Typ
+      return 19; // unknown type
   }
 }
 
+// pokemon grid cards getting rendert
 async function renderOverview(currentRequest) {
   let container = document.getElementById("overview-container");
 
@@ -153,7 +162,7 @@ async function renderOverview(currentRequest) {
     const pokemon = currentRequest.results[i];
     const pokemonName = capitalizeFirstLetter(pokemon.name);
     const pokemonImage = await getImageData(i + 1);
-    const pokemonTypes = await getTypeData(i + 1);
+    const pokemonTypes = await getTypeDataAlternative(i + 1); // Alternative aktiviert
     const pokemonFirstType = pokemonTypes[0];
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(i + 1, pokemonName, pokemonImage, typeColor);
@@ -161,18 +170,10 @@ async function renderOverview(currentRequest) {
   }
 }
 
-function handleSecondType(pokemonTypes) {
-  try {
-    const pokemonSecondType = pokemonTypes[1];
-    return pokemonSecondType;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
+// HTML template of the cards
 function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor) {
   return /*html*/ `
-    <div class="card" style="background-color: ${typeColor};">
+    <div class="card" style="background-color: ${typeColor};" onclick="openOverlay()">
         <div class="card-header">
             <span>${pokeIndex}</span>
             <span>${pokemonName}</span>
@@ -188,6 +189,7 @@ function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor)
     `;
 }
 
+// 1 or 2 type icons getting rendert
 async function renderOverviewTypes(pokeIndex, pokemonTypes) {
   let container = document.getElementById(`types-container-${pokeIndex}`);
 
@@ -200,6 +202,7 @@ async function renderOverviewTypes(pokeIndex, pokemonTypes) {
   }
 }
 
+// capitalizeFirstLetter
 function capitalizeFirstLetter(pokemonName) {
   return String(pokemonName).charAt(0).toUpperCase() + String(pokemonName).slice(1);
 }

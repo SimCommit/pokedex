@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="./assets/styles/standards.css">
     <link rel="stylesheet" href="./assets/styles/card.css">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/styles/overlay-dialog.css">
 
     <script src="./assets/scripts/db.js"></script>
     <script src="./script.js"></script>
+    <script src="./assets/scripts/overlay-dialog.js"></script>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -32,7 +34,7 @@
             <!-- Hier werden ca. 20 Pokémon-Karten gerendert -->
         </div>
 
-        <div class="overlay hidden">
+        <div id="overlay" class="overlay d-none" onclick="closeOverlay()">
             <!-- Overlay-Dialog für die Detailansicht eines Pokémon -->
             <div id="dialog-container"></div>
         </div>
