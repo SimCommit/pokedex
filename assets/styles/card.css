@@ -25,7 +25,6 @@
 }
 
 .card-main img {
-    
     scale: 1.4;
 }
 
@@ -39,4 +38,10 @@
     background-color: #092129;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+}
+
+.types {
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-around;    
 }

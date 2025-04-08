@@ -43,17 +43,11 @@ async function getTypeData(pokeIndex) {
   }
 
   return types;
-
-  // let firstType = currentDetails.types[0].type.name;
-  // return firstType;
-
-  // let secondType = currentDetails.types[1].type.name;
-  // console.log(secondType);
 }
 
 function getTypeDataAlternative(pokeIndex) {
   let currentPokemon = gen1Pokemon[pokeIndex];
-  let firstType = currentPokemon.types[0];
+  let firstType = currentPokemon.types;
   return firstType;
 }
 
@@ -148,35 +142,48 @@ async function renderOverview(currentRequest) {
 
   for (let i = 0; i < amountPerLoad; i++) {
     const pokemon = currentRequest.results[i];
+    const pokemonName = capitalizeFirstLetter(pokemon.name);
     const pokemonImage = await getImageData(i + 1);
     const pokemonTypes = await getTypeDataAlternative(i + 1);
     const pokemonFirstType = pokemonTypes[0];
-    const pokemonSecondType = pokemonTypes[1];
+    const pokemonSecondType = handleSecondType(pokemonTypes);
+    console.log(pokemonFirstType);
+    console.log(pokemonSecondType);
     const pokemonFirstTypeIndex = getTypeId(pokemonFirstType);
-    const pokemonSecondTypeIndex = getTypeId(pokemonSecondType);    
+    const pokemonSecondTypeIndex = getTypeId(pokemonSecondType);
     const pokemonFirstTypeIcon = await getTypeIcon(pokemonFirstTypeIndex);
     const pokemonSecondTypeIcon = await getTypeIcon(pokemonSecondTypeIndex);
     const typeColor = cardBackgroundColor(pokemonFirstType);
-    container.innerHTML += renderOverviewTemplate(i + 1, pokemon, pokemonImage, typeColor, pokemonFirstTypeIcon);
-    
-    if(pokemonTypes.length === 2){      // try catch statt if!!!
+    container.innerHTML += renderOverviewTemplate(i + 1, pokemonName, pokemonImage, typeColor, pokemonFirstTypeIcon);
+
+    if (pokemonTypes.length === 2) {
+      // try catch statt if!!!
       renderOverviewSecondType(i + 1, pokemonSecondTypeIcon);
     }
   }
 }
 
-function renderOverviewTemplate(pokeIndex, pokemon, pokemonImage, typeColor, pokemonFirstTypeIcon) {
+function handleSecondType(pokemonTypes) {
+  try {
+    const pokemonSecondType = pokemonTypes[1];
+    return pokemonSecondType;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor, pokemonFirstTypeIcon) {
   return /*html*/ `
     <div class="card" style="background-color: ${typeColor};">
         <div class="card-header">
             <span>${pokeIndex}</span>
-            <span>${pokemon.name}</span>
+            <span>${pokemonName}</span>
         </div>
         <div class="card-main">
-            <img src="${pokemonImage}" alt="picture of ${pokemon.name}">
+            <img src="${pokemonImage}" alt="picture of ${pokemonName}">
         </div>
         <div class="card-footer">
-            <div id="types-container-${pokeIndex}">
+            <div id="types-container-${pokeIndex}" class="types">
                 <img src="${pokemonFirstTypeIcon}" alt="main type">
             </div>
         </div>
@@ -190,4 +197,8 @@ function renderOverviewSecondType(pokeIndex, pokemonSecondTypeIcon) {
   container.innerHTML += `
     <img src="${pokemonSecondTypeIcon}" alt="main type">
   `;
+}
+
+function capitalizeFirstLetter(pokemonName) {
+  return String(pokemonName).charAt(0).toUpperCase() + String(pokemonName).slice(1);
 }
