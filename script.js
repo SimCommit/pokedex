@@ -28,7 +28,7 @@ async function getImageData(pokeIndex) {
 //     let url = `https://pokeapi.co/api/v2/pokemon/${pokeIndex}/`;
 //     let response = await fetch(url);
 //     let currentData = await response.json();
-//     let imageUrl = currentData.sprites.versions['generation-v']['black-white'].animated.front_default;
+//     let imageUrl =c:\Users\fuchs\Downloads\left-poke-ball.png currentData.sprites.versions['generation-v']['black-white'].animated.front_default;
 //     console.log(imageUrl);
 //     return imageUrl;
 // }
