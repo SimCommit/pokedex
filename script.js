@@ -1,16 +1,19 @@
 let amountPerLoad = 18;
 let startPointLoad = 0;
+let poolOf151 = [];
 
 function init() {
-  getABunchOfPokemon();
+  renderOverview();
 }
 
-// fetch a bunch of pokemon (names)
-async function getABunchOfPokemon() {
-  let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${amountPerLoad}&offset=${startPointLoad}`;
+
+async function getPoolOfPokemon(){
+  let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${0}`;
   let response = await fetch(nameUrl);
   let currentRequest = await response.json();
-  renderOverview(currentRequest);
+  let namesOf151 = currentRequest.results;
+  poolOf151 = namesOf151.map((pokemon, index) => ({ index, pokemon }));
+  return poolOf151;
 }
 
 // fetch pokemon picture from github with blob() and createObjectURL()
@@ -155,14 +158,17 @@ function getTypeId(type) {
 }
 
 // pokemon grid cards getting rendert
-async function renderOverview(currentRequest) {
+async function renderOverview() {
   let container = document.getElementById("overview-container");
+  // console.log(poolOf151[0].pokemon);
+  poolOf151 = await getPoolOfPokemon();
 
   for (let i = 0; i < amountPerLoad; i++) {
-    const pokemon = currentRequest.results[i];
-    const pokemonName = capitalizeFirstLetter(pokemon.name);
+    const pokemonRef = poolOf151[i].pokemon;
+    console.log(pokemonRef);    
+    const pokemonName = capitalizeFirstLetter(pokemonRef.name);
     const pokemonImage = await getImageData(i + 1);
-    const pokemonTypes = await getTypeDataAlternative(i + 1); // Alternative aktiviert
+    const pokemonTypes = await getTypeDataAlternative(i + 1); // Alternative deaktiviert
     const pokemonFirstType = pokemonTypes[0];
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(i + 1, pokemonName, pokemonImage, typeColor);
@@ -207,27 +213,19 @@ function capitalizeFirstLetter(pokemonName) {
   return String(pokemonName).charAt(0).toUpperCase() + String(pokemonName).slice(1);
 }
 
-async function getNamesOf151() {
-  let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${0}`;
-  let response = await fetch(nameUrl);
-  let currentRequest = await response.json();
-  let namesOf151 = currentRequest.results;
-  return namesOf151;
-}
-
 // monitor input field
 async function handleInputEvent() {
   console.log('BLING');
   let inputField = document.getElementById("search-input");
   let inputValue = inputField.value;
-  let namesOf151 = await getNamesOf151();
+  // let namesOf151 = await getNamesOf151();
 
   if (inputValue.length >= 3) {
     let inputRef = inputValue.toLowerCase();
     console.log(inputRef);
-    let matches = namesOf151.filter(pokemon => pokemon.name.toLowerCase().includes(inputRef));
+    let matches = poolOf151.filter(element => element.pokemon.name.toLowerCase().includes(inputRef));
+
     console.log(matches);
-    
   }
 }
 
