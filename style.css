@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: #05161F;    
+    background-color: #05161F;
     color: white;
 }
 
@@ -32,6 +32,12 @@ main {
     margin: 32px;
 }
 
+.load {
+    display: flex;
+    justify-content: center;
+    margin: 16px;
+}
+
 footer {
     background-color: #092129;
     color: white;
@@ -43,4 +49,3 @@ footer {
     justify-content: center;
     align-items: center;
 }
-

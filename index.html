@@ -27,7 +27,7 @@
             <h1>Pokedex</h1>
             <div class="search-container">
                 <input id="search-input" oninput="handleInputEvent()" type="text" placeholder="Enter a Pokemon name...">
-                <button onclick="renderOverviewMatches()">Search</button>
+                <button id="search-btn" onclick="renderOverviewMatches()" disabled>Search</button>
             </div>
         </div>
     </header>
@@ -43,6 +43,16 @@
             <div id="dialog-container" class="dialog-wrapper"></div>
         </div>
 
+        <div class="load">
+            <button id="load-btn" onclick="loadMorePokemon()">Load more Pokemon</button>
+            <button id="back-btn" class="d-none" onclick="backToStart()">Back to Start</button>
+        </div>
+
+        <div id="loading-container" class="d-none">
+            <div class="loading">
+                <span class="loader"></span>
+            </div>
+        </div>
     </main>
 
     <footer>

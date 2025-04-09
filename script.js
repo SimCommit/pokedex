@@ -1,14 +1,15 @@
-let amountPerLoad = 18;
+let amountPerLoad = 12;
 let startPointLoad = 0;
 let poolOf151 = [];
 let matches = [];
+let loadCount = 1;
 
 function init() {
-  renderOverview();
+  renderOverview(startPointLoad);
 }
 
 async function getPoolOfPokemon(){
-  let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${startPointLoad}`;
+  let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${0}`;
   let response = await fetch(nameUrl);
   let currentRequest = await response.json();
   let namesOf151 = currentRequest.results;
@@ -158,7 +159,7 @@ function getTypeId(type) {
 }
 
 // pokemon grid cards getting rendert
-async function renderOverview() {
+async function renderOverview(startPointLoad) {
   let container = document.getElementById("overview-container");
   poolOf151 = await getPoolOfPokemon();
 
@@ -170,13 +171,15 @@ async function renderOverview() {
     const pokemonTypes = await getTypeDataAlternative(pokemonId); // Alternative deaktiviert
     const pokemonFirstType = pokemonTypes[0];
     const typeColor = cardBackgroundColor(pokemonFirstType);
-    console.log(pokemonRef);    
     container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
     await renderOverviewTypes(pokemonId, pokemonTypes);
+    hideLoadingScreen();
   }
 }
 
 async function renderOverviewMatches() {
+  document.getElementById('load-btn').classList.add('d-none');
+  document.getElementById('back-btn').classList.remove('d-none');
   let container = document.getElementById("overview-container");
   container.innerHTML = "";
 
@@ -185,7 +188,7 @@ async function renderOverviewMatches() {
     const pokemonId = matches[i].index + 1;
     const pokemonName = capitalizeFirstLetter(pokemonRef.name);
     const pokemonImage = await getImageData(pokemonId);
-    const pokemonTypes = await getTypeDataAlternative(pokemonId); // Alternative deaktiviert
+    const pokemonTypes = await getTypeData(pokemonId); // Alternative deaktiviert
     const pokemonFirstType = pokemonTypes[0];
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
@@ -235,13 +238,40 @@ async function handleInputEvent() {
   console.log('BLING');
   let inputField = document.getElementById("search-input");
   let inputValue = inputField.value;
-  // let namesOf151 = await getNamesOf151();
+  let searchBtn = document.getElementById('search-btn');
 
   if (inputValue.length >= 3) {
+    searchBtn.disabled = false;
     let inputRef = inputValue.toLowerCase();
     console.log(inputRef);
     matches = poolOf151.filter(element => element.pokemon.name.toLowerCase().includes(inputRef));
 
     console.log(matches);
+  } else {
+    searchBtn.disabled = true;
   }
+}
+
+function backToStart(){
+  let container = document.getElementById("overview-container");
+  container.innerHTML = "";
+  startPointLoad = 0;
+  document.getElementById('back-btn').classList.add('d-none');
+  renderOverview(startPointLoad);
+}
+
+//load more pokemon
+async function loadMorePokemon(){
+  showLoadingScreen();
+  pointToLoadFrom = amountPerLoad * loadCount;
+  renderOverview(pointToLoadFrom)
+  loadCount++;
+}
+
+function showLoadingScreen(){
+  document.getElementById('loading-container').classList.remove('d-none');
+}
+
+function hideLoadingScreen(){
+  document.getElementById('loading-container').classList.add('d-none');
 }
