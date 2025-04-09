@@ -23,8 +23,12 @@
 
 <body onload="init()">
     <header>
-        <div class="header-container">
+        <div class="header-container max-width-1440">
             <h1>Pokedex</h1>
+            <div class="search-container">
+                <input id="search-input" oninput="handleInputEvent()" type="text" placeholder="Enter a Pokemon name...">
+                <button>Search</button>
+            </div>
         </div>
     </header>
 
@@ -42,7 +46,7 @@
     </main>
 
     <footer>
-        <div class="footer-container">
+        <div class="footer-container max-width-1440">
             <p>All visual content is obtained from <a href="https://pokeapi.co">https://pokeapi.co</a></p>
         </div>
     </footer>

@@ -14,8 +14,10 @@ header {
 }
 
 .header-container {
+    padding: 8px 80px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
 
 main {

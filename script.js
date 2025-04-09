@@ -26,12 +26,12 @@ async function getImageData(pokeIndex) {
   }
 }
 
-// fetch pokemon picture from 
+// fetch pokemon picture from
 // async function getImageDataAlternative(pokeIndex) {
 //     let url = `https://pokeapi.co/api/v2/pokemon/${pokeIndex}/`;
 //     let response = await fetch(url);
 //     let currentData = await response.json();
-//     let imageUrl =c:\Users\fuchs\Downloads\left-poke-ball.png currentData.sprites.versions['generation-v']['black-white'].animated.front_default;
+// let imageUrl =c:\Users\fuchs\Downloads\left-poke-ball.png currentData.sprites.versions['generation-v']['black-white'].animated.front_default;
 //     console.log(imageUrl);
 //     return imageUrl;
 // }
@@ -173,10 +173,10 @@ async function renderOverview(currentRequest) {
 // HTML template of the cards
 function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor) {
   return /*html*/ `
-    <div class="card" style="background-color: ${typeColor};" onclick="openOverlay()">
+    <div class="card" style="background-color: ${typeColor};" onclick="openOverlay(${pokeIndex})">
         <div class="card-header">
+          <span>${pokemonName}</span>
             <span>${pokeIndex}</span>
-            <span>${pokemonName}</span>
         </div>
         <div class="card-main">
             <img src="${pokemonImage}" alt="picture of ${pokemonName}">
@@ -206,3 +206,38 @@ async function renderOverviewTypes(pokeIndex, pokemonTypes) {
 function capitalizeFirstLetter(pokemonName) {
   return String(pokemonName).charAt(0).toUpperCase() + String(pokemonName).slice(1);
 }
+
+async function getNamesOf151() {
+  let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${0}`;
+  let response = await fetch(nameUrl);
+  let currentRequest = await response.json();
+  let namesOf151 = currentRequest.results;
+  return namesOf151;
+}
+
+// monitor input field
+async function handleInputEvent() {
+  console.log('BLING');
+  let inputField = document.getElementById("search-input");
+  let inputValue = inputField.value;
+  let namesOf151 = await getNamesOf151();
+
+  if (inputValue.length >= 3) {
+    let inputRef = inputValue.toLowerCase();
+    console.log(inputRef);
+    let matches = namesOf151.filter(pokemon => pokemon.name.toLowerCase().includes(inputRef));
+    console.log(matches);
+    
+  }
+}
+
+
+// async function handleInputEvent() {
+//   console.log('BLING');
+  
+//   let inputField = document.getElementById("search-input");
+//   let matches = await getNamesOf151();
+//   inputField.addEventListener("input", () => {
+    // let input = inputField.value.toLowerCase();
+//   });
+// }

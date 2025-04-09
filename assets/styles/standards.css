@@ -10,3 +10,8 @@ a {
 .d-none {
     display: none;
 }
+
+.max-width-1440 {
+    max-width: 1440px;
+    margin: auto;
+}
