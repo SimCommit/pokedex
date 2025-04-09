@@ -1,14 +1,14 @@
 let amountPerLoad = 18;
 let startPointLoad = 0;
 let poolOf151 = [];
+let matches = [];
 
 function init() {
   renderOverview();
 }
 
-
 async function getPoolOfPokemon(){
-  let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${0}`;
+  let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${startPointLoad}`;
   let response = await fetch(nameUrl);
   let currentRequest = await response.json();
   let namesOf151 = currentRequest.results;
@@ -160,24 +160,41 @@ function getTypeId(type) {
 // pokemon grid cards getting rendert
 async function renderOverview() {
   let container = document.getElementById("overview-container");
-  // console.log(poolOf151[0].pokemon);
   poolOf151 = await getPoolOfPokemon();
 
-  for (let i = 0; i < amountPerLoad; i++) {
+  for (let i = 0 + startPointLoad; i < amountPerLoad + startPointLoad; i++) {
     const pokemonRef = poolOf151[i].pokemon;
-    console.log(pokemonRef);    
+    const pokemonId = poolOf151[i].index + 1;
     const pokemonName = capitalizeFirstLetter(pokemonRef.name);
-    const pokemonImage = await getImageData(i + 1);
-    const pokemonTypes = await getTypeDataAlternative(i + 1); // Alternative deaktiviert
+    const pokemonImage = await getImageData(pokemonId);
+    const pokemonTypes = await getTypeDataAlternative(pokemonId); // Alternative deaktiviert
     const pokemonFirstType = pokemonTypes[0];
     const typeColor = cardBackgroundColor(pokemonFirstType);
-    container.innerHTML += renderOverviewTemplate(i + 1, pokemonName, pokemonImage, typeColor);
-    await renderOverviewTypes(i + 1, pokemonTypes);
+    console.log(pokemonRef);    
+    container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
+    await renderOverviewTypes(pokemonId, pokemonTypes);
+  }
+}
+
+async function renderOverviewMatches() {
+  let container = document.getElementById("overview-container");
+  container.innerHTML = "";
+
+  for (let i = 0; i < matches.length; i++) {
+    const pokemonRef = matches[i].pokemon;
+    const pokemonId = matches[i].index + 1;
+    const pokemonName = capitalizeFirstLetter(pokemonRef.name);
+    const pokemonImage = await getImageData(pokemonId);
+    const pokemonTypes = await getTypeDataAlternative(pokemonId); // Alternative deaktiviert
+    const pokemonFirstType = pokemonTypes[0];
+    const typeColor = cardBackgroundColor(pokemonFirstType);
+    container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
+    await renderOverviewTypes(pokemonId, pokemonTypes);
   }
 }
 
 // HTML template of the cards
-function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor) {
+function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor,) {
   return /*html*/ `
     <div class="card" style="background-color: ${typeColor};" onclick="openOverlay(${pokeIndex})">
         <div class="card-header">
@@ -223,19 +240,8 @@ async function handleInputEvent() {
   if (inputValue.length >= 3) {
     let inputRef = inputValue.toLowerCase();
     console.log(inputRef);
-    let matches = poolOf151.filter(element => element.pokemon.name.toLowerCase().includes(inputRef));
+    matches = poolOf151.filter(element => element.pokemon.name.toLowerCase().includes(inputRef));
 
     console.log(matches);
   }
 }
-
-
-// async function handleInputEvent() {
-//   console.log('BLING');
-  
-//   let inputField = document.getElementById("search-input");
-//   let matches = await getNamesOf151();
-//   inputField.addEventListener("input", () => {
-    // let input = inputField.value.toLowerCase();
-//   });
-// }
