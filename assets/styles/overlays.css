@@ -57,6 +57,14 @@
     padding: 16px;
 }
 
+.abilities {
+    display: flex;
+}
+
+.abilities p {
+    margin: 0;
+}
+
 .dialog-pic {
     max-width: 200px;
     max-height: 200px;
