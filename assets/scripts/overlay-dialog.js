@@ -33,14 +33,24 @@ function renderDialogCardTemplate(currentPokemon) {
   return /*html*/ `
    <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
         <nav class="nav-pokemons" aria-label="Navigation through Pokemons">
-            <button onclick="switchPokemon(-1)">previous</button>
-            <button onclick="switchPokemon(1)">next</button>
+            <button class="nav-btn" onclick="switchPokemon(-1)">
+              <div class="btn-prev">
+                <div class="btn-icon-a"></div>
+                <div class="btn-icon-b"></div>
+              </div>
+            </button>
+            <span>No ${currentPokemon.id}</span>
+            <button class="nav-btn" onclick="switchPokemon(1)">
+              <div class="btn-next">
+                <div class="btn-icon-b"></div>
+                <div class="btn-icon-a"></div>
+              </div>
+            </button>
         </nav>
         <div class="dialog-main">
             <div class="basic-info">
                 <div class="identity">
                   <span>${capitalizeFirstLetter(currentPokemon.name)}</span>
-                  <span>${currentPokemon.id}</span>
                 </div>
                 <div id="dialog-types-container" class="types"></div>
                 <img class="dialog-pic" src="${
@@ -111,11 +121,10 @@ function renderAboutMoves() {
   container.innerHTML = ``;
 
   for (let i = 0; i < currentPokemon.moves.length; i++) {
-    container.innerHTML += /*html*/`
+    container.innerHTML += /*html*/ `
       <p>${capitalizeFirstLetter(currentPokemon["moves"][i]["move"]["name"])}</p>
-    `
+    `;
   }
-
 }
 
 function disableScrollingBody() {
@@ -126,7 +135,7 @@ function enableScrollingBody() {
   document.body.classList.remove("overflow-hidden");
 }
 
-function switchPokemon(modificator){
+function switchPokemon(modificator) {
   let newPokemonId = currentPokemon.id + modificator;
 
   switch (newPokemonId) {

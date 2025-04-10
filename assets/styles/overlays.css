@@ -1,5 +1,5 @@
 .overlay {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     inset: 0;
 }
@@ -27,6 +27,72 @@
     display: flex;
     justify-content: space-between;
     padding: 16px;
+}
+
+.nav-btn {
+    background-color: #04171F;
+    border: none;
+    border-radius: 25px;
+    width: 50px;
+}
+
+.nav-btn {
+    background-color: #04171F;
+    border: none;
+    border-radius: 25px;
+    width: 50px;
+}
+
+.btn-prev {
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 12px 8px;
+    gap: 8px;
+}
+
+.btn-next {
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 12px 8px;
+    gap: 8px;
+}
+
+.btn-icon-a {
+    height: 4px;
+    width: 20px;
+    background-color: rgb(255, 255, 255);
+    transform: rotate(-45deg);
+    border-radius: 2px;
+}
+
+.btn-icon-b {
+    height: 4px;
+    width: 20px;
+    background-color: rgb(255, 255, 255);
+    transform: rotate(45deg);
+    border-radius: 2px;
+}
+
+.btn-icon-c {
+    height: 4px;
+    width: 30px;
+    background-color: rgb(255, 255, 255);
+    transform: translateY(2px) rotate(-45deg);
+    border-radius: 2px;
+}
+
+.btn-icon-d {
+    height: 4px;
+    width: 30px;
+    background-color: rgb(255, 255, 255);
+    transform: translateY(-2px) rotate(45deg);
+    border-radius: 2px;
 }
 
 .dialog-main {

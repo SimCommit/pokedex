@@ -85,6 +85,14 @@ function getTypeDataAlternative(pokeIndex) {
   return firstType;
 }
 
+async function getTypeDataForms(id){
+  let typeUrl = `https://pokeapi.co/api/v2/pokemon-form/${id}/`;
+  let response = await fetch(typeUrl);
+  let currentTypes = await response.json();
+  // console.log(currentTypes.types[0].type);
+  return currentTypes.types;
+}
+
 // type background colors
 function cardBackgroundColor(firstType) {
   switch (firstType) {
@@ -187,7 +195,9 @@ async function renderOverview(startPointLoad) {
     const pokemonId = poolOf151[i].index + 1;
     const pokemonName = capitalizeFirstLetter(pokemonRef.name);
     const pokemonImage = await getImageData(pokemonId);
-    const pokemonTypes = await getTypeData(pokemonId); // Alternative aktiviert
+    const pokemonTypes = await getTypeDataForms(pokemonId); // Alternative deak
+    console.log(pokemonTypes);
+    
     const pokemonFirstType = pokemonTypes[0];
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
