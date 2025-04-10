@@ -1,4 +1,4 @@
-let amountPerLoad = 21;
+let amountPerLoad = 6;
 let startPointLoad = 0;
 let poolOf151 = [];
 let matches = [];
@@ -317,4 +317,9 @@ function closeSuggestions(){
 
 function emptySearchInput(){
   getElementHelper('search-input').value = "";
+}
+
+// stop propagation
+function prevent(event) {
+  event.stopPropagation();
 }
