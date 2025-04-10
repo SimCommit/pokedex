@@ -1,4 +1,4 @@
-let amountPerLoad = 3;
+let amountPerLoad = 9;
 let startPointLoad = 0;
 let poolOf151 = [];
 let matches = [];
@@ -6,6 +6,7 @@ let loadCount = 1;
 let renderCount = 0;
 
 function init() {
+  showLoadingScreen();
   renderOverview(startPointLoad);
 }
 
@@ -65,18 +66,18 @@ async function getTypeIcon(typeIndex) {
 }
 
 // fetch type data from pokeapi for certain pokemon
-async function getTypeData(pokeIndex) {
-  let detailsUrl = `https://pokeapi.co/api/v2/pokemon/${pokeIndex}/`;
-  let response = await fetch(detailsUrl);
-  let currentDetails = await response.json();
-  let types = [];
+// async function getTypeData(pokeIndex) {
+//   let detailsUrl = `https://pokeapi.co/api/v2/pokemon/${pokeIndex}/`;
+//   let response = await fetch(detailsUrl);
+//   let currentDetails = await response.json();
+//   let types = [];
 
-  for (let indexTypes = 0; indexTypes < currentDetails.types.length; indexTypes++) {
-    types.push(currentDetails.types[indexTypes].type.name);
-  }
+//   for (let indexTypes = 0; indexTypes < currentDetails.types.length; indexTypes++) {
+//     types.push(currentDetails.types[indexTypes].type.name);
+//   }
 
-  return types;
-}
+//   return types;
+// }
 
 // loading type data from db.js for certain pokemon
 function getTypeDataAlternative(pokeIndex) {
@@ -197,8 +198,8 @@ async function renderOverview(startPointLoad) {
     const pokemonImage = await getImageData(pokemonId);
     const pokemonTypes = await getTypeDataForms(pokemonId); // Alternative deak
     console.log(pokemonTypes);
-    
-    const pokemonFirstType = pokemonTypes[0];
+    console.log(pokemonTypes[0].type.name);
+    const pokemonFirstType = pokemonTypes[0].type.name;
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
     await renderOverviewTypes(pokemonId, pokemonTypes);
@@ -207,6 +208,7 @@ async function renderOverview(startPointLoad) {
   hideLoadingScreen();
   enableLoadBtn();
 }
+
 
 async function renderOverviewMatches() {
   document.getElementById("load-btn").classList.add("d-none");
@@ -219,8 +221,8 @@ async function renderOverviewMatches() {
     const pokemonId = matches[i].index + 1;
     const pokemonName = capitalizeFirstLetter(pokemonRef.name);
     const pokemonImage = await getImageData(pokemonId);
-    const pokemonTypes = await getTypeData(pokemonId); // hier
-    const pokemonFirstType = pokemonTypes[0];
+    const pokemonTypes = await getTypeDataForms(pokemonId); // hier
+    const pokemonFirstType = pokemonTypes[0].type.name;
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
     await renderOverviewTypes(pokemonId, pokemonTypes);
@@ -255,7 +257,7 @@ async function renderOverviewTypes(pokeIndex, pokemonTypes) {
   let container = document.getElementById(`types-container-${pokeIndex}`);
 
   for (let indexTypes = 0; indexTypes < pokemonTypes.length; indexTypes++) {
-    let typeIcon = getTypeId(pokemonTypes[indexTypes]);
+    let typeIcon = getTypeId(pokemonTypes[indexTypes].type.name);
     let typeIconUrl = await getTypeIcon(typeIcon);
     container.innerHTML += `
     <img src="${typeIconUrl}" alt="icon ${pokemonTypes[indexTypes]}">

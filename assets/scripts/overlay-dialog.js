@@ -29,6 +29,7 @@ async function renderDialogCard(id) {
   renderAbout(currentPokemon);
 }
 
+// template of large card for detail information
 function renderDialogCardTemplate(currentPokemon) {
   return /*html*/ `
    <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
