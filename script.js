@@ -1,4 +1,4 @@
-let amountPerLoad = 6;
+let amountPerLoad = 3;
 let startPointLoad = 0;
 let poolOf151 = [];
 let matches = [];
@@ -7,6 +7,20 @@ let renderCount = 0;
 
 function init() {
   renderOverview(startPointLoad);
+}
+
+// Utility 
+// Functions
+
+// get element by id
+function getElementHelper(id) {
+  let element = document.getElementById(id);
+  return element;
+}
+
+// capitalizeFirstLetter
+function capitalizeFirstLetter(stringToChange) {
+  return String(stringToChange).charAt(0).toUpperCase() + String(stringToChange).slice(1);
 }
 
 async function getPoolOfPokemon() {
@@ -226,11 +240,6 @@ function enableLoadBtn(){
   getElementHelper('load-btn').disabled = false;
 }
 
-function getElementHelper(id) {
-  let element = document.getElementById(id);
-  return element;
-}
-
 // 1 or 2 type icons getting rendert
 async function renderOverviewTypes(pokeIndex, pokemonTypes) {
   let container = document.getElementById(`types-container-${pokeIndex}`);
@@ -242,11 +251,6 @@ async function renderOverviewTypes(pokeIndex, pokemonTypes) {
     <img src="${typeIconUrl}" alt="icon ${pokemonTypes[indexTypes]}">
   `;
   }
-}
-
-// capitalizeFirstLetter
-function capitalizeFirstLetter(pokemonName) {
-  return String(pokemonName).charAt(0).toUpperCase() + String(pokemonName).slice(1);
 }
 
 // monitor input field
@@ -267,6 +271,7 @@ async function handleInputEvent() {
   }
 }
 
+// to return from rendered search grid to default grid
 function backToStart() {
   showLoadingScreen();
   let container = document.getElementById("overview-container");

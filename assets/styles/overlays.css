@@ -50,11 +50,23 @@
     padding: 16px;
 }
 
+.nav-details {
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-around;
+}
+
 .detail-info {
     background-color: rgb(255, 255, 255);
     color: black;
     border-radius: 16px;
     padding: 16px;
+}
+
+.detail-info-wrapper {
+    height: 50vh;
+    min-height: 200px;
+    overflow-y: auto;
 }
 
 .abilities {

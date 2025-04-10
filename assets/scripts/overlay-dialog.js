@@ -33,8 +33,8 @@ function renderDialogCardTemplate(currentPokemon) {
   return /*html*/ `
    <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
         <nav class="nav-pokemons" aria-label="Navigation through Pokemons">
-            <button>previous</button>
-            <button>next</button>
+            <button onclick="switchPokemon(-1)">previous</button>
+            <button onclick="switchPokemon(1)">next</button>
         </nav>
         <div class="dialog-main">
             <div class="basic-info">
@@ -49,12 +49,14 @@ function renderDialogCardTemplate(currentPokemon) {
             </div>
             <div class="detail-info">
                 <nav class="nav-details" aria-label="Navigation through detail info">
-                    <button onclick="renderAbout()">about</button>
-                    <button onclick="renderStats()">stats</button>
-                    <button onclick="renderAbout(${currentPokemon.id})">evolution</button>
-                    <button onclick="renderAbout(${currentPokemon.id})">moves</button>
+                    <button onclick="renderAbout()">ABOUT</button>
+                    <button onclick="renderStats()">STATS</button>
+                    <button onclick="renderAboutMoves()">MOVES</button>
                 </nav>
-                <div id="detail-info-container"></div>
+                <div class="detail-info-wrapper">
+                  <div id="detail-info-container"></div> 
+                </div>
+                
             </div>
         </div>
     </div>
@@ -97,7 +99,7 @@ function renderStats() {
   for (let i = 0; i < currentPokemon.stats.length; i++) {
     container.innerHTML += /*html*/ `
       <p>
-        <span>${currentPokemon["stats"][i]["stat"]["name"]}</span>
+        <span>${capitalizeFirstLetter(currentPokemon["stats"][i]["stat"]["name"])}</span>
         <span>${currentPokemon["stats"][i]["base_stat"]}</span>
       </p>
     `;
@@ -106,10 +108,12 @@ function renderStats() {
 
 function renderAboutMoves() {
   let container = getElementHelper("detail-info-container");
-  container.innerHTML = "";
+  container.innerHTML = ``;
 
   for (let i = 0; i < currentPokemon.moves.length; i++) {
-    
+    container.innerHTML += /*html*/`
+      <p>${capitalizeFirstLetter(currentPokemon["moves"][i]["move"]["name"])}</p>
+    `
   }
 
 }
@@ -120,4 +124,19 @@ function disableScrollingBody() {
 
 function enableScrollingBody() {
   document.body.classList.remove("overflow-hidden");
+}
+
+function switchPokemon(modificator){
+  let newPokemonId = currentPokemon.id + modificator;
+
+  switch (newPokemonId) {
+    case 0:
+      newPokemonId = 151;
+      break;
+    case 152:
+      newPokemonId = 1;
+      break;
+  }
+
+  renderDialogCard(newPokemonId);
 }
