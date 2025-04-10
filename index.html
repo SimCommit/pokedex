@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./assets/styles/standards.css">
     <link rel="stylesheet" href="./assets/styles/card.css">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./assets/styles/overlay-dialog.css">
+    <link rel="stylesheet" href="./assets/styles/overlays.css">
 
     <script src="./assets/scripts/db.js"></script>
     <script src="./script.js"></script>
@@ -26,7 +26,9 @@
         <div class="header-container max-width-1440">
             <h1>Pokedex</h1>
             <div class="search-container">
-                <input id="search-input" oninput="handleInputEvent()" type="text" placeholder="Enter a Pokemon name...">
+                <input id="search-input" oninput="handleInputEvent()" type="text" placeholder="Enter a Pokemon name..." autocomplete="off">
+                <div id="dropdown-suggestions">
+                </div>
                 <button id="search-btn" onclick="renderOverviewMatches()" disabled>Search</button>
             </div>
         </div>
@@ -57,7 +59,8 @@
 
     <footer>
         <div class="footer-container max-width-1440">
-            <p>All visual content is obtained from <a href="https://pokeapi.co">https://pokeapi.co</a></p>
+            <p>Visual content is obtained from <a href="https://pokeapi.co">https://pokeapi.co</a></p>
+            <p>and form <a href="https://cssloaders.github.io/">https://cssloaders.github.io/</a></p>
         </div>
     </footer>
 </body>

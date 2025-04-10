@@ -24,6 +24,30 @@ main {
     min-height: calc(100vh - 200px);
 }
 
+#search-input {
+    position: relative;
+}
+
+#dropdown-suggestions {
+    position: absolute;
+    width: 170px;
+    margin-top: 2px;
+    border-radius: 2px;
+    background-color: white;
+    color: black;
+}
+
+#dropdown-suggestions p {
+    margin: 0;
+    padding: 4px;
+    font-size: 14px;
+}
+
+#dropdown-suggestions p:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
 .grid-overview {
     display: flex;
     flex-wrap: wrap;
@@ -46,6 +70,7 @@ footer {
 
 .footer-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }

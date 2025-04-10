@@ -1,14 +1,15 @@
-let amountPerLoad = 12;
+let amountPerLoad = 21;
 let startPointLoad = 0;
 let poolOf151 = [];
 let matches = [];
 let loadCount = 1;
+let renderCount = 0;
 
 function init() {
   renderOverview(startPointLoad);
 }
 
-async function getPoolOfPokemon(){
+async function getPoolOfPokemon() {
   let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${0}`;
   let response = await fetch(nameUrl);
   let currentRequest = await response.json();
@@ -164,22 +165,27 @@ async function renderOverview(startPointLoad) {
   poolOf151 = await getPoolOfPokemon();
 
   for (let i = 0 + startPointLoad; i < amountPerLoad + startPointLoad; i++) {
+    if (renderCount >= 151) {
+      document.getElementById("load-btn").classList.add("d-none");
+      return;
+    }
     const pokemonRef = poolOf151[i].pokemon;
     const pokemonId = poolOf151[i].index + 1;
     const pokemonName = capitalizeFirstLetter(pokemonRef.name);
     const pokemonImage = await getImageData(pokemonId);
-    const pokemonTypes = await getTypeDataAlternative(pokemonId); // Alternative deaktiviert
+    const pokemonTypes = await getTypeData(pokemonId); // Alternative aktiviert
     const pokemonFirstType = pokemonTypes[0];
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
     await renderOverviewTypes(pokemonId, pokemonTypes);
-    hideLoadingScreen();
+    renderCount++;
   }
+  hideLoadingScreen();
 }
 
 async function renderOverviewMatches() {
-  document.getElementById('load-btn').classList.add('d-none');
-  document.getElementById('back-btn').classList.remove('d-none');
+  document.getElementById("load-btn").classList.add("d-none");
+  document.getElementById("back-btn").classList.remove("d-none");
   let container = document.getElementById("overview-container");
   container.innerHTML = "";
 
@@ -188,7 +194,7 @@ async function renderOverviewMatches() {
     const pokemonId = matches[i].index + 1;
     const pokemonName = capitalizeFirstLetter(pokemonRef.name);
     const pokemonImage = await getImageData(pokemonId);
-    const pokemonTypes = await getTypeData(pokemonId); // Alternative deaktiviert
+    const pokemonTypes = await getTypeData(pokemonId); // hier
     const pokemonFirstType = pokemonTypes[0];
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
@@ -197,7 +203,7 @@ async function renderOverviewMatches() {
 }
 
 // HTML template of the cards
-function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor,) {
+function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor) {
   return /*html*/ `
     <div class="card" style="background-color: ${typeColor};" onclick="openOverlay(${pokeIndex})">
         <div class="card-header">
@@ -235,43 +241,65 @@ function capitalizeFirstLetter(pokemonName) {
 
 // monitor input field
 async function handleInputEvent() {
-  console.log('BLING');
   let inputField = document.getElementById("search-input");
   let inputValue = inputField.value;
-  let searchBtn = document.getElementById('search-btn');
+  let searchBtn = document.getElementById("search-btn");
 
   if (inputValue.length >= 3) {
     searchBtn.disabled = false;
     let inputRef = inputValue.toLowerCase();
-    console.log(inputRef);
-    matches = poolOf151.filter(element => element.pokemon.name.toLowerCase().includes(inputRef));
-
-    console.log(matches);
+    matches = poolOf151.filter((element) => element.pokemon.name.toLowerCase().includes(inputRef));
+    renderSuggestions();
+    // console.log(matches[1].index);
   } else {
     searchBtn.disabled = true;
   }
 }
 
-function backToStart(){
+function backToStart() {
+  showLoadingScreen();
   let container = document.getElementById("overview-container");
   container.innerHTML = "";
   startPointLoad = 0;
-  document.getElementById('back-btn').classList.add('d-none');
+  document.getElementById("back-btn").classList.add("d-none");
+  document.getElementById("load-btn").classList.remove("d-none");
   renderOverview(startPointLoad);
 }
 
 //load more pokemon
-async function loadMorePokemon(){
+function loadMorePokemon() {
   showLoadingScreen();
   pointToLoadFrom = amountPerLoad * loadCount;
-  renderOverview(pointToLoadFrom)
+  renderOverview(pointToLoadFrom);
   loadCount++;
 }
 
-function showLoadingScreen(){
-  document.getElementById('loading-container').classList.remove('d-none');
+function showLoadingScreen() {
+  document.getElementById("loading-container").classList.remove("d-none");
 }
 
-function hideLoadingScreen(){
-  document.getElementById('loading-container').classList.add('d-none');
+function hideLoadingScreen() {
+  document.getElementById("loading-container").classList.add("d-none");
+}
+
+
+// render dropdown suggestions
+function renderSuggestions(){
+  let container = document.getElementById('dropdown-suggestions');
+  container.innerHTML = "";
+
+  for (let i = 0; i < matches.length; i++) {
+    container.innerHTML += /*html*/`
+      <p onclick="openOverlay(${matches[i].index}), suggestionToInput(${i}), closeSuggestions()">${capitalizeFirstLetter(matches[i].pokemon.name)}</p>
+    `;
+  }
+}
+
+function suggestionToInput(i){
+  let container = document.getElementById('search-input');
+  container.value = `${capitalizeFirstLetter(matches[i].pokemon.name)}`
+}
+
+function closeSuggestions(){
+  document.getElementById('dropdown-suggestions').innerHTML = "";
 }
