@@ -181,6 +181,7 @@ async function renderOverview(startPointLoad) {
     renderCount++;
   }
   hideLoadingScreen();
+  enableLoadBtn();
 }
 
 async function renderOverviewMatches() {
@@ -221,6 +222,15 @@ function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor)
     `;
 }
 
+function enableLoadBtn(){
+  getElementHelper('load-btn').disabled = false;
+}
+
+function getElementHelper(id) {
+  let element = document.getElementById(id);
+  return element;
+}
+
 // 1 or 2 type icons getting rendert
 async function renderOverviewTypes(pokeIndex, pokemonTypes) {
   let container = document.getElementById(`types-container-${pokeIndex}`);
@@ -253,6 +263,7 @@ async function handleInputEvent() {
     // console.log(matches[1].index);
   } else {
     searchBtn.disabled = true;
+    closeSuggestions();
   }
 }
 
@@ -290,7 +301,7 @@ function renderSuggestions(){
 
   for (let i = 0; i < matches.length; i++) {
     container.innerHTML += /*html*/`
-      <p onclick="openOverlay(${matches[i].index}), suggestionToInput(${i}), closeSuggestions()">${capitalizeFirstLetter(matches[i].pokemon.name)}</p>
+      <p onclick="openOverlay(${matches[i].index + 1}), suggestionToInput(${i}), closeSuggestions()">${capitalizeFirstLetter(matches[i].pokemon.name)}</p>
     `;
   }
 }
@@ -302,4 +313,8 @@ function suggestionToInput(i){
 
 function closeSuggestions(){
   document.getElementById('dropdown-suggestions').innerHTML = "";
+}
+
+function emptySearchInput(){
+  getElementHelper('search-input').value = "";
 }

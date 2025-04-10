@@ -29,7 +29,7 @@
                 <input id="search-input" oninput="handleInputEvent()" type="text" placeholder="Enter a Pokemon name..." autocomplete="off">
                 <div id="dropdown-suggestions">
                 </div>
-                <button id="search-btn" onclick="renderOverviewMatches()" disabled>Search</button>
+                <button id="search-btn" onclick="renderOverviewMatches(), closeSuggestions(), emptySearchInput()" disabled>Search</button>
             </div>
         </div>
     </header>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="load">
-            <button id="load-btn" onclick="loadMorePokemon()">Load more Pokemon</button>
+            <button id="load-btn" onclick="loadMorePokemon()" disabled>Load more Pokemon</button>
             <button id="back-btn" class="d-none" onclick="backToStart()">Back to Start</button>
         </div>
 
