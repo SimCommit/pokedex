@@ -1,4 +1,4 @@
-let amountPerLoad = 3;
+let amountPerLoad = 21;
 let startPointLoad = 0;
 let poolOf151 = [];
 let matches = [];

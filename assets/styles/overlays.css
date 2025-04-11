@@ -5,9 +5,9 @@
 }
 
 .dialog-wrapper {
-    height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .overflow-hidden {
@@ -15,7 +15,6 @@
 }
 
 .dialog {
-    margin-top: 16px;
     height: 600px;
     width: 400px;
     display: flex;
