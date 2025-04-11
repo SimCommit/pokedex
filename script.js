@@ -1,4 +1,4 @@
-let amountPerLoad = 9;
+let amountPerLoad = 21;
 let startPointLoad = 0;
 let poolOf151 = [];
 let matches = [];
@@ -318,14 +318,9 @@ function renderSuggestions(){
 
   for (let i = 0; i < matches.length; i++) {
     container.innerHTML += /*html*/`
-      <p onclick="openOverlay(${matches[i].index + 1}), suggestionToInput(${i}), closeSuggestions()">${capitalizeFirstLetter(matches[i].pokemon.name)}</p>
+      <p onclick="openOverlay(${matches[i].index + 1}), closeSuggestions(), emptySearchInput()">${capitalizeFirstLetter(matches[i].pokemon.name)}</p>
     `;
   }
-}
-
-function suggestionToInput(i){
-  let container = document.getElementById('search-input');
-  container.value = `${capitalizeFirstLetter(matches[i].pokemon.name)}`
 }
 
 function closeSuggestions(){
