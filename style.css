@@ -242,3 +242,77 @@ footer {
     height: 32px;
     background-image: url('./assets/img/types-png/19.png');
 }
+
+
+/* Typ farben */
+.type-color-normal {
+    background-color: #A8A77A;
+}
+
+.type-color-fighting {
+    background-color: #C22E28;
+}
+
+.type-color-flying {
+    background-color: #A98FF3;
+}
+
+.type-color-poison {
+    background-color: #A33EA1;
+}
+
+.type-color-ground {
+    background-color: #E2BF65;
+}
+
+.type-color-rock {
+    background-color: #B6A136;
+}
+
+.type-color-bug {
+    background-color: #A6B91A;
+}
+
+.type-color-ghost {
+    background-color: #735797;
+}
+
+.type-color-steel {
+    background-color: #B7B7CE;
+}
+
+.type-color-fire {
+    background-color: #EE8130;
+}
+
+.type-color-water {
+    background-color: #6390F0;
+}
+
+.type-color-grass {
+    background-color: #7AC74C;
+}
+
+.type-color-electric {
+    background-color: #F7D02C;
+}
+
+.type-color-psychic {
+    background-color: #F95587;
+}
+
+.type-color-ice {
+    background-color: #96D9D6;
+}
+
+.type-color-dragon {
+    background-color: #6F35FC;
+}
+
+.type-color-dark {
+    background-color: #705746;
+}
+
+.type-color-fairy {
+    background-color: #D685AD;
+}

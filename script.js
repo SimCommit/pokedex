@@ -1,18 +1,16 @@
-let amountPerLoad = 21;
-let startPointLoad = 0;
-let poolOf151 = [];
 let matches = [];
 let loadCount = 1;
 let renderCount = 0;
+let currentPokemon;
+let = startPokemon = 1;
+let = endPokemon = 21;
 
 function init() {
   showLoadingScreen();
-  renderOverview(startPointLoad);
+  renderOverview(startPokemon, endPokemon);
 }
 
-// Utility 
-// Functions
-
+// Hilfsfunktionen
 // stop propagation
 function prevent(event) {
   event.stopPropagation();
@@ -30,192 +28,92 @@ function capitalizeFirstLetter(stringToChange) {
 }
 
 
-// Main 
-// Functions
-
+// Hauptfunktionen
 // Name Pool for Pokemon
-async function getPoolOfPokemon() {
-  let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${0}`;
-  let response = await fetch(nameUrl);
-  let currentRequest = await response.json();
-  let namesOf151 = currentRequest.results;
-  poolOf151 = namesOf151.map((pokemon, index) => ({ index, pokemon }));
-  return poolOf151;
+async function getPokemonData(id) {
+  let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
+  let response = await fetch(url);
+  currentPokemon = await response.json();
+  // console.log(currentPokemon['sprites']['other']['official-artwork']['front_default']);
+  return currentPokemon;
 }
 
-// fetch pokemon picture from github with blob() and createObjectURL()
-async function getImageData(pokeIndex) {
-  try {
-    let imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${pokeIndex}.gif`;
-    let response = await fetch(imageUrl);
-    let imageBlob = await response.blob();
-    let imageSrc = URL.createObjectURL(imageBlob);
-    return imageSrc;
-  } catch (error) {
-    console.error(error);
-  }
-}
+// Rendert die Übersicht der Pokemon
+async function renderOverview(startPokemon, endPokemon) {
+  let container = getElementHelper('overview-container');
 
-// fetch pokemon picture from
-// async function getImageDataAlternative(pokeIndex) {
-//     let url = `https://pokeapi.co/api/v2/pokemon/${pokeIndex}/`;
-//     let response = await fetch(url);
-//     let currentData = await response.json();
-// let imageUrl =c:\Users\fuchs\Downloads\left-poke-ball.png currentData.sprites.versions['generation-v']['black-white'].animated.front_default;
-//     console.log(imageUrl);
-//     return imageUrl;
-// }
+  for (let id = startPokemon; id <= endPokemon; id++) {
+    currentPokemon = await getPokemonData(id);
+    
+    console.log(currentPokemon.types[0].type.name);
+  
+    container.innerHTML += renderOverviewTemplate(currentPokemon);
+    renderTypes(`types-container-${currentPokemon.id}`);
 
-// fetch type icon from github with blob() and createObjectURL()
-async function getTypeIcon(typeIndex) {
-  let typeIconUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-vii/lets-go-pikachu-lets-go-eevee/${typeIndex}.png`;
-  let response = await fetch(typeIconUrl);
-  let currentTypeIconBlob = await response.blob();
-  let typeIconImageSrc = URL.createObjectURL(currentTypeIconBlob);
-  return typeIconImageSrc;
-}
-
-// fetch type data from pokeapi for certain pokemon
-// async function getTypeData(pokeIndex) {
-//   let detailsUrl = `https://pokeapi.co/api/v2/pokemon/${pokeIndex}/`;
-//   let response = await fetch(detailsUrl);
-//   let currentDetails = await response.json();
-//   let types = [];
-
-//   for (let indexTypes = 0; indexTypes < currentDetails.types.length; indexTypes++) {
-//     types.push(currentDetails.types[indexTypes].type.name);
-//   }
-
-//   return types;
-// }
-
-// loading type data from db.js for certain pokemon
-function getTypeDataAlternative(pokeIndex) {
-  let currentPokemon = gen1Pokemon[pokeIndex];
-  let firstType = currentPokemon.types;
-  return firstType;
-}
-
-async function getTypeDataForms(id){
-  let typeUrl = `https://pokeapi.co/api/v2/pokemon-form/${id}/`;
-  let response = await fetch(typeUrl);
-  let currentTypes = await response.json();
-  return currentTypes.types;
-}
-
-// type background colors
-function cardBackgroundColor(firstType) {
-  switch (firstType) {
-    case "normal":
-      return "#A8A77A";
-    case "fighting":
-      return "#C22E28";
-    case "flying":
-      return "#A98FF3";
-    case "poison":
-      return "#A33EA1";
-    case "ground":
-      return "#E2BF65";
-    case "rock":
-      return "#B6A136";
-    case "bug":
-      return "#A6B91A";
-    case "ghost":
-      return "#735797";
-    case "steel":
-      return "#B7B7CE";
-    case "fire":
-      return "#EE8130";
-    case "water":
-      return "#6390F0";
-    case "grass":
-      return "#7AC74C";
-    case "electric":
-      return "#F7D02C";
-    case "psychic":
-      return "#F95587";
-    case "ice":
-      return "#96D9D6";
-    case "dragon":
-      return "#6F35FC";
-    case "dark":
-      return "#705746";
-    case "fairy":
-      return "#D685AD";
-    default:
-      return "#777"; // fallback-color
-  }
-}
-
-// Determine type ID to assign icons
-function getTypeId(type) {
-  switch (type) {
-    case "normal":
-      return 1;
-    case "fighting":
-      return 2;
-    case "flying":
-      return 3;
-    case "poison":
-      return 4;
-    case "ground":
-      return 5;
-    case "rock":
-      return 6;
-    case "bug":
-      return 7;
-    case "ghost":
-      return 8;
-    case "steel":
-      return 9;
-    case "fire":
-      return 10;
-    case "water":
-      return 11;
-    case "grass":
-      return 12;
-    case "electric":
-      return 13;
-    case "psychic":
-      return 14;
-    case "ice":
-      return 15;
-    case "dragon":
-      return 16;
-    case "dark":
-      return 17;
-    case "fairy":
-      return 18;
-    default:
-      return 19; // unknown type
-  }
-}
-
-// pokemon grid cards getting rendert
-async function renderOverview(startPointLoad) {
-  let container = document.getElementById("overview-container");
-  poolOf151 = await getPoolOfPokemon();
-
-  for (let i = 0 + startPointLoad; i < amountPerLoad + startPointLoad; i++) {
-    if (renderCount >= 151) {
-      document.getElementById("load-btn").classList.add("d-none");
-      return;
+    if (currentPokemon.id >= 151) {
+      hideLoadBtn();
     }
-    const pokemonRef = poolOf151[i].pokemon;
-    const pokemonId = poolOf151[i].index + 1;
-    const pokemonName = capitalizeFirstLetter(pokemonRef.name);
-    const pokemonImage = await getImageData(pokemonId);
-    const pokemonTypes = await getTypeDataForms(pokemonId); // Alternative deak
-    const pokemonFirstType = pokemonTypes[0].type.name;
-    const typeColor = cardBackgroundColor(pokemonFirstType);
-    container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
-    await renderOverviewTypes(pokemonId, pokemonTypes);
-    renderCount++;
   }
   hideLoadingScreen();
   enableLoadBtn();
 }
 
+// HTML template der Übersichtskarten 
+function renderOverviewTemplate(currentPokemon) {
+  return /*html*/ `
+    <div class="card type-color-${currentPokemon.types[0].type.name}" onclick="openOverlay(${currentPokemon.id})">
+        <div class="card-header">
+          <span>${currentPokemon.name}</span>
+            <span>${currentPokemon.id}</span>
+        </div>
+        <div class="card-main">
+            <img src="${currentPokemon["sprites"]["other"]["official-artwork"]["front_default"]}" alt="picture of ${currentPokemon.types[0].type.name}">
+        </div>
+        <div class="card-footer">
+            <div id="types-container-${currentPokemon.id}" class="types">
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+// rendert einen oder zwei Typen in die Übersichtskarte
+function renderTypes(containerId){
+  let container = getElementHelper(containerId);
+  container.innerHTML = "";
+ 
+  for (let i = 0; i < currentPokemon.types.length; i++) {
+    container.innerHTML += /*html*/`
+      <div class="type-${currentPokemon.types[i].type.name}"></div>
+    `     
+  }
+}
+
+// Startet den Rendervorgang mit neuem Start- und Endpunkt
+function loadMorePokemon() {
+  showLoadingScreen();
+  startPokemon = endPokemon + 1;
+  endPokemon = endPokemon + 21;
+  
+  if (endPokemon > 151) {
+    endPokemon = 151;
+  }
+
+  if (startPokemon > 150) {
+    hideLoadBtn();
+    hideLoadingScreen();
+    return;
+  }
+
+  renderOverview(startPokemon, endPokemon);
+}
+
+// async function getTypeDataForms(id){
+//   let typeUrl = `https://pokeapi.co/api/v2/pokemon-form/${id}/`;
+//   let response = await fetch(typeUrl);
+//   let currentTypes = await response.json();
+//   return currentTypes.types;
+// }
 
 async function renderOverviewMatches() {
   document.getElementById("load-btn").classList.add("d-none");
@@ -236,27 +134,12 @@ async function renderOverviewMatches() {
   }
 }
 
-// HTML template of the cards
-function renderOverviewTemplate(pokeIndex, pokemonName, pokemonImage, typeColor) {
-  return /*html*/ `
-    <div class="card" style="background-color: ${typeColor};" onclick="openOverlay(${pokeIndex})">
-        <div class="card-header">
-          <span>${pokemonName}</span>
-            <span>${pokeIndex}</span>
-        </div>
-        <div class="card-main">
-            <img src="${pokemonImage}" alt="picture of ${pokemonName}">
-        </div>
-        <div class="card-footer">
-            <div id="types-container-${pokeIndex}" class="types">
-            </div>
-        </div>
-    </div>
-    `;
-}
-
 function enableLoadBtn(){
   getElementHelper('load-btn').disabled = false;
+}
+
+function hideLoadBtn(){
+  getElementHelper('load-btn').classList.add('d-none');
 }
 
 // 1 or 2 type icons getting rendert
@@ -298,14 +181,6 @@ function backToStart() {
   document.getElementById("back-btn").classList.add("d-none");
   document.getElementById("load-btn").classList.remove("d-none");
   renderOverview(startPointLoad);
-}
-
-//load more pokemon
-function loadMorePokemon() {
-  showLoadingScreen();
-  pointToLoadFrom = amountPerLoad * loadCount;
-  renderOverview(pointToLoadFrom);
-  loadCount++;
 }
 
 function showLoadingScreen() {

@@ -31,14 +31,8 @@
 }
 
 .card-main img {
-    scale: 1.2;
+    width: 100px;
 }
-
-/* .card-main img:hover {
-    scale: 1.5;
-} */
-
-
 
 .card-footer {
     width: 100%;

@@ -1,4 +1,3 @@
-let currentPokemon;
 
 // open overlay
 async function openOverlay(id) {
@@ -10,14 +9,6 @@ async function openOverlay(id) {
 function closeOverlay() {
   document.getElementById("overlay").classList.add("d-none");
   enableScrollingBody();
-}
-
-async function getPokemonData(id) {
-  let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-  let response = await fetch(url);
-  currentPokemon = await response.json();
-  // console.log(currentPokemon['sprites']['other']['official-artwork']['front_default']);
-  return currentPokemon;
 }
 
 // render dialog for detail view of one pokemon
@@ -68,24 +59,10 @@ function renderDialogCardTemplate(currentPokemon) {
                 <div class="detail-info-wrapper">
                   <div id="detail-info-container"></div> 
                 </div>
-                
             </div>
         </div>
     </div>
     `;
-}
-
-function renderTypes(containerId){
-  let container = getElementHelper(containerId);
-  container.innerHTML = "";
-  console.log(currentPokemon.types[0].type.name);
-  
-
-  for (let i = 0; i < currentPokemon.types.length; i++) {
-    container.innerHTML += /*html*/`
-      <div class="type-${currentPokemon.types[i].type.name}"></div>
-    `     
-  }
 }
 
 function renderAbout() {
