@@ -15,7 +15,8 @@
 }
 
 .dialog {
-    margin: 32px;
+    margin-top: 16px;
+    height: 600px;
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -26,7 +27,12 @@
 .nav-pokemons {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 16px;
+}
+
+.nav-pokemons span {
+    font-size: 24px;
 }
 
 .nav-btn {
@@ -96,7 +102,6 @@
 }
 
 .dialog-main {
-    height: 100%;
 }
 
 .basic-info {
@@ -108,12 +113,29 @@
 .identity {
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    font-size: 24px;
 }
 
 .identity span {
-    padding: 16px;
+    width: 100%;
+    text-align: center;
+    font-size: 48px;
+    padding: 0 24px 12px 24px;
+}
+
+.types-dialog {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 12px 24px 24px 24px;
+    box-sizing: border-box;
+}
+
+.dialog-pic {
+    max-width: 240px;
+    max-height: 240px;
+    padding: 0 24px 0 24px;
+    z-index: 6;
 }
 
 .nav-details {
@@ -130,8 +152,7 @@
 }
 
 .detail-info-wrapper {
-    height: 50vh;
-    min-height: 200px;
+    height: 240px;
     overflow-y: auto;
 }
 
@@ -141,11 +162,6 @@
 
 .abilities p {
     margin: 0;
-}
-
-.dialog-pic {
-    max-width: 200px;
-    max-height: 200px;
 }
 
 /* Loading overlay */

@@ -1,4 +1,4 @@
-let amountPerLoad = 21;
+let amountPerLoad = 3;
 let startPointLoad = 0;
 let poolOf151 = [];
 let matches = [];
@@ -13,6 +13,11 @@ function init() {
 // Utility 
 // Functions
 
+// stop propagation
+function prevent(event) {
+  event.stopPropagation();
+}
+
 // get element by id
 function getElementHelper(id) {
   let element = document.getElementById(id);
@@ -24,6 +29,11 @@ function capitalizeFirstLetter(stringToChange) {
   return String(stringToChange).charAt(0).toUpperCase() + String(stringToChange).slice(1);
 }
 
+
+// Main 
+// Functions
+
+// Name Pool for Pokemon
 async function getPoolOfPokemon() {
   let nameUrl = `https://pokeapi.co/api/v2/pokemon?limit=${151}&offset=${0}`;
   let response = await fetch(nameUrl);
@@ -90,7 +100,6 @@ async function getTypeDataForms(id){
   let typeUrl = `https://pokeapi.co/api/v2/pokemon-form/${id}/`;
   let response = await fetch(typeUrl);
   let currentTypes = await response.json();
-  // console.log(currentTypes.types[0].type);
   return currentTypes.types;
 }
 
@@ -197,8 +206,6 @@ async function renderOverview(startPointLoad) {
     const pokemonName = capitalizeFirstLetter(pokemonRef.name);
     const pokemonImage = await getImageData(pokemonId);
     const pokemonTypes = await getTypeDataForms(pokemonId); // Alternative deak
-    console.log(pokemonTypes);
-    console.log(pokemonTypes[0].type.name);
     const pokemonFirstType = pokemonTypes[0].type.name;
     const typeColor = cardBackgroundColor(pokemonFirstType);
     container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
@@ -276,7 +283,6 @@ async function handleInputEvent() {
     let inputRef = inputValue.toLowerCase();
     matches = poolOf151.filter((element) => element.pokemon.name.toLowerCase().includes(inputRef));
     renderSuggestions();
-    // console.log(matches[1].index);
   } else {
     searchBtn.disabled = true;
     closeSuggestions();
@@ -331,7 +337,8 @@ function emptySearchInput(){
   getElementHelper('search-input').value = "";
 }
 
-// stop propagation
-function prevent(event) {
-  event.stopPropagation();
-}
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("search-input").addEventListener("blur", () => {
+    closeSuggestions();
+  });
+});

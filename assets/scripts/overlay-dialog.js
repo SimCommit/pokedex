@@ -1,8 +1,8 @@
 let currentPokemon;
 
 // open overlay
-function openOverlay(id) {
-  renderDialogCard(id);
+async function openOverlay(id) {
+  await renderDialogCard(id);
   document.getElementById("overlay").classList.remove("d-none");
   disableScrollingBody();
 }
@@ -26,6 +26,7 @@ async function renderDialogCard(id) {
   let container = document.getElementById("dialog-container");
   //   console.log(currentPokemon['sprites']['other']['official-artwork']['front_default']);
   container.innerHTML = renderDialogCardTemplate(currentPokemon);
+  renderTypes('dialog-types-container');
   renderAbout(currentPokemon);
 }
 
@@ -40,7 +41,7 @@ function renderDialogCardTemplate(currentPokemon) {
                 <div class="btn-icon-b"></div>
               </div>
             </button>
-            <span>No ${currentPokemon.id}</span>
+            <span>#${currentPokemon.id}</span>
             <button class="nav-btn" onclick="switchPokemon(1)">
               <div class="btn-next">
                 <div class="btn-icon-b"></div>
@@ -53,10 +54,10 @@ function renderDialogCardTemplate(currentPokemon) {
                 <div class="identity">
                   <span>${capitalizeFirstLetter(currentPokemon.name)}</span>
                 </div>
-                <div id="dialog-types-container" class="types"></div>
                 <img class="dialog-pic" src="${
-                  currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_default"]
+                  currentPokemon["sprites"]["other"]["official-artwork"]["front_default"]
                 }" alt="picture of name">
+                <div id="dialog-types-container" class="types-dialog"></div>
             </div>
             <div class="detail-info">
                 <nav class="nav-details" aria-label="Navigation through detail info">
@@ -72,6 +73,19 @@ function renderDialogCardTemplate(currentPokemon) {
         </div>
     </div>
     `;
+}
+
+function renderTypes(containerId){
+  let container = getElementHelper(containerId);
+  container.innerHTML = "";
+  console.log(currentPokemon.types[0].type.name);
+  
+
+  for (let i = 0; i < currentPokemon.types.length; i++) {
+    container.innerHTML += /*html*/`
+      <div class="type-${currentPokemon.types[i].type.name}"></div>
+    `     
+  }
 }
 
 function renderAbout() {

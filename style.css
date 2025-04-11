@@ -1,5 +1,13 @@
 * {
-    font-family: sans-serif;
+    font-family: 'Inter', sans-serif;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('./assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf') format('woff2'),
+        url('./assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf') format('woff');
+    font-weight: 400;
+    font-style: normal;
 }
 
 body {
@@ -11,10 +19,16 @@ header {
     background-color: #092129;
     margin: 0;
     height: 200px;
+    display: flex;
+    justify-content: center;
 }
 
 .header-container {
-    padding: 20px 100px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px 0px;
+    margin-left: 100px;
+    margin-right: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -26,7 +40,10 @@ header {
 }
 
 main {
-    min-height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 300px);
 }
 
 .search-container {
@@ -36,10 +53,10 @@ main {
 #search-input {
     position: relative;
     height: 26px;
-    width: 160px;
     padding: 8px;
     box-sizing: border-box;
     border: none;
+    border-radius: 8px 0 0 8px;
 }
 
 #search-btn {
@@ -51,18 +68,18 @@ main {
     border-radius: 0 8px 8px 0;
 }
 
-#search-input, 
+#search-input,
 #dropdown-suggestions {
-    width: 170px;
+    width: 230px;
 }
 
 #dropdown-suggestions {
     position: absolute;
-    width: 170px;
-    margin-top: 2px;
+    margin-top: 5px;
     border-radius: 2px;
     background-color: white;
     color: black;
+    border-radius: 8px 0px 8px 8px;
     z-index: 10;
 }
 
@@ -91,6 +108,12 @@ main {
     margin: 16px;
 }
 
+#load-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+
 footer {
     background-color: #092129;
     color: white;
@@ -102,4 +125,120 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+
+/* types */
+.type-normal {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/1.png');
+}
+
+.type-fighting {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/2.png');
+}
+
+.type-flying {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/3.png');
+}
+
+.type-poison {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/4.png');
+}
+
+.type-ground {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/5.png');
+}
+
+.type-rock {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/6.png');
+}
+
+.type-bug {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/7.png');
+}
+
+.type-ghost {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/8.png');
+}
+
+.type-steel {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/9.png');
+}
+
+.type-fire {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/10.png');
+}
+
+.type-water {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/11.png');
+}
+
+.type-grass {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/12.png');
+}
+
+.type-electric {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/13.png');
+}
+
+.type-psychic {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/14.png');
+}
+
+.type-ice {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/15.png');
+}
+
+.type-dragon {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/16.png');
+}
+
+.type-dark {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/17.png');
+}
+
+.type-fairy {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/18.png');
+}
+
+.type-unknown {
+    width: 96px;
+    height: 32px;
+    background-image: url('./assets/img/types-png/19.png');
 }
