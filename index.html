@@ -26,10 +26,10 @@
             <!-- <h1>Pokedex</h1> -->
              <img src="./assets/img/1st-gen-pokedex-logo-caps-large.png" alt="pokedex logo">
             <div class="search-container">
-                <input id="search-input" oninput="handleInputEvent()" type="text" placeholder="Enter a Pokemon name..." autocomplete="off">
+                <input id="search-input" oninput="searchInPool()" type="text" placeholder="Enter a Pokemon name..." autocomplete="off">
                 <div id="dropdown-suggestions">
                 </div>
-                <button id="search-btn" onclick="renderOverviewMatches(), closeSuggestions(), emptySearchInput()" disabled>Search</button>
+                <button id="search-btn" onclick="renderOverviewMatches(), emptySearchInput(), closeSuggestions()" disabled>Search</button>
             </div>
         </div>
     </header>

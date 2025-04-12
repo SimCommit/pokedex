@@ -1,4 +1,3 @@
-
 // open overlay
 async function openOverlay(id) {
   await renderDialogCard(id);
@@ -15,9 +14,9 @@ function closeOverlay() {
 async function renderDialogCard(id) {
   currentPokemon = await getPokemonData(id);
   let container = document.getElementById("dialog-container");
-  //   console.log(currentPokemon['sprites']['other']['official-artwork']['front_default']);
+  // console.log(currentPokemon['sprites']['other']['official-artwork']['front_default']);
   container.innerHTML = renderDialogCardTemplate(currentPokemon);
-  renderTypes('dialog-types-container');
+  renderTypes("dialog-types-container");
   renderAbout(currentPokemon);
 }
 
@@ -45,10 +44,12 @@ function renderDialogCardTemplate(currentPokemon) {
                 <div class="identity">
                   <span>${capitalizeFirstLetter(currentPokemon.name)}</span>
                 </div>
-                <img class="dialog-pic" src="${
-                  currentPokemon["sprites"]["other"]["official-artwork"]["front_default"]
-                }" alt="picture of name">
-                <div id="dialog-types-container" class="types-dialog"></div>
+                <div class="dialoge-images">
+                  <div id="dialog-types-container" class="types-dialog"></div>
+                  <img class="dialog-pic" src="${
+                    currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_default"]
+                  }" alt="picture of ${capitalizeFirstLetter(currentPokemon.name)}">
+                </div>
             </div>
             <div class="detail-info">
                 <nav class="nav-details" aria-label="Navigation through detail info">
