@@ -51,11 +51,11 @@ function renderDialogCardTemplate(currentPokemon) {
                   }" alt="picture of ${capitalizeFirstLetter(currentPokemon.name)}">
                 </div>
             </div>
-            <div class="detail-info">
+            <div class="detail-info type-color-${currentPokemon.types[0].type.name}">
                 <nav class="nav-details" aria-label="Navigation through detail info">
-                    <button onclick="renderAbout()">ABOUT</button>
-                    <button onclick="renderStats()">STATS</button>
-                    <button onclick="renderAboutMoves()">MOVES</button>
+                    <button class="nav-details-btn" onclick="renderAbout()">ABOUT</button>
+                    <button class="nav-details-btn" onclick="renderStats()">STATS</button>
+                    <button class="nav-details-btn" onclick="renderAboutMoves()">MOVES</button>
                 </nav>
                 <div class="detail-info-wrapper">
                   <div id="detail-info-container"></div> 

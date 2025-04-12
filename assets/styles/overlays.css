@@ -156,8 +156,20 @@
     justify-content: space-around;
 }
 
+.nav-details-btn {
+    border: none;
+    background-color: unset;
+    font-weight: 700;
+    padding: 8px 0;    
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
+
+}
+
+.nav-details-btn:hover {
+    border-bottom: 2px solid black;
+}
+
 .detail-info {
-    background-color: #7AC74C;
     color: black;
     border-radius: 16px;
     padding: 16px;
@@ -176,6 +188,9 @@
 .abilities p {
     margin: 0;
 }
+
+
+
 
 /* Loading overlay */
 .loading {
