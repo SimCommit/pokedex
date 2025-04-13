@@ -1,5 +1,5 @@
 :root {
-    --width-input: clamp(11.25rem, 6.25vw + 8.516rem, 13.75rem);
+    --width-input: clamp(10.75rem, 7.5vw + 7.469rem, 13.75rem);
 }
 
 * {
@@ -72,6 +72,10 @@ main {
     background-color: white;
 }
 
+#search-btn:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
 #search-btn:disabled {
     background-color: rgba(255, 255, 255, 0.2);
     color: rgba(0, 0, 0, 0.4);
@@ -101,7 +105,7 @@ main {
 
 #dropdown-suggestions p:hover {
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .grid-overview {
