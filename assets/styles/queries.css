@@ -62,6 +62,10 @@
         text-align: center;
     }
 
+    .nav-pokemons span {
+        font-size: 20px;
+    }
+
     
     #header-impress {
         width: 100%;

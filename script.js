@@ -244,10 +244,12 @@ function emptyMatches() {
 // Funktionen um den Loading Screen zu steuern
 function showLoadingScreen() {
   getElementHelper("loading-container").classList.remove("d-none");
+  disableScrollingBody();
 }
 
 function hideLoadingScreen() {
   getElementHelper("loading-container").classList.add("d-none");
+  enableScrollingBody();
 }
 
 // schließt die Dropdown Liste der Suchvorschläge, wenn das Inputfeld den Fokus verliert leicht verzögert, damit onclick auf die Vorschläge weiter funktioniert
