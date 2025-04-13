@@ -54,9 +54,9 @@ function renderDialogCardTemplate(currentPokemon) {
             </div>
             <div class="detail-info type-color-${currentPokemon.types[0].type.name}">
                 <nav class="nav-details" aria-label="Navigation through detail info">
-                    <button id="about-btn" class="nav-details-btn outlined-text active" onclick="renderAbout(), setActiveDetailsTab('about-btn')">ABOUT</button>
-                    <button id="stats-btn" class="nav-details-btn outlined-text" onclick="renderStats(), setActiveDetailsTab('stats-btn')">STATS</button>
-                    <button id="moves-btn" class="nav-details-btn outlined-text" onclick="renderMoves(), setActiveDetailsTab('moves-btn')">MOVES</button>
+                    <button id="about-btn" class="nav-details-btn active" onclick="renderAbout(), setActiveDetailsTab('about-btn')">About</button>
+                    <button id="stats-btn" class="nav-details-btn" onclick="renderStats(), setActiveDetailsTab('stats-btn')">Stats</button>
+                    <button id="moves-btn" class="nav-details-btn" onclick="renderMoves(), setActiveDetailsTab('moves-btn')">Moves</button>
                 </nav>
                 <div class="detail-info-wrapper outlined-text">
                   <div id="detail-info-container"></div> 

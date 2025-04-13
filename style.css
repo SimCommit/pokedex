@@ -63,12 +63,20 @@ main {
 }
 
 #search-btn {
+    font-size: 14px;
     height: 26px;
     width: 80px;
     padding: 4px;
     box-sizing: border-box;
     border: none;
     border-radius: 0 8px 8px 0;
+    background-color: white;
+}
+
+#search-btn:disabled {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: rgba(0, 0, 0, 0.4);
+    cursor: unset;
 }
 
 #search-input,
@@ -102,7 +110,9 @@ main {
     flex-wrap: wrap;
     justify-content: center;
     gap: 16px;
-    margin: 32px;
+    margin-top: 32px;
+    margin-bottom: 32px;
+
 }
 
 .load {
