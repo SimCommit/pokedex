@@ -22,9 +22,9 @@
 
 <body onload="init()">
     <header>
-        <div class="header-container max-width-1440">
+        <div class="header-container max-width-1440 general-padding-width">
             <a href="./index.html">
-                <img src="./assets/img/1st-gen-pokedex-logo-caps-large.png" alt="pokedex logo">
+                <img src="./assets/img/1st-gen-pokedex-logo-caps-large-og-no-black.png" alt="pokedex logo">
             </a>
             <div class="search-container">
                 <input id="search-input" oninput="searchInPool()" type="text" placeholder="Enter a Pokemon name..." autocomplete="off">
@@ -37,7 +37,7 @@
 
     <main>
 
-        <div id="overview-container" class="grid-overview max-width-1440">
+        <div id="overview-container" class="grid-overview max-width-1440 general-padding-width">
             <!-- Hier werden ca. 20 Pokémon-Karten gerendert -->
         </div>
 
@@ -47,11 +47,13 @@
         </div>
 
         <div class="load max-width-1440">
+            <!-- Buttons zum Laden von Pokemon -->
             <button id="load-btn" onclick="loadMorePokemon()">Load more Pokemon</button>
             <button id="back-btn" class="d-none" onclick="backToStart()">Back to Start</button>
         </div>
 
         <div id="loading-container" class="d-none">
+            <!-- Loadingscreen -->
             <div class="loading">
                 <div class="loader-wrapper">
                     <div class="loader-background"></div>

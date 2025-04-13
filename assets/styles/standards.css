@@ -16,7 +16,12 @@ button:hover {
 }
 
 .max-width-1440 {
-    max-width: 1440px;
+    max-width: 1340px;
     margin: auto;
+}
+
+.general-padding-width {
+    padding-left: 120px;
+    padding-right: 120px;
 }
 

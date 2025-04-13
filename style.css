@@ -1,3 +1,7 @@
+:root {
+    --width-input: clamp(11.25rem, 6.25vw + 8.516rem, 13.75rem);
+}
+
 * {
     font-family: 'Inter', sans-serif;
 }
@@ -26,9 +30,8 @@ header {
 .header-container {
     width: 100%;
     box-sizing: border-box;
-    padding: 20px 0px;
-    margin-left: 100px;
-    margin-right: 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -70,7 +73,7 @@ main {
 
 #search-input,
 #dropdown-suggestions {
-    width: 230px;
+    width: var(--width-input);
 }
 
 #dropdown-suggestions {
@@ -105,13 +108,31 @@ main {
 .load {
     display: flex;
     justify-content: center;
-    margin: 16px;
+    margin-bottom: 32px;
 }
 
 #load-btn {
     border: none;
     border-radius: 8px;
     padding: 8px 16px;
+    font-weight: 700;
+    background-color: #ffffff;
+}
+
+#load-btn:hover {    
+    box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.4);
+}
+
+#back-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-weight: 700;
+    background-color: #ffffff;
+}
+
+#back-btn:hover {    
+    box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.4);
 }
 
 footer {
@@ -125,6 +146,10 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+footer a:hover {
+    text-decoration: underline;
 }
 
 

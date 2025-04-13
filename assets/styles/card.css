@@ -1,5 +1,5 @@
 .card {
-    width: 240px;
+    width: 252px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -30,6 +30,7 @@
 }
 
 .card-main img {
+    margin: 4px;
     width: 100px;
 }
 
