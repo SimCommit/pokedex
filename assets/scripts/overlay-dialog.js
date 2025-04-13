@@ -20,7 +20,6 @@ async function renderDialogCard(id) {
   renderAbout(currentPokemon);
 }
 
-// template of large card for detail information
 function renderDialogCardTemplate(currentPokemon) {
   return /*html*/ `
    <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
@@ -55,7 +54,7 @@ function renderDialogCardTemplate(currentPokemon) {
                 <nav class="nav-details" aria-label="Navigation through detail info">
                     <button class="nav-details-btn" onclick="renderAbout()">ABOUT</button>
                     <button class="nav-details-btn" onclick="renderStats()">STATS</button>
-                    <button class="nav-details-btn" onclick="renderAboutMoves()">MOVES</button>
+                    <button class="nav-details-btn" onclick="renderMoves()">MOVES</button>
                 </nav>
                 <div class="detail-info-wrapper">
                   <div id="detail-info-container"></div> 
@@ -66,6 +65,7 @@ function renderDialogCardTemplate(currentPokemon) {
     `;
 }
 
+// rendert den About Reiter
 function renderAbout() {
   let container = getElementHelper("detail-info-container");
   container.innerHTML = renderAboutTemplate(currentPokemon);
@@ -84,6 +84,7 @@ function renderAboutTemplate(currentPokemon) {
   `;
 }
 
+// Unterfunktion um die Abilities für den About Reiter zu rendern
 function renderAboutAbilities(abilities) {
   let container = getElementHelper("abilities-container");
 
@@ -95,6 +96,7 @@ function renderAboutAbilities(abilities) {
   }
 }
 
+// rendert den Stats Reiter
 function renderStats() {
   let container = getElementHelper("detail-info-container");
   container.innerHTML = "";
@@ -109,7 +111,8 @@ function renderStats() {
   }
 }
 
-function renderAboutMoves() {
+// rendert den Moves Reiter
+function renderMoves() {
   let container = getElementHelper("detail-info-container");
   container.innerHTML = ``;
 
@@ -128,6 +131,7 @@ function enableScrollingBody() {
   document.body.classList.remove("overflow-hidden");
 }
 
+// ändert die ID des zu rendernden Pokemon um vom ersten zum letzten zu springen und umgekehrt
 function switchPokemon(modificator) {
   let newPokemonId = currentPokemon.id + modificator;
 
