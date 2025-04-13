@@ -74,12 +74,24 @@ function renderAbout() {
 
 function renderAboutTemplate(currentPokemon) {
   return /*html*/ `
-    <p>Species ${capitalizeFirstLetter(currentPokemon["species"]["name"])}</p>
-    <p>Height ${currentPokemon["height"] * 10}cm</p>
-    <p>Weight ${currentPokemon["height"]}kg</p>
-    <div class="abilities">
-      <span>Abilities</span>
-      <div id="abilities-container"></div>
+    <div class="info-row">
+      <span class="info-label">Species</span>
+      <span class="info-value">${capitalizeFirstLetter(currentPokemon["species"]["name"])}</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Height</span>
+      <span class="info-value">${currentPokemon["height"] * 10}cm</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Weight</span>
+      <span class="info-value">${currentPokemon["height"]}kg</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Abilities</span>
+      <span class="info-value">
+        <ul id="abilities-container" class="ability-list">
+        </ul>
+      </span>
     </div>
   `;
 }
@@ -91,7 +103,7 @@ function renderAboutAbilities(abilities) {
   for (let i = 0; i < abilities.length; i++) {
     const abilityName = abilities[i].ability.name;
     container.innerHTML += /*html*/ `
-      <p>${capitalizeFirstLetter(abilityName)}</p>
+      <li>${capitalizeFirstLetter(abilityName)}</li>
     `;
   }
 }
@@ -103,10 +115,10 @@ function renderStats() {
 
   for (let i = 0; i < currentPokemon.stats.length; i++) {
     container.innerHTML += /*html*/ `
-      <p>
-        <span>${capitalizeFirstLetter(currentPokemon["stats"][i]["stat"]["name"])}</span>
-        <span>${currentPokemon["stats"][i]["base_stat"]}</span>
-      </p>
+      <div class="info-row">
+        <span class="info-label">${capitalizeFirstLetter(currentPokemon["stats"][i]["stat"]["name"])}</span>
+        <span class="info-value">${currentPokemon["stats"][i]["base_stat"]}</span>
+      </div>
     `;
   }
 }
@@ -118,7 +130,7 @@ function renderMoves() {
 
   for (let i = 0; i < currentPokemon.moves.length; i++) {
     container.innerHTML += /*html*/ `
-      <p>${capitalizeFirstLetter(currentPokemon["moves"][i]["move"]["name"])}</p>
+      <p class="move-name">${capitalizeFirstLetter(currentPokemon["moves"][i]["move"]["name"])}</p>
     `;
   }
 }
