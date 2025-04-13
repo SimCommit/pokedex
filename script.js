@@ -62,6 +62,7 @@ async function renderOverview(startPokemon, endPokemon) {
 
 // Rendert die Übersicht der Pokemon, die über die Suchfunktion gefunden wurden
 async function renderOverviewMatches() {
+  showLoadingScreen();
   let container = getElementHelper("overview-container");
   let startMatchesI = 0;
   let endMatchesI = matches.length;
@@ -112,21 +113,22 @@ function renderTypes(containerId) {
   }
 }
 
-// Startet den Rendervorgang mit neuem Start- und Endpunkt
+// Startet den Rendervorgang mit neuem Start- und Endpunkt, um weitere Pokemon hinzuzufügen
 function loadMorePokemon() {
   showLoadingScreen();
   startPokemon = endPokemon + 1;
   endPokemon = endPokemon + 21;
 
+  // verhindert einen Endpunkt außerhalb der 1st Gen
   if (endPokemon > 151) {
-    // verhindert einen Endpunkt außerhalb der 1st Gen
     endPokemon = 151;
   }
 
-  if (startPokemon > 150) {
+  // verhindert dass das rendern begonnen wird, sollte der Startpunkt gleich dem Endpunkt oder höher sein
+  if (startPokemon >= 151) {
     hideLoadBtn();
     hideLoadingScreen();
-    return; // verhindert dass das rendern begonnen wird, sollte der Startpunkt bereits dem Endpunkt oder höher entsprechen
+    return;
   }
 
   renderOverview(startPokemon, endPokemon);
@@ -178,11 +180,17 @@ function renderSuggestions() {
 
   for (let i = 0; i < matches.length; i++) {
     container.innerHTML += /*html*/ `
-      <p onclick="openOverlay(${matches[i].index}), closeSuggestions(), emptySearchInput()">${capitalizeFirstLetter(
-      matches[i].pokemon.name
-    )}</p>
+      <p onclick="handleClickOnSuggestion(${matches[i].index})">${capitalizeFirstLetter(matches[i].pokemon.name)}</p>
     `;
   }
+}
+
+// steuert die Logik bei Klick auf einen Suchvorschlag
+function handleClickOnSuggestion(matchId) {
+  openOverlay(matchId);
+  closeSuggestions();
+  emptySearchInput();
+  disableSearchBtn();
 }
 
 // Funktionen zum steuern des Load Buttons
@@ -194,7 +202,7 @@ function hideLoadBtn() {
   getElementHelper("load-btn").classList.add("d-none");
 }
 
-function showLoadButton(){
+function showLoadButton() {
   getElementHelper("load-btn").classList.remove("d-none");
 }
 
@@ -219,6 +227,7 @@ function backToStart() {
   renderOverview(startPokemon, endPokemon);
 }
 
+// Funktionen um den Loading Screen zu steuern
 function showLoadingScreen() {
   getElementHelper("loading-container").classList.remove("d-none");
 }

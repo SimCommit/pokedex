@@ -1,4 +1,4 @@
-// open overlay
+// Funktionen zum Steuern des Overlays
 async function openOverlay(id) {
   await renderDialogCard(id);
   document.getElementById("overlay").classList.remove("d-none");
@@ -10,7 +10,7 @@ function closeOverlay() {
   enableScrollingBody();
 }
 
-// render dialog for detail view of one pokemon
+// rendert den Dialog für die Detailkarte des ausgewählten Pokemons
 async function renderDialogCard(id) {
   currentPokemon = await getPokemonData(id);
   let container = document.getElementById("dialog-container");
