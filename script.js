@@ -1,12 +1,11 @@
 let matches = [];
-// let loadCount = 1;
 let currentPokemon;
 let startPokemon = 1;
 let endPokemon = 4;
 let searchPool;
 let missingno = {
   name: "missingno.",
-  url: "https://pokeapi.co/api/v2/pokemon/1/",
+  url: "https://en.wikipedia.org/wiki/MissingNo.",
 };
 
 async function init() {
@@ -57,7 +56,6 @@ async function renderOverview(startPokemon, endPokemon) {
     }
   }
   hideLoadingScreen();
-  enableLoadBtn();
 }
 
 // Rendert die Übersicht der Pokemon, die über die Suchfunktion gefunden wurden
@@ -188,16 +186,20 @@ function renderSuggestions() {
 // steuert die Logik bei Klick auf einen Suchvorschlag
 function handleClickOnSuggestion(matchId) {
   openOverlay(matchId);
-  closeSuggestions();
   emptySearchInput();
+  closeSuggestions();
+  disableSearchBtn();
+}
+
+// steuert die Logik bei Klick auf den Suchbutton
+function handleClickOnSearchBtn() {
+  renderOverviewMatches();
+  emptySearchInput();
+  closeSuggestions();
   disableSearchBtn();
 }
 
 // Funktionen zum steuern des Load Buttons
-function enableLoadBtn() {
-  getElementHelper("load-btn").disabled = false;
-}
-
 function hideLoadBtn() {
   getElementHelper("load-btn").classList.add("d-none");
 }
@@ -227,15 +229,6 @@ function backToStart() {
   renderOverview(startPokemon, endPokemon);
 }
 
-// Funktionen um den Loading Screen zu steuern
-function showLoadingScreen() {
-  getElementHelper("loading-container").classList.remove("d-none");
-}
-
-function hideLoadingScreen() {
-  getElementHelper("loading-container").classList.add("d-none");
-}
-
 function closeSuggestions() {
   getElementHelper("dropdown-suggestions").innerHTML = "";
 }
@@ -246,6 +239,15 @@ function emptySearchInput() {
 
 function emptyMatches() {
   matches = [];
+}
+
+// Funktionen um den Loading Screen zu steuern
+function showLoadingScreen() {
+  getElementHelper("loading-container").classList.remove("d-none");
+}
+
+function hideLoadingScreen() {
+  getElementHelper("loading-container").classList.add("d-none");
 }
 
 // schließt die Dropdown Liste der Suchvorschläge, wenn das Inputfeld den Fokus verliert leicht verzögert, damit onclick auf die Vorschläge weiter funktioniert
