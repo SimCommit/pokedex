@@ -8,27 +8,11 @@ let missingno = {
   url: "https://en.wikipedia.org/wiki/MissingNo.",
 };
 
+// Initialisierung
 async function init() {
   showLoadingScreen();
   await renderOverview(startPokemon, endPokemon);
   loadSearchPool();
-}
-
-// Hilfsfunktionen
-// stop propagation
-function prevent(event) {
-  event.stopPropagation();
-}
-
-// get element by id
-function getElementHelper(id) {
-  let element = document.getElementById(id);
-  return element;
-}
-
-// capitalizeFirstLetter
-function capitalizeFirstLetter(stringToChange) {
-  return String(stringToChange).charAt(0).toUpperCase() + String(stringToChange).slice(1);
 }
 
 // Hauptfunktionen
@@ -132,7 +116,7 @@ function loadMorePokemon() {
   renderOverview(startPokemon, endPokemon);
 }
 
-// erzeugt ein array mit den 151 Pokemon sowie missingno auf index 0 damit index = id
+// erzeugt ein array mit den 151 Pokemon sowie missingno auf index 0 damit index = id für die Suchfunktion
 async function loadSearchPool() {
   let Url = "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0";
   let response = await fetch(Url);
@@ -147,6 +131,7 @@ async function searchInPool() {
   //leert das array matches vor dem neuen Suchvorgang
   emptyMatches();
 
+  // verhindert ein Suchen für Eingaben unter 3 Zeichen länge
   if (inputValue.length >= 3) {
     enableSearchBtn();
     let inputRef = inputValue.toLowerCase();
@@ -162,15 +147,6 @@ async function searchInPool() {
   }
 }
 
-// Funktionen zum steuern des Search Buttons
-function disableSearchBtn() {
-  getElementHelper("search-btn").disabled = true;
-}
-
-function enableSearchBtn() {
-  getElementHelper("search-btn").disabled = false;
-}
-
 // rendert die Vorschläge in den Dropdownmenü-Container
 function renderSuggestions() {
   let container = document.getElementById("dropdown-suggestions");
@@ -179,7 +155,7 @@ function renderSuggestions() {
   for (let i = 0; i < matches.length; i++) {
     container.innerHTML += /*html*/ `
       <p onclick="handleClickOnSuggestion(${matches[i].index})">${capitalizeFirstLetter(matches[i].pokemon.name)}</p>
-    `;
+      `;
   }
 }
 
@@ -197,6 +173,53 @@ function handleClickOnSearchBtn() {
   emptySearchInput();
   closeSuggestions();
   disableSearchBtn();
+}
+
+// schließt die Dropdown Liste der Suchvorschläge, wenn das Inputfeld den Fokus verliert leicht verzögert, damit onclick auf die Vorschläge weiter funktioniert
+window.addEventListener("DOMContentLoaded", () => {
+  getElementHelper("search-input").addEventListener("blur", () => {
+    setTimeout(function () {
+      closeSuggestions();
+    }, 200);
+  });
+});
+
+// Funktion, die nach dem gerenderten Suchergebnis wieder vom Start des Pokedex rendern lässt
+function backToStart() {
+  let container = document.getElementById("overview-container");
+  showLoadingScreen();
+  container.innerHTML = "";
+  startPokemon = 1;
+  endPokemon = 21;
+  hideBackBtn();
+  showLoadButton();
+  renderOverview(startPokemon, endPokemon);
+}
+
+// Hilfsfunktionen
+// get element by id
+function getElementHelper(id) {
+  let element = document.getElementById(id);
+  return element;
+}
+
+// capitalizeFirstLetter
+function capitalizeFirstLetter(stringToChange) {
+  return String(stringToChange).charAt(0).toUpperCase() + String(stringToChange).slice(1);
+}
+
+// stop propagation
+function prevent(event) {
+  event.stopPropagation();
+}
+
+// Funktionen zum steuern des Search Buttons
+function disableSearchBtn() {
+  getElementHelper("search-btn").disabled = true;
+}
+
+function enableSearchBtn() {
+  getElementHelper("search-btn").disabled = false;
 }
 
 // Funktionen zum steuern des Load Buttons
@@ -217,30 +240,6 @@ function hideBackBtn() {
   getElementHelper("back-btn").classList.add("d-none");
 }
 
-// um nach dem gerenderten Suchergebnis wieder vom Start des Pokedex rendern zu lassen
-function backToStart() {
-  let container = document.getElementById("overview-container");
-  showLoadingScreen();
-  container.innerHTML = "";
-  startPokemon = 1;
-  endPokemon = 21;
-  hideBackBtn();
-  showLoadButton();
-  renderOverview(startPokemon, endPokemon);
-}
-
-function closeSuggestions() {
-  getElementHelper("dropdown-suggestions").innerHTML = "";
-}
-
-function emptySearchInput() {
-  getElementHelper("search-input").value = "";
-}
-
-function emptyMatches() {
-  matches = [];
-}
-
 // Funktionen um den Loading Screen zu steuern
 function showLoadingScreen() {
   getElementHelper("loading-container").classList.remove("d-none");
@@ -252,11 +251,17 @@ function hideLoadingScreen() {
   enableScrollingBody();
 }
 
-// schließt die Dropdown Liste der Suchvorschläge, wenn das Inputfeld den Fokus verliert leicht verzögert, damit onclick auf die Vorschläge weiter funktioniert
-window.addEventListener("DOMContentLoaded", () => {
-  getElementHelper("search-input").addEventListener("blur", () => {
-    setTimeout(function () {
-      closeSuggestions();
-    }, 200);
-  });
-});
+// schließt die Dropdown Liste der Suchvorschläge
+function closeSuggestions() {
+  getElementHelper("dropdown-suggestions").innerHTML = "";
+}
+
+// leert das Inputfeld
+function emptySearchInput() {
+  getElementHelper("search-input").value = "";
+}
+
+// leert das Array der Sucherergebnisse
+function emptyMatches() {
+  matches = [];
+}

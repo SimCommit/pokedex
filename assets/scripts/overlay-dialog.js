@@ -20,6 +20,7 @@ async function renderDialogCard(id) {
   renderAbout(currentPokemon);
 }
 
+// Template für den Dialog
 function renderDialogCardTemplate(currentPokemon) {
   return /*html*/ `
    <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
@@ -137,12 +138,13 @@ function renderMoves() {
   }
 }
 
+// weist die Class active dem zuletzt geklickten nav-details-btn zu
 function setActiveDetailsTab(buttonId) {
   document.querySelectorAll(".nav-details-btn").forEach((btn) => {
     btn.classList.remove("active");
   });
 
-  getElementHelper(buttonId).classList.add('active');
+  getElementHelper(buttonId).classList.add("active");
 }
 
 // Scrollen unterbinden, während Overlay geöffnet ist
@@ -154,10 +156,11 @@ function enableScrollingBody() {
   document.body.classList.remove("overflow-hidden");
 }
 
-// ändert die ID des zu rendernden Pokemon um vom ersten zum letzten zu springen und umgekehrt
+// ändert die ID des zu rendernden Pokemon um mit den Vor- und Zurückbuttons zu navigieren
 function switchPokemon(modificator) {
   let newPokemonId = currentPokemon.id + modificator;
 
+  // wechselt von der höchsten zur niedrigsten ID und umgekährt
   switch (newPokemonId) {
     case 0:
       newPokemonId = 151;

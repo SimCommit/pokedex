@@ -101,7 +101,7 @@ main {
 }
 
 #dropdown-suggestions p:hover {
-    cursor: pointer; 
+    cursor: pointer;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -128,7 +128,7 @@ main {
     background-color: #ffffff;
 }
 
-#load-btn:hover {    
+#load-btn:hover {
     box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.4);
 }
 
@@ -139,7 +139,7 @@ main {
     background-color: #ffffff;
 }
 
-#back-btn:hover {    
+#back-btn:hover {
     box-shadow: 0px 0px 6px 4px rgba(0, 0, 0, 0.4);
 }
 
