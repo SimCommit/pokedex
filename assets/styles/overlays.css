@@ -20,7 +20,9 @@
     display: flex;
     flex-direction: column;
     background-color: #092129;
-    border-radius: 16px;
+    border-radius: 24px;
+    /* border: 4px solid #11415c; */
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.3);
 }
 
 .nav-pokemons {
@@ -122,10 +124,11 @@
 
 .dialoge-images {
     width: 100%;
-    height: 120px;
+    /* height: 120px; */
     display: flex;
     justify-content: center;
     gap: 60px;
+    margin-bottom: 16px;
 
 }
 
@@ -140,12 +143,22 @@
     box-sizing: border-box;
 }
 
+.dialog-pic-wrapper {
+    width: 125px;
+    height: 125px;
+    background-image: url('/assets/img/1st-gen-pokedex-logo-no-text.png');
+    background-size: contain;
+    background-position: top;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .dialog-pic {
     z-index: 6;
     object-fit: contain;
-    object-position: bottom;
-    max-width: 120px;
+    max-width: 101px;
     max-height: 101px;
     scale: 1.4;
 }
@@ -179,7 +192,6 @@
 }
 
 .detail-info {
-    /* color: black; */
     border-radius: 16px;
     padding: 16px;
     margin: 0 16px 16px 16px;
@@ -243,7 +255,7 @@
   }
   
   .move-name {
-    margin: -2px 54px -2px 64px;
+    margin: -2px 24px -2px 34px;
     padding: 4px 8px;
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 8px;
@@ -267,7 +279,7 @@
     text-shadow: 1px 1px black;
 }
 
-/* alternativer spinner */
+/* spinner */
 .loader {
     width: 48px;
     height: 48px;

@@ -45,9 +45,11 @@ function renderDialogCardTemplate(currentPokemon) {
                 </div>
                 <div class="dialoge-images">
                   <div id="dialog-types-container" class="types-dialog"></div>
-                  <img class="dialog-pic" src="${
-                    currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_default"]
-                  }" alt="picture of ${capitalizeFirstLetter(currentPokemon.name)}">
+                    <div class="dialog-pic-wrapper">
+                      <img class="dialog-pic" src="${
+                        currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_default"]
+                      }" alt="picture of ${capitalizeFirstLetter(currentPokemon.name)}">
+                    </div>
                 </div>
             </div>
             <div class="detail-info type-color-${currentPokemon.types[0].type.name}">
