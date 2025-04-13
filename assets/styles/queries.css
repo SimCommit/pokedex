@@ -1,0 +1,73 @@
+@media(max-width: 840px) {
+    .general-padding-width {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    /* #search-input {
+        display: none;
+    } */
+}
+
+@media(max-width: 500px) {
+    .header-container {
+        justify-content: center;
+    }
+
+    .header-container a {
+        display: none;
+    }
+
+    .search-container {
+        background-image: url('/assets/img/1st-gen-pokedex-logo-caps-large-og-no-black-no-text.png');
+        background-position: top;
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 160px;
+        background-color: unset;
+        display: flex;
+        align-items: center;
+    }
+
+    #dropdown-suggestions {
+        width: 156px;
+        align-self: flex-start;
+        margin-top: 100px;
+        margin-left: 52px;
+        border-top-left-radius: 0;
+    }
+
+    .dialog {
+        margin: 8px;
+    }
+
+    .identity span {
+        font-size: 32px;
+    }
+
+    .dialoge-images {
+        gap: 16px;
+    }
+
+    /* #search-input {
+    } */
+
+    .footer-container {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .footer-container p {
+        margin: 8px;
+        text-align: center;
+    }
+
+    
+    #header-impress {
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+
+
+}

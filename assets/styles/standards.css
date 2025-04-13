@@ -7,6 +7,10 @@ a {
     color: gray;
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 button:hover {
     cursor: pointer;
 }
