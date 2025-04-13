@@ -19,7 +19,7 @@
     }
 
     .search-container {
-        background-image: url('/assets/img/1st-gen-pokedex-logo-caps-large-og-no-black-no-text.png');
+        background-image: url('../img/1st-gen-pokedex-logo-caps-large-og-no-black-no-text.png');
         background-position: top;
         background-repeat: no-repeat;
         background-size: contain;
