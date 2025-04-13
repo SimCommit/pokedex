@@ -128,7 +128,7 @@ footer {
 }
 
 
-/* types */
+/* Typen Icons aus Let's Go Evoli/Pikachu */
 .type-normal {
     width: 96px;
     height: 32px;
@@ -244,7 +244,7 @@ footer {
 }
 
 
-/* Typ farben */
+/* Typ farben entsprechend der Fraben der Typen Icons */
 .type-color-normal {
     background-color: #798B9A;
 }
@@ -266,7 +266,7 @@ footer {
 }
 
 .type-color-rock {
-    background-color: #B6A136;
+    background-color: #AF9B63;
 }
 
 .type-color-bug {
@@ -274,7 +274,7 @@ footer {
 }
 
 .type-color-ghost {
-    background-color: #735797;
+    background-color: #4A56BA;
 }
 
 .type-color-steel {
@@ -302,7 +302,7 @@ footer {
 }
 
 .type-color-ice {
-    background-color: #96D9D6;
+    background-color: #55BCC5;
 }
 
 .type-color-dragon {

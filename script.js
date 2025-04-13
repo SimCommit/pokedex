@@ -1,8 +1,8 @@
 let matches = [];
-let loadCount = 1;
+// let loadCount = 1;
 let currentPokemon;
 let startPokemon = 1;
-let endPokemon = 3;
+let endPokemon = 4;
 let searchPool;
 let missingno = {
   name: "missingno.",
@@ -33,7 +33,7 @@ function capitalizeFirstLetter(stringToChange) {
 }
 
 // Hauptfunktionen
-// Name Pool for Pokemon
+// Daten-Pool for Pokemon
 async function getPokemonData(id) {
   let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
   let response = await fetch(url);
@@ -60,6 +60,25 @@ async function renderOverview(startPokemon, endPokemon) {
   enableLoadBtn();
 }
 
+// Rendert die Übersicht der Pokemon, die über die Suchfunktion gefunden wurden
+async function renderOverviewMatches() {
+  let container = getElementHelper("overview-container");
+  let startMatchesI = 0;
+  let endMatchesI = matches.length;
+  container.innerHTML = "";
+
+  for (let iMatches = startMatchesI; iMatches < endMatchesI; iMatches++) {
+    // über den Index des Matches array, die ID des currentPokemons ermitteln
+    iMatchesToCurrentPokemonId = matches[iMatches].index;
+    currentPokemon = await getPokemonData(iMatchesToCurrentPokemonId);
+    container.innerHTML += renderOverviewTemplate(currentPokemon);
+    renderTypes(`types-container-${currentPokemon.id}`);
+  }
+  hideLoadingScreen();
+  hideLoadBtn();
+  showBackBtn();
+}
+
 // HTML template der Übersichtskarten
 function renderOverviewTemplate(currentPokemon) {
   return /*html*/ `
@@ -81,7 +100,7 @@ function renderOverviewTemplate(currentPokemon) {
     `;
 }
 
-// rendert einen oder zwei Typen in die Übersichtskarte
+// rendert einen oder zwei Typen in den mitgegebenen Container (Übersichtskarte/Detailkarte)
 function renderTypes(containerId) {
   let container = getElementHelper(containerId);
   container.innerHTML = "";
@@ -118,21 +137,18 @@ async function loadSearchPool() {
   let Url = "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0";
   let response = await fetch(Url);
   let unfinishedSearchPool = await response.json();
-
   searchPool = [missingno, ...unfinishedSearchPool.results];
-
-  console.log(searchPool);
 }
 
-// durchsucht den Pool der "152" Pokemon nach Übereinstimmungen mit der Eingabe im Inputfeld    matches = searchPool.filter((element) => element.name.includes(inputRef));
-
+// durchsucht den Pool der "152" Pokemon nach Übereinstimmungen mit der Eingabe im Inputfeld
 async function searchInPool() {
-  let inputField = document.getElementById("search-input");
+  let inputField = getElementHelper("search-input");
   let inputValue = inputField.value;
-  let searchBtn = document.getElementById("search-btn");
+  //leert das array matches vor dem neuen Suchvorgang
+  emptyMatches();
 
   if (inputValue.length >= 3) {
-    searchBtn.disabled = false;
+    enableSearchBtn();
     let inputRef = inputValue.toLowerCase();
     for (let i = 0; i < searchPool.length; i++) {
       if (searchPool[i].name.includes(inputRef)) {
@@ -141,44 +157,35 @@ async function searchInPool() {
     }
     renderSuggestions();
   } else {
-    searchBtn.disabled = true;
+    disableSearchBtn();
     closeSuggestions();
   }
 }
 
-// render dropdown suggestions
+// Funktionen zum steuern des Search Buttons
+function disableSearchBtn() {
+  getElementHelper("search-btn").disabled = true;
+}
+
+function enableSearchBtn() {
+  getElementHelper("search-btn").disabled = false;
+}
+
+// rendert die Vorschläge in den Dropdownmenü-Container
 function renderSuggestions() {
   let container = document.getElementById("dropdown-suggestions");
   container.innerHTML = "";
 
   for (let i = 0; i < matches.length; i++) {
     container.innerHTML += /*html*/ `
-      <p onclick="openOverlay(${matches[i].index}), closeSuggestions(), emptySearchInput()">${capitalizeFirstLetter(matches[i].pokemon.name)}</p>
+      <p onclick="openOverlay(${matches[i].index}), closeSuggestions(), emptySearchInput()">${capitalizeFirstLetter(
+      matches[i].pokemon.name
+    )}</p>
     `;
   }
-
-  emptyMatches()
 }
 
-async function renderOverviewMatches() {
-  document.getElementById("load-btn").classList.add("d-none");
-  document.getElementById("back-btn").classList.remove("d-none");
-  let container = document.getElementById("overview-container");
-  container.innerHTML = "";
-
-  for (let i = 0; i < matches.length; i++) {
-    const pokemonRef = matches[i].pokemon;
-    const pokemonId = matches[i].index + 1;
-    const pokemonName = capitalizeFirstLetter(pokemonRef.name);
-    const pokemonImage = await getImageData(pokemonId);
-    const pokemonTypes = await getTypeDataForms(pokemonId); // hier
-    const pokemonFirstType = pokemonTypes[0].type.name;
-    const typeColor = cardBackgroundColor(pokemonFirstType);
-    container.innerHTML += renderOverviewTemplate(pokemonId, pokemonName, pokemonImage, typeColor);
-    await renderOverviewTypes(pokemonId, pokemonTypes);
-  }
-}
-
+// Funktionen zum steuern des Load Buttons
 function enableLoadBtn() {
   getElementHelper("load-btn").disabled = false;
 }
@@ -187,57 +194,41 @@ function hideLoadBtn() {
   getElementHelper("load-btn").classList.add("d-none");
 }
 
-// 1 or 2 type icons getting rendert
-// async function renderOverviewTypes(pokeIndex, pokemonTypes) {
-//   let container = document.getElementById(`types-container-${pokeIndex}`);
+function showLoadButton(){
+  getElementHelper("load-btn").classList.remove("d-none");
+}
 
-//   for (let indexTypes = 0; indexTypes < pokemonTypes.length; indexTypes++) {
-//     let typeIcon = getTypeId(pokemonTypes[indexTypes].type.name);
-//     let typeIconUrl = await getTypeIcon(typeIcon);
-//     container.innerHTML += `
-//     <img src="${typeIconUrl}" alt="icon ${pokemonTypes[indexTypes]}">
-//   `;
-//   }
-// }
+// Funktionen zum steuern des Back Buttons
+function showBackBtn() {
+  getElementHelper("back-btn").classList.remove("d-none");
+}
 
-// monitor input field
-// async function handleInputEvent() {
-//   let inputField = document.getElementById("search-input");
-//   let inputValue = inputField.value;
-//   let searchBtn = document.getElementById("search-btn");
+function hideBackBtn() {
+  getElementHelper("back-btn").classList.add("d-none");
+}
 
-//   if (inputValue.length >= 3) {
-//     searchBtn.disabled = false;
-//     let inputRef = inputValue.toLowerCase();
-//     matches = poolOf151.filter((element) => element.pokemon.name.toLowerCase().includes(inputRef));
-//     renderSuggestions();
-//   } else {
-//     searchBtn.disabled = true;
-//     closeSuggestions();
-//   }
-// }
-
-// to return from rendered search grid to default grid
+// um nach dem gerenderten Suchergebnis wieder vom Start des Pokedex rendern zu lassen
 function backToStart() {
-  showLoadingScreen();
   let container = document.getElementById("overview-container");
+  showLoadingScreen();
   container.innerHTML = "";
-  startPointLoad = 0;
-  document.getElementById("back-btn").classList.add("d-none");
-  document.getElementById("load-btn").classList.remove("d-none");
-  renderOverview(startPointLoad);
+  startPokemon = 1;
+  endPokemon = 21;
+  hideBackBtn();
+  showLoadButton();
+  renderOverview(startPokemon, endPokemon);
 }
 
 function showLoadingScreen() {
-  document.getElementById("loading-container").classList.remove("d-none");
+  getElementHelper("loading-container").classList.remove("d-none");
 }
 
 function hideLoadingScreen() {
-  document.getElementById("loading-container").classList.add("d-none");
+  getElementHelper("loading-container").classList.add("d-none");
 }
 
 function closeSuggestions() {
-  document.getElementById("dropdown-suggestions").innerHTML = "";
+  getElementHelper("dropdown-suggestions").innerHTML = "";
 }
 
 function emptySearchInput() {
@@ -248,10 +239,11 @@ function emptyMatches() {
   matches = [];
 }
 
+// schließt die Dropdown Liste der Suchvorschläge, wenn das Inputfeld den Fokus verliert leicht verzögert, damit onclick auf die Vorschläge weiter funktioniert
 window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("search-input").addEventListener("blur", () => {
+  getElementHelper("search-input").addEventListener("blur", () => {
     setTimeout(function () {
       closeSuggestions();
-    }, 500);
+    }, 200);
   });
 });
