@@ -52,9 +52,9 @@ function renderDialogCardTemplate(currentPokemon) {
             </div>
             <div class="detail-info type-color-${currentPokemon.types[0].type.name}">
                 <nav class="nav-details" aria-label="Navigation through detail info">
-                    <button class="nav-details-btn" onclick="renderAbout()">ABOUT</button>
-                    <button class="nav-details-btn" onclick="renderStats()">STATS</button>
-                    <button class="nav-details-btn" onclick="renderMoves()">MOVES</button>
+                    <button id="about-btn" class="nav-details-btn" onclick="renderAbout(), setActiveDetailsTab('about-btn')">ABOUT</button>
+                    <button id="stats-btn" class="nav-details-btn" onclick="renderStats(), setActiveDetailsTab('stats-btn')">STATS</button>
+                    <button id="moves-btn" class="nav-details-btn" onclick="renderMoves(), setActiveDetailsTab('moves-btn')">MOVES</button>
                 </nav>
                 <div class="detail-info-wrapper">
                   <div id="detail-info-container"></div> 
@@ -135,6 +135,15 @@ function renderMoves() {
   }
 }
 
+function setActiveDetailsTab(buttonId) {
+  document.querySelectorAll(".nav-details-btn").forEach((btn) => {
+    btn.classList.remove("active");
+  });
+
+  getElementHelper(buttonId).classList.add('active');
+}
+
+// Scrollen unterbinden, während Overlay geöffnet ist
 function disableScrollingBody() {
   document.body.classList.add("overflow-hidden");
 }

@@ -165,6 +165,7 @@
 
 }
 
+.nav-details-btn.active,
 .nav-details-btn:hover {
     border-bottom: 2px solid black;
 }
