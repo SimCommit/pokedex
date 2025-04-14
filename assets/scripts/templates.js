@@ -133,7 +133,7 @@ function renderMissingNoTemplate() {
         <span>???</span>
       </div>
       <div class="card-main unknown-main">
-        <img src="../assets/img/missingNo.png" alt="picture of missingNo.">
+        <img src="./assets/img/missingNo.png" alt="picture of missingNo.">
       </div>
       <div class="card-footer">
         <div id="types-container-unknown" class="types">
