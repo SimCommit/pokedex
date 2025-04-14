@@ -266,6 +266,7 @@ footer a:hover {
 
 .type-unknown {
     background-image: url('./assets/img/types-viii-png/19.png');
+
 }
 
 /* Type colors similar to type icons */
@@ -343,6 +344,17 @@ footer a:hover {
 
 .type-color-unknown {
     background-color: #018292;
+}
+
+.unknown-main {
+    background-image: linear-gradient(to bottom, #082039, #018292);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.unknown-main img {
+    margin: 0;
 }
 
 /* Impress */

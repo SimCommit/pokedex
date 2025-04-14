@@ -1,7 +1,7 @@
 let matches = [];
 let currentPokemon;
 let startPokemon = 1;
-let endPokemon = 3;
+let endPokemon = 21;
 let searchPool;
 
 let missingno = {
@@ -30,12 +30,15 @@ async function getPokemonData(id) {
   }
 }
 
+// Rendering missingNo. in case a Pokemon and its data couldnt be found
 function renderMissingNo() {
   let container = getElementHelper("overview-container");
   container.innerHTML = renderMissingNoTemplate();
   hideLoadBtn();
   showBackBtn();
   hideLoadingScreen();
+  emptySearchInput();
+  disableSearchBtn();
 }
 
 // Rendering overview of Pokemon, including if condition for hiding the load-btn as soon as the 151st Pokemon got rendered.
@@ -43,21 +46,28 @@ async function renderOverview(startPokemon, endPokemon) {
   let container = getElementHelper("overview-container");
 
   for (let id = startPokemon; id <= endPokemon; id++) {
-    currentPokemon = await getPokemonData(id);
-
-    try {
-      container.innerHTML += renderOverviewTemplate(currentPokemon);
-    } catch (error) {
-      renderMissingNo();
-      return;
-    }
-    renderTypes(`types-container-${currentPokemon.id}`);
-
-    if (currentPokemon.id >= 151) {
-      hideLoadBtn();
-    }
+    await renderOverviewSingleCard(id, container);
   }
   hideLoadingScreen();
+}
+
+// Rendering a single overview Pokemon card
+async function renderOverviewSingleCard(id, container){
+  currentPokemon = await getPokemonData(id);
+
+  try {
+    container.innerHTML += renderOverviewTemplate(currentPokemon);
+  } catch (error) {
+    console.error(error);
+    renderMissingNo();
+    return;
+  }
+  
+  renderTypes(`types-container-${currentPokemon.id}`);
+
+  if (currentPokemon.id >= 151) {
+    hideLoadBtn();
+  }
 }
 
 // Rendering one or two types in the container provided (overview card/detail card)
