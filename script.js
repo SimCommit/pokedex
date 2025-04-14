@@ -1,7 +1,7 @@
 let matches = [];
 let currentPokemon;
 let startPokemon = 1;
-let endPokemon = 1;
+let endPokemon = 12;
 let searchPool;
 
 let missingno = {

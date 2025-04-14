@@ -184,191 +184,161 @@ footer a:hover {
 }
 
 /* Type Icons from Let's Go Evoli/Pikachu */
+.type-all {
+    width: 100px;
+    height: 22px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+}
+
 .type-normal {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/1.png');
+    background-image: url('./assets/img/types-viii-png/1.png');
 }
 
 .type-fighting {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/2.png');
+    background-image: url('./assets/img/types-viii-png/2.png');
 }
 
 .type-flying {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/3.png');
+    background-image: url('./assets/img/types-viii-png/3.png');
 }
 
 .type-poison {
-    width: 96px;
-    height: 32px;
     background-image: url('./assets/img/types-viii-png/4.png');
 }
 
 .type-ground {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/5.png');
+    background-image: url('./assets/img/types-viii-png/5.png');
 }
 
 .type-rock {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/6.png');
+    background-image: url('./assets/img/types-viii-png/6.png');
 }
 
 .type-bug {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/7.png');
+    background-image: url('./assets/img/types-viii-png/7.png');
 }
 
 .type-ghost {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/8.png');
+    background-image: url('./assets/img/types-viii-png/8.png');
 }
 
 .type-steel {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/9.png');
+    background-image: url('./assets/img/types-viii-png/9.png');
 }
 
 .type-fire {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/10.png');
+    background-image: url('./assets/img/types-viii-png/10.png');
 }
 
 .type-water {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/11.png');
+    background-image: url('./assets/img/types-viii-png/11.png');
 }
 
 .type-grass {
-    width: 96px;
-    height: 32px;
     background-image: url('./assets/img/types-viii-png/12.png');
 }
 
 .type-electric {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/13.png');
+    background-image: url('./assets/img/types-viii-png/13.png');
 }
 
 .type-psychic {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/14.png');
+    background-image: url('./assets/img/types-viii-png/14.png');
 }
 
 .type-ice {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/15.png');
+    background-image: url('./assets/img/types-viii-png/15.png');
 }
 
 .type-dragon {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/16.png');
+    background-image: url('./assets/img/types-viii-png/16.png');
 }
 
 .type-dark {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/17.png');
+    background-image: url('./assets/img/types-viii-png/17.png');
 }
 
 .type-fairy {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/18.png');
+    background-image: url('./assets/img/types-viii-png/18.png');
 }
 
 .type-unknown {
-    width: 96px;
-    height: 32px;
-    background-image: url('./assets/img/types-png/19.png');
+    background-image: url('./assets/img/types-viii-png/19.png');
 }
 
 /* Type colors similar to type icons */
 .type-color-normal {
-    background-color: #798B9A;
+    background-color: #919AA2;
 }
 
 .type-color-fighting {
-    background-color: #D64F76;
+    background-color: #CE416B;
 }
 
 .type-color-flying {
-    background-color: #4871C3;
+    background-color: #8FA9DE;
 }
 
 .type-color-poison {
-    background-color: #A343D5;
+    background-color: #AA6BC8;
 }
 
 .type-color-ground {
-    background-color: #D97644;
+    background-color: #D97845;
 }
 
 .type-color-rock {
-    background-color: #AF9B63;
+    background-color: #C5B78C;
 }
 
 .type-color-bug {
-    background-color: #90BE31;
+    background-color: #91C12F;
 }
 
 .type-color-ghost {
-    background-color: #4A56BA;
+    background-color: #5269AD;
 }
 
 .type-color-steel {
-    background-color: #B7B7CE;
+    background-color: #5A8EA2;
 }
 
 .type-color-fire {
-    background-color: #F89944;
+    background-color: #FF9D54;
 }
 
 .type-color-water {
-    background-color: #259BD7;
+    background-color: #5090D6;
 }
 
 .type-color-grass {
-    background-color: #4CC571;
+    background-color: #63BC5A;
 }
 
 .type-color-electric {
-    background-color: #F7D02C;
+    background-color: #F4D23C;
 }
 
 .type-color-psychic {
-    background-color: #F86F75;
+    background-color: #FA7179;
 }
 
 .type-color-ice {
-    background-color: #55BCC5;
+    background-color: #73CEC0;
 }
 
 .type-color-dragon {
-    background-color: #3E6EA2;
+    background-color: #0B6DC3;
 }
 
 .type-color-dark {
-    background-color: #705746;
+    background-color: #5A5465;
 }
 
 .type-color-fairy {
-    background-color: #F872D0;
+    background-color: #EC8FE6;
 }
 
 .type-color-unknown {

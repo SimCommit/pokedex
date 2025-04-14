@@ -22,7 +22,7 @@ function renderOverviewTemplate(currentPokemon) {
 // Template for rendering Types
 function renderTypesTemplate(i) {
   return /*html*/ `
-    <div class="type-${currentPokemon.types[i].type.name}"></div>
+    <div class="type-${currentPokemon.types[i].type.name} type-all"></div>
   `;
 }
 
