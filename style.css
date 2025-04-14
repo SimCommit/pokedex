@@ -48,10 +48,6 @@ main {
     min-height: calc(100vh - 360px);
 }
 
-.search-container {
-    /* display: flex; */
-}
-
 #search-input {
     position: relative;
     height: 26px;
@@ -169,7 +165,7 @@ footer a:hover {
     text-align: center;
 }
 
-/* Typen Icons aus Let's Go Evoli/Pikachu */
+/* Type Icons from Let's Go Evoli/Pikachu */
 .type-normal {
     width: 96px;
     height: 32px;
@@ -285,7 +281,7 @@ footer a:hover {
 }
 
 
-/* Typ farben entsprechend der Fraben der Typen Icons */
+/* Type colors similar to type icons */
 .type-color-normal {
     background-color: #798B9A;
 }

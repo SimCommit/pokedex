@@ -14,7 +14,6 @@ function closeOverlay() {
 async function renderDialogCard(id) {
   currentPokemon = await getPokemonData(id);
   let container = document.getElementById("dialog-container");
-  // console.log(currentPokemon['sprites']['other']['official-artwork']['front_default']);
   container.innerHTML = renderDialogCardTemplate(currentPokemon);
   renderTypes("dialog-types-container");
   renderAbout(currentPokemon);

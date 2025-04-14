@@ -8,24 +8,23 @@ let missingno = {
   url: "https://en.wikipedia.org/wiki/MissingNo.",
 };
 
-// Initialisierung
+// Initialization
 async function init() {
   showLoadingScreen();
   await renderOverview(startPokemon, endPokemon);
   loadSearchPool();
 }
 
-// Hauptfunktionen
-// Daten-Pool for Pokemon
+/* Main functions
+Data Pool for Pokemon */
 async function getPokemonData(id) {
   let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
   let response = await fetch(url);
   currentPokemon = await response.json();
-  // console.log(currentPokemon['sprites']['other']['official-artwork']['front_default']);
   return currentPokemon;
 }
 
-// Rendert die Übersicht der Pokemon
+// Rendering overview of Pokemon, including if condition for hiding the load-btn as soon as the 151st Pokemon got rendered.
 async function renderOverview(startPokemon, endPokemon) {
   let container = getElementHelper("overview-container");
 
@@ -35,34 +34,37 @@ async function renderOverview(startPokemon, endPokemon) {
     renderTypes(`types-container-${currentPokemon.id}`);
 
     if (currentPokemon.id >= 151) {
-      // Verbirgt den load-btn sobald das 151ste Pokemon gerendert wurde
       hideLoadBtn();
     }
   }
   hideLoadingScreen();
 }
 
-// Rendert die Übersicht der Pokemon, die über die Suchfunktion gefunden wurden
+/* Rendering the overview of Pokemon found by search function
+using the index from array of matches to determine the ID of currentPokemon */
 async function renderOverviewMatches() {
   showLoadingScreen();
   let container = getElementHelper("overview-container");
-  let startMatchesI = 0;
-  let endMatchesI = matches.length;
   container.innerHTML = "";
 
-  for (let iMatches = startMatchesI; iMatches < endMatchesI; iMatches++) {
-    // über den Index des Matches array, die ID des currentPokemons ermitteln
-    iMatchesToCurrentPokemonId = matches[iMatches].index;
-    currentPokemon = await getPokemonData(iMatchesToCurrentPokemonId);
-    container.innerHTML += renderOverviewTemplate(currentPokemon);
-    renderTypes(`types-container-${currentPokemon.id}`);
+  for (let iMatches = 0; iMatches < matches.length; iMatches++) {
+    renderOverviewSingleMatch(iMatches, container);
   }
+
   hideLoadingScreen();
   hideLoadBtn();
   showBackBtn();
 }
 
-// HTML template der Übersichtskarten
+// Process of rendering a single Pokemon
+async function renderOverviewSingleMatch(iMatches, container) {
+  iMatchesToCurrentPokemonId = matches[iMatches].index;
+  currentPokemon = await getPokemonData(iMatchesToCurrentPokemonId);
+  container.innerHTML += renderOverviewTemplate(currentPokemon);
+  renderTypes(`types-container-${currentPokemon.id}`);
+}
+
+// HTML template of overview card
 function renderOverviewTemplate(currentPokemon) {
   return /*html*/ `
     <div class="card type-color-${currentPokemon.types[0].type.name}" onclick="openOverlay(${currentPokemon.id})">
@@ -83,7 +85,7 @@ function renderOverviewTemplate(currentPokemon) {
     `;
 }
 
-// rendert einen oder zwei Typen in den mitgegebenen Container (Übersichtskarte/Detailkarte)
+// Rendering one or two types in the container provided (overview card/detail card)
 function renderTypes(containerId) {
   let container = getElementHelper(containerId);
   container.innerHTML = "";
@@ -95,18 +97,18 @@ function renderTypes(containerId) {
   }
 }
 
-// Startet den Rendervorgang mit neuem Start- und Endpunkt, um weitere Pokemon hinzuzufügen
+/* Starts the rendering process with a new start and end point to add more Pokemon,
+ prevents an endpoint outside the 1st Gen 
+ prevents rendering from starting if the start point is equal to or higher than the end point */
 function loadMorePokemon() {
   showLoadingScreen();
   startPokemon = endPokemon + 1;
   endPokemon = endPokemon + 21;
 
-  // verhindert einen Endpunkt außerhalb der 1st Gen
   if (endPokemon > 151) {
     endPokemon = 151;
   }
 
-  // verhindert dass das rendern begonnen wird, sollte der Startpunkt gleich dem Endpunkt oder höher sein
   if (startPokemon >= 151) {
     hideLoadBtn();
     hideLoadingScreen();
@@ -116,7 +118,7 @@ function loadMorePokemon() {
   renderOverview(startPokemon, endPokemon);
 }
 
-// erzeugt ein array mit den 151 Pokemon sowie missingno auf index 0 damit index = id für die Suchfunktion
+// Creates an array with the 151 Pokemon and missingno at index 0 so that index = id for the search function
 async function loadSearchPool() {
   let Url = "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0";
   let response = await fetch(Url);
@@ -124,22 +126,17 @@ async function loadSearchPool() {
   searchPool = [missingno, ...unfinishedSearchPool.results];
 }
 
-// durchsucht den Pool der "152" Pokemon nach Übereinstimmungen mit der Eingabe im Inputfeld
-async function searchInPool() {
+/* Searches the pool of "152" Pokemon for matches with the value of the input fieldasync 
+also prevents searching with input length under 3 characters */
+function searchInPool() {
   let inputField = getElementHelper("search-input");
   let inputValue = inputField.value;
-  //leert das array matches vor dem neuen Suchvorgang
   emptyMatches();
 
-  // verhindert ein Suchen für Eingaben unter 3 Zeichen länge
   if (inputValue.length >= 3) {
     enableSearchBtn();
     let inputRef = inputValue.toLowerCase();
-    for (let i = 0; i < searchPool.length; i++) {
-      if (searchPool[i].name.includes(inputRef)) {
-        matches.push({ index: i, pokemon: searchPool[i] });
-      }
-    }
+    pushMatchesIntoArray(inputRef);
     renderSuggestions();
   } else {
     disableSearchBtn();
@@ -147,7 +144,16 @@ async function searchInPool() {
   }
 }
 
-// rendert die Vorschläge in den Dropdownmenü-Container
+// pushing every match with inputRef into the array "matches"
+function pushMatchesIntoArray(inputRef) {
+  for (let i = 0; i < searchPool.length; i++) {
+    if (searchPool[i].name.includes(inputRef)) {
+      matches.push({ index: i, pokemon: searchPool[i] });
+    }
+  }
+}
+
+// Rendering suggestions into dropdown list container
 function renderSuggestions() {
   let container = document.getElementById("dropdown-suggestions");
   container.innerHTML = "";
@@ -159,7 +165,7 @@ function renderSuggestions() {
   }
 }
 
-// steuert die Logik bei Klick auf einen Suchvorschlag
+// Handling the logic when clicking on a search suggestion
 function handleClickOnSuggestion(matchId) {
   openOverlay(matchId);
   emptySearchInput();
@@ -167,7 +173,7 @@ function handleClickOnSuggestion(matchId) {
   disableSearchBtn();
 }
 
-// steuert die Logik bei Klick auf den Suchbutton
+// Handling the logic when clicking on the search button
 function handleClickOnSearchBtn() {
   renderOverviewMatches();
   emptySearchInput();
@@ -175,7 +181,8 @@ function handleClickOnSearchBtn() {
   disableSearchBtn();
 }
 
-// schließt die Dropdown Liste der Suchvorschläge, wenn das Inputfeld den Fokus verliert leicht verzögert, damit onclick auf die Vorschläge weiter funktioniert
+/* closes the dropdown list of search suggestions when the input field loses focus slightly delayed,
+ so that onclick on a suggestion can work */
 window.addEventListener("DOMContentLoaded", () => {
   getElementHelper("search-input").addEventListener("blur", () => {
     setTimeout(function () {
@@ -184,7 +191,7 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Funktion, die nach dem gerenderten Suchergebnis wieder vom Start des Pokedex rendern lässt
+// Function that can render from the start of the Pokedex, to get from the rendered search result back to default.
 function backToStart() {
   let container = document.getElementById("overview-container");
   showLoadingScreen();
@@ -196,24 +203,24 @@ function backToStart() {
   renderOverview(startPokemon, endPokemon);
 }
 
-// Hilfsfunktionen
-// get element by id
+// Utility Functions	
+// Getting element by id a bit easier
 function getElementHelper(id) {
   let element = document.getElementById(id);
   return element;
 }
 
-// capitalizeFirstLetter
+// Function to capitalize the first letter of a string. (Most of the data of the api is written completely in lower case)
 function capitalizeFirstLetter(stringToChange) {
   return String(stringToChange).charAt(0).toUpperCase() + String(stringToChange).slice(1);
 }
 
-// stop propagation
+// Stopping propagation for the element on which it's placed
 function prevent(event) {
   event.stopPropagation();
 }
 
-// Funktionen zum steuern des Search Buttons
+// Functions for handling the search button usability
 function disableSearchBtn() {
   getElementHelper("search-btn").disabled = true;
 }
@@ -222,7 +229,7 @@ function enableSearchBtn() {
   getElementHelper("search-btn").disabled = false;
 }
 
-// Funktionen zum steuern des Load Buttons
+// Functions for handling the load button visibility
 function hideLoadBtn() {
   getElementHelper("load-btn").classList.add("d-none");
 }
@@ -231,7 +238,7 @@ function showLoadButton() {
   getElementHelper("load-btn").classList.remove("d-none");
 }
 
-// Funktionen zum steuern des Back Buttons
+// Functions for handling the back button visibility
 function showBackBtn() {
   getElementHelper("back-btn").classList.remove("d-none");
 }
@@ -240,7 +247,7 @@ function hideBackBtn() {
   getElementHelper("back-btn").classList.add("d-none");
 }
 
-// Funktionen um den Loading Screen zu steuern
+// Functions for handling the back button visibility and scroll behavior
 function showLoadingScreen() {
   getElementHelper("loading-container").classList.remove("d-none");
   disableScrollingBody();
@@ -251,17 +258,17 @@ function hideLoadingScreen() {
   enableScrollingBody();
 }
 
-// schließt die Dropdown Liste der Suchvorschläge
+// closes the dropdown list of search suggestions
 function closeSuggestions() {
   getElementHelper("dropdown-suggestions").innerHTML = "";
 }
 
-// leert das Inputfeld
+// Emptying the value of the input field
 function emptySearchInput() {
   getElementHelper("search-input").value = "";
 }
 
-// leert das Array der Sucherergebnisse
+// Emptying the array of matches
 function emptyMatches() {
   matches = [];
 }
