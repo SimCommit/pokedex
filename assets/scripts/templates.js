@@ -19,6 +19,13 @@ function renderOverviewTemplate(currentPokemon) {
       `;
 }
 
+// Template for rendering Types
+function renderTypesTemplate(i) {
+  return /*html*/ `
+    <div class="type-${currentPokemon.types[i].type.name}"></div>
+  `;
+}
+
 // overlay-dialog
 // Template for the dialog card
 function renderDialogCardTemplate(currentPokemon) {
@@ -122,13 +129,15 @@ function renderMissingNoTemplate() {
         <div class="card type-color-unknown" onclick="openOverlay(0)">
             <div class="card-header">
               <span>missingNo.</span>
-                <span>0</span>
+                <span>???</span>
             </div>
             <div class="card-main">
                 <img src="../assets/img/missingNo.png" alt="picture of missingNo.">
       </div>
       <div class="card-footer">
           <div id="types-container-unknown" class="types">
+            <div class="type-unknown"></div>
+            <div class="type-unknown"></div>
           </div>
       </div>
   </div>

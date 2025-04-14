@@ -205,7 +205,7 @@ footer a:hover {
 .type-poison {
     width: 96px;
     height: 32px;
-    background-image: url('./assets/img/types-png/4.png');
+    background-image: url('./assets/img/types-viii-png/4.png');
 }
 
 .type-ground {
@@ -253,7 +253,7 @@ footer a:hover {
 .type-grass {
     width: 96px;
     height: 32px;
-    background-image: url('./assets/img/types-png/12.png');
+    background-image: url('./assets/img/types-viii-png/12.png');
 }
 
 .type-electric {
@@ -297,7 +297,6 @@ footer a:hover {
     height: 32px;
     background-image: url('./assets/img/types-png/19.png');
 }
-
 
 /* Type colors similar to type icons */
 .type-color-normal {
@@ -370,6 +369,10 @@ footer a:hover {
 
 .type-color-fairy {
     background-color: #F872D0;
+}
+
+.type-color-unknown {
+    background-color: #018292;
 }
 
 /* Impress */

@@ -4,17 +4,17 @@ let startPokemon = 1;
 let endPokemon = 1;
 let searchPool;
 
-// let missingno = {
-//   name: "missingno.",
-//   url: "https://en.wikipedia.org/wiki/MissingNo.",
-// };
+let missingno = {
+  name: "missingNo.",
+  url: "https://en.wikipedia.org/wiki/MissingNo.",
+};
 
 // Initialization
 async function init() {
   showLoadingScreen();
   await renderOverview(startPokemon, endPokemon);
   loadSearchPool();
-  console.log(missingno);  
+  // console.log(missingno);  
 }
 
 /* Main functions
@@ -28,13 +28,12 @@ async function getPokemonData(id) {
     return currentPokemon;
   } catch (error) {
     console.error(error);
-    // currentPokemon = missingno;
-    // return currentPokemon
-    renderMissingNo();
+    currentPokemon = missingno;
+    return currentPokemon
   }
 }
 
-async function renderMissingNo() {
+function renderMissingNo() {
   let container = getElementHelper("overview-container");
   container.innerHTML = renderMissingNoTemplate();
 }
@@ -44,7 +43,9 @@ async function renderOverview(startPokemon, endPokemon) {
   let container = getElementHelper("overview-container");
 
   for (let id = startPokemon; id <= endPokemon; id++) {
+    
     currentPokemon = await getPokemonData(id);
+    console.log(currentPokemon);
     container.innerHTML += renderOverviewTemplate(currentPokemon);
     renderTypes(`types-container-${currentPokemon.id}`);
     
@@ -53,7 +54,7 @@ async function renderOverview(startPokemon, endPokemon) {
     }
   }
   hideLoadingScreen();
-  console.log(currentPokemon);  
+  // console.log(currentPokemon);  
 }
 
 // Rendering one or two types in the container provided (overview card/detail card)
@@ -62,9 +63,7 @@ function renderTypes(containerId) {
   container.innerHTML = "";
 
   for (let i = 0; i < currentPokemon.types.length; i++) {
-    container.innerHTML += /*html*/ `
-      <div class="type-${currentPokemon.types[i].type.name}"></div>
-    `;
+    container.innerHTML += renderTypesTemplate(i);
   }
 }
 
