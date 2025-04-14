@@ -1,4 +1,4 @@
-// Funktionen zum Steuern des Overlays
+// Functions for handling the overlay (open and close)
 async function openOverlay(id) {
   await renderDialogCard(id);
   document.getElementById("overlay").classList.remove("d-none");
@@ -10,7 +10,7 @@ function closeOverlay() {
   enableScrollingBody();
 }
 
-// rendert den Dialog für die Detailkarte des ausgewählten Pokemons
+// renders the dialog for the detailed card of the selected Pokemon
 async function renderDialogCard(id) {
   currentPokemon = await getPokemonData(id);
   let container = document.getElementById("dialog-container");
@@ -19,7 +19,7 @@ async function renderDialogCard(id) {
   renderAbout(currentPokemon);
 }
 
-// Template für den Dialog
+// Template for the dialog card
 function renderDialogCardTemplate(currentPokemon) {
   return /*html*/ `
    <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
@@ -67,13 +67,14 @@ function renderDialogCardTemplate(currentPokemon) {
     `;
 }
 
-// rendert den About Reiter
+// Renders the about tab of the dialog card
 function renderAbout() {
   let container = getElementHelper("detail-info-container");
   container.innerHTML = renderAboutTemplate(currentPokemon);
   renderAboutAbilities(currentPokemon["abilities"]);
 }
 
+// Template fot the about tab
 function renderAboutTemplate(currentPokemon) {
   return /*html*/ `
     <div class="info-row">
@@ -98,7 +99,7 @@ function renderAboutTemplate(currentPokemon) {
   `;
 }
 
-// Unterfunktion um die Abilities für den About Reiter zu rendern
+// Sub-function to render the abilities for the about tab
 function renderAboutAbilities(abilities) {
   let container = getElementHelper("abilities-container");
 
@@ -110,7 +111,7 @@ function renderAboutAbilities(abilities) {
   }
 }
 
-// rendert den Stats Reiter
+// Renders the stats tab
 function renderStats() {
   let container = getElementHelper("detail-info-container");
   container.innerHTML = "";
@@ -125,7 +126,7 @@ function renderStats() {
   }
 }
 
-// rendert den Moves Reiter
+// renders the moves tab
 function renderMoves() {
   let container = getElementHelper("detail-info-container");
   container.innerHTML = ``;
@@ -137,7 +138,7 @@ function renderMoves() {
   }
 }
 
-// weist die Class active dem zuletzt geklickten nav-details-btn zu
+// assigns the class active to the last clicked nav-details-btn
 function setActiveDetailsTab(buttonId) {
   document.querySelectorAll(".nav-details-btn").forEach((btn) => {
     btn.classList.remove("active");
@@ -146,7 +147,7 @@ function setActiveDetailsTab(buttonId) {
   getElementHelper(buttonId).classList.add("active");
 }
 
-// Scrollen unterbinden, während Overlay geöffnet ist
+// Prevent scrolling while overlay is open
 function disableScrollingBody() {
   document.body.classList.add("overflow-hidden");
 }
@@ -155,11 +156,11 @@ function enableScrollingBody() {
   document.body.classList.remove("overflow-hidden");
 }
 
-// ändert die ID des zu rendernden Pokemon um mit den Vor- und Zurückbuttons zu navigieren
+/* changes the ID of the Pokemon to be rendered to navigate with the next and prev buttons
+also switches from the highest ID to the lowest ID and vice versa */
 function switchPokemon(modificator) {
   let newPokemonId = currentPokemon.id + modificator;
 
-  // wechselt von der höchsten zur niedrigsten ID und umgekährt
   switch (newPokemonId) {
     case 0:
       newPokemonId = 151;
