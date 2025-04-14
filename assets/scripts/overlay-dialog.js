@@ -19,84 +19,11 @@ async function renderDialogCard(id) {
   renderAbout(currentPokemon);
 }
 
-// Template for the dialog card
-function renderDialogCardTemplate(currentPokemon) {
-  return /*html*/ `
-   <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
-        <nav class="nav-pokemons" aria-label="Navigation through Pokemons">
-            <button class="nav-btn" onclick="switchPokemon(-1)">
-              <div class="btn-prev">
-                <div class="btn-icon-a"></div>
-                <div class="btn-icon-b"></div>
-              </div>
-            </button>
-            <span>#${currentPokemon.id}</span>
-            <button class="nav-btn" onclick="switchPokemon(1)">
-              <div class="btn-next">
-                <div class="btn-icon-b"></div>
-                <div class="btn-icon-a"></div>
-              </div>
-            </button>
-        </nav>
-        <div class="dialog-main">
-            <div class="basic-info">
-                <div class="identity">
-                  <span>${capitalizeFirstLetter(currentPokemon.name)}</span>
-                </div>
-                <div class="dialoge-images">
-                  <div id="dialog-types-container" class="types-dialog"></div>
-                    <div class="dialog-pic-wrapper">
-                      <img class="dialog-pic" src="${
-                        currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_default"]
-                      }" alt="picture of ${capitalizeFirstLetter(currentPokemon.name)}">
-                    </div>
-                </div>
-            </div>
-            <div class="detail-info type-color-${currentPokemon.types[0].type.name}">
-                <nav class="nav-details" aria-label="Navigation through detail info">
-                    <button id="about-btn" class="nav-details-btn active" onclick="renderAbout(), setActiveDetailsTab('about-btn')">About</button>
-                    <button id="stats-btn" class="nav-details-btn" onclick="renderStats(), setActiveDetailsTab('stats-btn')">Stats</button>
-                    <button id="moves-btn" class="nav-details-btn" onclick="renderMoves(), setActiveDetailsTab('moves-btn')">Moves</button>
-                </nav>
-                <div class="detail-info-wrapper outlined-text">
-                  <div id="detail-info-container"></div> 
-                </div>
-            </div>
-        </div>
-    </div>
-    `;
-}
-
 // Renders the about tab of the dialog card
 function renderAbout() {
   let container = getElementHelper("detail-info-container");
   container.innerHTML = renderAboutTemplate(currentPokemon);
   renderAboutAbilities(currentPokemon["abilities"]);
-}
-
-// Template fot the about tab
-function renderAboutTemplate(currentPokemon) {
-  return /*html*/ `
-    <div class="info-row">
-      <span class="info-label">Species</span>
-      <span class="info-value">${capitalizeFirstLetter(currentPokemon["species"]["name"])}</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Height</span>
-      <span class="info-value">${currentPokemon["height"] * 10}cm</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Weight</span>
-      <span class="info-value">${currentPokemon["height"]}kg</span>
-    </div>
-    <div class="info-row">
-      <span class="info-label">Abilities</span>
-      <span class="info-value">
-        <ul id="abilities-container" class="ability-list">
-        </ul>
-      </span>
-    </div>
-  `;
 }
 
 // Sub-function to render the abilities for the about tab
@@ -105,9 +32,7 @@ function renderAboutAbilities(abilities) {
 
   for (let i = 0; i < abilities.length; i++) {
     const abilityName = abilities[i].ability.name;
-    container.innerHTML += /*html*/ `
-      <li>${capitalizeFirstLetter(abilityName)}</li>
-    `;
+    container.innerHTML += renderAboutAbilitiesTemplate(abilityName);
   }
 }
 
@@ -117,28 +42,21 @@ function renderStats() {
   container.innerHTML = "";
 
   for (let i = 0; i < currentPokemon.stats.length; i++) {
-    container.innerHTML += /*html*/ `
-      <div class="info-row">
-        <span class="info-label">${capitalizeFirstLetter(currentPokemon["stats"][i]["stat"]["name"])}</span>
-        <span class="info-value">${currentPokemon["stats"][i]["base_stat"]}</span>
-      </div>
-    `;
+    container.innerHTML += renderStatsTemplate(i);
   }
 }
 
-// renders the moves tab
+// Renders the moves tab
 function renderMoves() {
   let container = getElementHelper("detail-info-container");
   container.innerHTML = ``;
 
   for (let i = 0; i < currentPokemon.moves.length; i++) {
-    container.innerHTML += /*html*/ `
-      <p class="move-name">${capitalizeFirstLetter(currentPokemon["moves"][i]["move"]["name"])}</p>
-    `;
+    container.innerHTML += renderMovesTemplate(i);
   }
 }
 
-// assigns the class active to the last clicked nav-details-btn
+// Assigns the class active to the last clicked nav-details-btn
 function setActiveDetailsTab(buttonId) {
   document.querySelectorAll(".nav-details-btn").forEach((btn) => {
     btn.classList.remove("active");

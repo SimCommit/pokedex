@@ -64,27 +64,6 @@ async function renderOverviewSingleMatch(iMatches, container) {
   renderTypes(`types-container-${currentPokemon.id}`);
 }
 
-// HTML template of overview card
-function renderOverviewTemplate(currentPokemon) {
-  return /*html*/ `
-    <div class="card type-color-${currentPokemon.types[0].type.name}" onclick="openOverlay(${currentPokemon.id})">
-        <div class="card-header">
-          <span>${capitalizeFirstLetter(currentPokemon.name)}</span>
-            <span>${currentPokemon.id}</span>
-        </div>
-        <div class="card-main">
-            <img src="${currentPokemon["sprites"]["other"]["official-artwork"]["front_default"]}" alt="picture of ${
-    currentPokemon.types[0].type.name
-  }">
-        </div>
-        <div class="card-footer">
-            <div id="types-container-${currentPokemon.id}" class="types">
-            </div>
-        </div>
-    </div>
-    `;
-}
-
 // Rendering one or two types in the container provided (overview card/detail card)
 function renderTypes(containerId) {
   let container = getElementHelper(containerId);
