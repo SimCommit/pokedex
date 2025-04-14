@@ -1,7 +1,7 @@
 let matches = [];
 let currentPokemon;
 let startPokemon = 1;
-let endPokemon = 12;
+let endPokemon = 3;
 let searchPool;
 
 let missingno = {
@@ -14,7 +14,6 @@ async function init() {
   showLoadingScreen();
   await renderOverview(startPokemon, endPokemon);
   loadSearchPool();
-  // console.log(missingno);  
 }
 
 /* Main functions
@@ -28,14 +27,15 @@ async function getPokemonData(id) {
     return currentPokemon;
   } catch (error) {
     console.error(error);
-    currentPokemon = missingno;
-    return currentPokemon
   }
 }
 
 function renderMissingNo() {
   let container = getElementHelper("overview-container");
   container.innerHTML = renderMissingNoTemplate();
+  hideLoadBtn();
+  showBackBtn();
+  hideLoadingScreen();
 }
 
 // Rendering overview of Pokemon, including if condition for hiding the load-btn as soon as the 151st Pokemon got rendered.
@@ -43,18 +43,21 @@ async function renderOverview(startPokemon, endPokemon) {
   let container = getElementHelper("overview-container");
 
   for (let id = startPokemon; id <= endPokemon; id++) {
-    
     currentPokemon = await getPokemonData(id);
-    console.log(currentPokemon);
-    container.innerHTML += renderOverviewTemplate(currentPokemon);
+
+    try {
+      container.innerHTML += renderOverviewTemplate(currentPokemon);
+    } catch (error) {
+      renderMissingNo();
+      return;
+    }
     renderTypes(`types-container-${currentPokemon.id}`);
-    
+
     if (currentPokemon.id >= 151) {
       hideLoadBtn();
     }
   }
   hideLoadingScreen();
-  // console.log(currentPokemon);  
 }
 
 // Rendering one or two types in the container provided (overview card/detail card)
@@ -169,6 +172,11 @@ function handleClickOnSuggestion(matchId) {
 
 // Handling the logic when clicking on the search button
 function handleClickOnSearchBtn() {
+  if (matches.length === 0) {
+    renderMissingNo();
+    return;
+  }
+
   renderOverviewMatches();
   emptySearchInput();
   closeSuggestions();
