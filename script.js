@@ -1,27 +1,42 @@
 let matches = [];
 let currentPokemon;
 let startPokemon = 1;
-let endPokemon = 21;
+let endPokemon = 1;
 let searchPool;
-let missingno = {
-  name: "missingno.",
-  url: "https://en.wikipedia.org/wiki/MissingNo.",
-};
+
+// let missingno = {
+//   name: "missingno.",
+//   url: "https://en.wikipedia.org/wiki/MissingNo.",
+// };
 
 // Initialization
 async function init() {
   showLoadingScreen();
   await renderOverview(startPokemon, endPokemon);
   loadSearchPool();
+  console.log(missingno);  
 }
 
 /* Main functions
 Data Pool for Pokemon */
 async function getPokemonData(id) {
   let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-  let response = await fetch(url);
-  currentPokemon = await response.json();
-  return currentPokemon;
+
+  try {
+    let response = await fetch(url);
+    currentPokemon = await response.json();
+    return currentPokemon;
+  } catch (error) {
+    console.error(error);
+    // currentPokemon = missingno;
+    // return currentPokemon
+    renderMissingNo();
+  }
+}
+
+async function renderMissingNo() {
+  let container = getElementHelper("overview-container");
+  container.innerHTML = renderMissingNoTemplate();
 }
 
 // Rendering overview of Pokemon, including if condition for hiding the load-btn as soon as the 151st Pokemon got rendered.
@@ -32,36 +47,13 @@ async function renderOverview(startPokemon, endPokemon) {
     currentPokemon = await getPokemonData(id);
     container.innerHTML += renderOverviewTemplate(currentPokemon);
     renderTypes(`types-container-${currentPokemon.id}`);
-
+    
     if (currentPokemon.id >= 151) {
       hideLoadBtn();
     }
   }
   hideLoadingScreen();
-}
-
-/* Rendering the overview of Pokemon found by search function
-using the index from array of matches to determine the ID of currentPokemon */
-async function renderOverviewMatches() {
-  showLoadingScreen();
-  let container = getElementHelper("overview-container");
-  container.innerHTML = "";
-
-  for (let iMatches = 0; iMatches < matches.length; iMatches++) {
-    renderOverviewSingleMatch(iMatches, container);
-  }
-
-  hideLoadingScreen();
-  hideLoadBtn();
-  showBackBtn();
-}
-
-// Process of rendering a single Pokemon
-async function renderOverviewSingleMatch(iMatches, container) {
-  iMatchesToCurrentPokemonId = matches[iMatches].index;
-  currentPokemon = await getPokemonData(iMatchesToCurrentPokemonId);
-  container.innerHTML += renderOverviewTemplate(currentPokemon);
-  renderTypes(`types-container-${currentPokemon.id}`);
+  console.log(currentPokemon);  
 }
 
 // Rendering one or two types in the container provided (overview card/detail card)
@@ -77,8 +69,8 @@ function renderTypes(containerId) {
 }
 
 /* Starts the rendering process with a new start and end point to add more Pokemon,
- prevents an endpoint outside the 1st Gen 
- prevents rendering from starting if the start point is equal to or higher than the end point */
+prevents an endpoint outside the 1st Gen 
+prevents rendering from starting if the start point is equal to or higher than the end point */
 function loadMorePokemon() {
   showLoadingScreen();
   startPokemon = endPokemon + 1;
@@ -121,6 +113,30 @@ function searchInPool() {
     disableSearchBtn();
     closeSuggestions();
   }
+}
+
+/* Rendering the overview of Pokemon found by search function
+using the index from array of matches to determine the ID of currentPokemon */
+async function renderOverviewMatches() {
+  showLoadingScreen();
+  let container = getElementHelper("overview-container");
+  container.innerHTML = "";
+
+  for (let iMatches = 0; iMatches < matches.length; iMatches++) {
+    renderOverviewSingleMatch(iMatches, container);
+  }
+
+  hideLoadingScreen();
+  hideLoadBtn();
+  showBackBtn();
+}
+
+// Process of rendering a single Pokemon
+async function renderOverviewSingleMatch(iMatches, container) {
+  iMatchesToCurrentPokemonId = matches[iMatches].index;
+  currentPokemon = await getPokemonData(iMatchesToCurrentPokemonId);
+  container.innerHTML += renderOverviewTemplate(currentPokemon);
+  renderTypes(`types-container-${currentPokemon.id}`);
 }
 
 // pushing every match with inputRef into the array "matches"
@@ -182,7 +198,7 @@ function backToStart() {
   renderOverview(startPokemon, endPokemon);
 }
 
-// Utility Functions	
+// Utility Functions
 // Getting element by id a bit easier
 function getElementHelper(id) {
   let element = document.getElementById(id);

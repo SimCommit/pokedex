@@ -4,7 +4,7 @@ function renderOverviewTemplate(currentPokemon) {
       <div class="card type-color-${currentPokemon.types[0].type.name}" onclick="openOverlay(${currentPokemon.id})">
           <div class="card-header">
             <span>${capitalizeFirstLetter(currentPokemon.name)}</span>
-              <span>${currentPokemon.id}</span>
+              <span>#${currentPokemon.id}</span>
           </div>
           <div class="card-main">
               <img src="${currentPokemon["sprites"]["other"]["official-artwork"]["front_default"]}" alt="picture of ${
@@ -95,11 +95,11 @@ function renderAboutTemplate(currentPokemon) {
 
 // Template for abilities subcategory of about
 function renderAboutAbilitiesTemplate(abilityName) {
-    return /*html*/ `
+  return /*html*/ `
       <li>${capitalizeFirstLetter(abilityName)}</li>
     `;
-  }
-  
+}
+
 // Template for the stats tab
 function renderStatsTemplate(i) {
   return /*html*/ `
@@ -112,7 +112,25 @@ function renderStatsTemplate(i) {
 
 // Template for the moves tab
 function renderMovesTemplate(i) {
-    return /*html*/ `
+  return /*html*/ `
         <p class="move-name">${capitalizeFirstLetter(currentPokemon["moves"][i]["move"]["name"])}</p>
       `;
-  }
+}
+
+function renderMissingNoTemplate() {
+  return /*html*/ `
+        <div class="card type-color-unknown" onclick="openOverlay(0)">
+            <div class="card-header">
+              <span>missingNo.</span>
+                <span>0</span>
+            </div>
+            <div class="card-main">
+                <img src="../assets/img/missingNo.png" alt="picture of missingNo.">
+      </div>
+      <div class="card-footer">
+          <div id="types-container-unknown" class="types">
+          </div>
+      </div>
+  </div>
+  `;
+}
