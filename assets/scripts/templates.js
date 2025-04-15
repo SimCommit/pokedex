@@ -53,8 +53,8 @@ function renderDialogCardTemplate(currentPokemon) {
                 </div>
                 <div class="dialoge-images">
                   <div id="dialog-types-container" class="types-dialog"></div>
-                    <div class="dialog-pic-wrapper">
-                      <img class="dialog-pic" src="${
+                    <div class="dialog-gif-wrapper">
+                      <img id="dialog-gif-container" class="dialog-gif" onclick="toggleShinyGif(currentPokemon.id)" title="Click me!" src="${
                         currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_default"]
                       }" alt="picture of ${capitalizeFirstLetter(currentPokemon.name)}">
                     </div>
