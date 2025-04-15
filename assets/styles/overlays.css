@@ -20,7 +20,7 @@
     display: flex;
     flex-direction: column;
     background-color: #092129;
-    border-radius: 24px;
+    border-radius: 16px;
     box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -143,7 +143,7 @@
     box-sizing: border-box;
 }
 
-.dialog-pic-wrapper {
+.dialog-gif-wrapper {
     width: 125px;
     height: 125px;
     background-image: url('../img/1st-gen-pokedex-logo-no-text.png');
@@ -155,12 +155,16 @@
     justify-content: center;
 }
 
-.dialog-pic {
+.dialog-gif {
     z-index: 6;
     object-fit: contain;
     max-width: 101px;
     max-height: 101px;
     scale: 1.4;
+}
+
+.dialog-gif:hover {
+    cursor: pointer;
 }
 
 .nav-details {
@@ -173,19 +177,20 @@
 .nav-details-btn {
     font-size: 16px;
     border: none;
-    background-color: unset;
+    background-color: rgba(77, 80, 82, 0.5);
+    border-radius: 4px;
     padding: 4px 8px;
     color: white;
 }
 
 .nav-details-btn.active,
 .nav-details-btn:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    background-color: rgba(77, 80, 82, 0.9);
+    border-radius: 4px;
 }
 
 .detail-info {
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 16px;
     margin: 0 16px 16px 16px;
 }
@@ -200,18 +205,17 @@
 }
 
 .detail-info-wrapper::-webkit-scrollbar-track {
-    background-color: rgba(0, 0, 0, 0.1);
-    box-shadow: inset 0 0 1px #092129;
+    background-color: rgba(77, 80, 82, 0.2);
     border-radius: 10px;
 }
 
 .detail-info-wrapper::-webkit-scrollbar-thumb {
-    background: #ffffff;
+    background-color: rgba(77, 80, 82, 0.5);
     border-radius: 10px;
 }
 
 .detail-info-wrapper::-webkit-scrollbar-thumb:hover {
-    background: #e7e7e7;
+    background-color: rgba(77, 80, 82, 0.7);
 }
 
 #detail-info-container {
@@ -226,10 +230,10 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(77, 80, 82, 0.5);
     margin: -2px;
     padding: 4px 8px;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 .info-label {
@@ -249,10 +253,29 @@
 .move-name {
     margin: -2px 24px -2px 34px;
     padding: 4px 8px;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    background-color: rgba(77, 80, 82, 0.5);
+    border-radius: 4px;
 }
 
+@keyframes sparkle-zoom {
+    0% {
+      transform: scale(1) rotate(0deg);
+      filter: drop-shadow(0 0 0px #ffffff);
+    }
+    50% {
+      transform: scale(1.03) rotate(0deg);
+      filter: drop-shadow(0 0 8px #ffffff);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+      filter: drop-shadow(0 0 0px #ffffff);
+    }
+  }
+  
+  .sparkle {
+    animation: sparkle-zoom 0.5s ease;
+  }
+  
 /* Loading overlay */
 .loading {
     position: fixed;

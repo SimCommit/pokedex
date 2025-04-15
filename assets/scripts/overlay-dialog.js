@@ -1,3 +1,5 @@
+let isShiny = false;
+
 // Functions for handling the overlay (open and close)
 async function openOverlay(id) {
   await renderDialogCard(id);
@@ -89,4 +91,20 @@ function switchPokemon(modificator) {
   }
 
   renderDialogCard(newPokemonId);
+}
+
+// Toggling default and shiny gif
+function toggleShinyGif() {
+  let container = getElementHelper("dialog-gif-container");
+
+  if (!isShiny) {
+    setTimeout(() => container.src = `${currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_shiny"]}`, 200)
+  } else {
+    setTimeout(() => container.src = `${currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_default"]}`, 200)
+  }
+
+  isShiny = !isShiny;
+
+  container.classList.add("sparkle");
+  setTimeout(() => container.classList.remove("sparkle"), 500);
 }

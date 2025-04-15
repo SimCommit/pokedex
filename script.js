@@ -1,7 +1,7 @@
 let matches = [];
 let currentPokemon;
 let startPokemon = 1;
-let endPokemon = 1;
+let endPokemon = 21;
 let searchPool;
 
 let missingno = {
@@ -14,7 +14,6 @@ async function init() {
   showLoadingScreen();
   await renderOverview(startPokemon, endPokemon);
   loadSearchPool();
-  // console.log(missingno);  
 }
 
 /* Main functions
@@ -28,14 +27,18 @@ async function getPokemonData(id) {
     return currentPokemon;
   } catch (error) {
     console.error(error);
-    currentPokemon = missingno;
-    return currentPokemon
   }
 }
 
+// Rendering missingNo. in case a Pokemon and its data couldnt be found
 function renderMissingNo() {
   let container = getElementHelper("overview-container");
   container.innerHTML = renderMissingNoTemplate();
+  hideLoadBtn();
+  showBackBtn();
+  hideLoadingScreen();
+  emptySearchInput();
+  disableSearchBtn();
 }
 
 // Rendering overview of Pokemon, including if condition for hiding the load-btn as soon as the 151st Pokemon got rendered.
@@ -43,18 +46,28 @@ async function renderOverview(startPokemon, endPokemon) {
   let container = getElementHelper("overview-container");
 
   for (let id = startPokemon; id <= endPokemon; id++) {
-    
-    currentPokemon = await getPokemonData(id);
-    console.log(currentPokemon);
-    container.innerHTML += renderOverviewTemplate(currentPokemon);
-    renderTypes(`types-container-${currentPokemon.id}`);
-    
-    if (currentPokemon.id >= 151) {
-      hideLoadBtn();
-    }
+    await renderOverviewSingleCard(id, container);
   }
   hideLoadingScreen();
-  // console.log(currentPokemon);  
+}
+
+// Rendering a single overview Pokemon card
+async function renderOverviewSingleCard(id, container){
+  currentPokemon = await getPokemonData(id);
+
+  try {
+    container.innerHTML += renderOverviewTemplate(currentPokemon);
+  } catch (error) {
+    console.error(error);
+    renderMissingNo();
+    return;
+  }
+  
+  renderTypes(`types-container-${currentPokemon.id}`);
+
+  if (currentPokemon.id >= 151) {
+    hideLoadBtn();
+  }
 }
 
 // Rendering one or two types in the container provided (overview card/detail card)
@@ -169,6 +182,11 @@ function handleClickOnSuggestion(matchId) {
 
 // Handling the logic when clicking on the search button
 function handleClickOnSearchBtn() {
+  if (matches.length === 0) {
+    renderMissingNo();
+    return;
+  }
+
   renderOverviewMatches();
   emptySearchInput();
   closeSuggestions();
