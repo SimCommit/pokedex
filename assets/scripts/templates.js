@@ -112,42 +112,42 @@ function renderStatsTemplate() {
   return /*html*/ `
     <div class="info-row">
       <span class="info-label">HP</span>
-      <div class="range" style="--p:${currentPokemon["stats"][0]["base_stat"]}; --factor: 0.4%; --bar-color: ${secondTypeColor};">
+      <div class="range" style="--p:${currentPokemon["stats"][0]["base_stat"]}; --factor: 0.338%; --bar-color: ${secondTypeColor};">
         <div class="range-value">${currentPokemon["stats"][0]["base_stat"]}</div>  
         <div class="range__label"></div>
       </div>
     </div>
     <div class="info-row">
       <span class="info-label">Attack</span>
-      <div class="range" style="--p:${currentPokemon["stats"][1]["base_stat"]}; --factor: 0.625%; --bar-color: ${secondTypeColor};">
+      <div class="range" style="--p:${currentPokemon["stats"][1]["base_stat"]}; --factor: 0.528%; --bar-color: ${secondTypeColor};">
         <div class="range-value">${currentPokemon["stats"][1]["base_stat"]}</div>  
         <div class="range__label"></div>
       </div>
     </div>
     <div class="info-row">
       <span class="info-label">Defense</span>
-      <div class="range" style="--p:${currentPokemon["stats"][2]["base_stat"]}; --factor: 0.625%; --bar-color: ${secondTypeColor};">
+      <div class="range" style="--p:${currentPokemon["stats"][2]["base_stat"]}; --factor: 0.528%; --bar-color: ${secondTypeColor};">
         <div class="range-value">${currentPokemon["stats"][2]["base_stat"]}</div>  
         <div class="range__label"></div>
       </div>
     </div>
     <div class="info-row">
       <span class="info-label">Sp. Atk</span>
-      <div class="range" style="--p:${currentPokemon["stats"][3]["base_stat"]}; --factor: 0.625%; --bar-color: ${secondTypeColor};">
+      <div class="range" style="--p:${currentPokemon["stats"][3]["base_stat"]}; --factor: 0.528%; --bar-color: ${secondTypeColor};">
         <div class="range-value">${currentPokemon["stats"][3]["base_stat"]}</div>  
         <div class="range__label"></div>
       </div>
     </div>
     <div class="info-row">
       <span class="info-label">Sp. Def</span>
-      <div class="range" style="--p:${currentPokemon["stats"][4]["base_stat"]}; --factor: 0.625%; --bar-color: ${secondTypeColor};">
+      <div class="range" style="--p:${currentPokemon["stats"][4]["base_stat"]}; --factor: 0.528%; --bar-color: ${secondTypeColor};">
         <div class="range-value">${currentPokemon["stats"][4]["base_stat"]}</div>  
         <div class="range__label"></div>
       </div>
     </div>
     <div class="info-row">
       <span class="info-label">Speed</span>
-      <div class="range" style="--p:${currentPokemon["stats"][5]["base_stat"]}; --factor: 0.625%; --bar-color: ${secondTypeColor};">
+      <div class="range" style="--p:${currentPokemon["stats"][5]["base_stat"]}; --factor: 0.528%; --bar-color: ${secondTypeColor};">
         <div class="range-value">${currentPokemon["stats"][5]["base_stat"]}</div>  
         <div class="range__label"></div>
       </div>

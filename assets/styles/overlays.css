@@ -288,42 +288,46 @@ body {
   font-size: 18px;
 } */
 
+.range-value {
+    background-color: #4D5052;
+    color: white;
+    font-size: 14px;
+    box-sizing: border-box;
+    width: 44px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 14px;
+    clip-path: polygon(0 0, 100% 0, 75% 100%, 0% 100%);
+    z-index: 2;
+  }
+
 .range {
+    display: flex;
+    align-items: center;
     position: relative;
-    background-color: rgba(77, 80, 82, 0.9);
+    background-color: #11415C;
     width: 200px;
     height: 19px;
-    transform: skew(0deg);
     border-radius: 4px;
-
-    --factor: 0.625%; /* 160 → ~100% */
+    overflow: hidden;
+    --factor: 0.625%;
     
     &:before {
-      --width: calc(var(--p) * var(--factor));
-      
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%;
-      border-radius: 3px;
-      background-color: var(--bar-color, #333333);
-      z-index: 0;
-      animation: load .5s forwards linear;
+        --width: calc(var(--p) * var(--factor));
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 31px; /* verschiebt Startpunkt rechts neben das Trapez */
+        width: 0;
+        height: 100%;
+        border-radius: 3px 3px 3px 0;
+        background-color: var(--bar-color, #333333);
+        z-index: 1;
+        animation: load 0.5s forwards linear;
     }
-    
-    &:after {
-      counter-reset: progress var(--p);
-      content: counter(progress) '';
-      color: #fff;
-      position: absolute;
-      left: 5%;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 1;
-    }
-    
+        
     &__label {
       transform: skew(-30deg) translateY(-100%);
       line-height: 1.5;

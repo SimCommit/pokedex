@@ -28,7 +28,7 @@ const typeColors = {
   dragon: "#0B6DC3",
   dark: "#5A5465",
   fairy: "#EC8FE6",
-  unknown: "#3e3e3e"
+  unknown: "#FFFFFF"
 };
 
 // Initialization
