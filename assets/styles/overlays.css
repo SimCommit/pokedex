@@ -274,20 +274,6 @@
     animation: glow-zoom 0.5s ease;
 }
 
-
-/* test */
-/* *, *:before, *:after {box-sizing:border-box;}
-body {
-  background-color: #212121;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  color: #ccc;
-  font-family: sans-serif;
-  font-size: 18px;
-} */
-
 .range-value {
     background-color: #4D5052;
     color: white;
@@ -307,7 +293,7 @@ body {
     display: flex;
     align-items: center;
     position: relative;
-    background-color: #11415C;
+    background-color: #092129;
     width: 200px;
     height: 19px;
     border-radius: 4px;
@@ -319,7 +305,7 @@ body {
         content: '';
         position: absolute;
         top: 0;
-        left: 31px; /* verschiebt Startpunkt rechts neben das Trapez */
+        left: 31px;
         width: 0;
         height: 100%;
         border-radius: 3px 3px 3px 0;
@@ -414,4 +400,3 @@ body {
         transform: rotate(360deg);
     }
 }
-

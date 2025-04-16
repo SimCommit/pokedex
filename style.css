@@ -183,7 +183,7 @@ footer a:hover {
     text-align: center;
 }
 
-/* Type Icons from Let's Go Evoli/Pikachu */
+/* Type Icons from gen VIII */
 .type-all {
     width: 100px;
     height: 22px;
@@ -267,83 +267,6 @@ footer a:hover {
 .type-unknown {
     background-image: url('./assets/img/types-viii-png/19.png');
 
-}
-
-/* Type colors similar to type icons */
-.type-color-normal {
-    background-color: #919AA2;
-}
-
-.type-color-fighting {
-    background-color: #CE416B;
-}
-
-.type-color-flying {
-    background-color: #8FA9DE;
-}
-
-.type-color-poison {
-    background-color: #AA6BC8;
-}
-
-.type-color-ground {
-    background-color: #D97845;
-}
-
-.type-color-rock {
-    background-color: #C5B78C;
-}
-
-.type-color-bug {
-    background-color: #91C12F;
-}
-
-.type-color-ghost {
-    background-color: #5269AD;
-}
-
-.type-color-steel {
-    background-color: #5A8EA2;
-}
-
-.type-color-fire {
-    background-color: #FF9D54;
-}
-
-.type-color-water {
-    background-color: #5090D6;
-}
-
-.type-color-grass {
-    background-color: #63BC5A;
-}
-
-.type-color-electric {
-    background-color: #F4D23C;
-}
-
-.type-color-psychic {
-    background-color: #FA7179;
-}
-
-.type-color-ice {
-    background-color: #73CEC0;
-}
-
-.type-color-dragon {
-    background-color: #0B6DC3;
-}
-
-.type-color-dark {
-    background-color: #5A5465;
-}
-
-.type-color-fairy {
-    background-color: #EC8FE6;
-}
-
-.type-color-unknown {
-    background-color: #018292;
 }
 
 .unknown-main {

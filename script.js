@@ -76,9 +76,10 @@ async function renderOverview(startPokemon, endPokemon) {
 // Rendering a single overview Pokemon card
 async function renderOverviewSingleCard(id, container){
   currentPokemon = await getPokemonData(id);
+  const backgroundColor = typeColors[currentPokemon.types[0].type.name] || "#66aed7";
 
   try {
-    container.innerHTML += renderOverviewTemplate(currentPokemon);
+    container.innerHTML += renderOverviewTemplate(currentPokemon, backgroundColor);
   } catch (error) {
     console.error(error);
     renderMissingNo();

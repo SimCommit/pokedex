@@ -1,7 +1,7 @@
 // HTML template of overview card
-function renderOverviewTemplate(currentPokemon) {
+function renderOverviewTemplate(currentPokemon, backgroundColor) {
   return /*html*/ `
-      <div class="card type-color-${currentPokemon.types[0].type.name}" onclick="openOverlay(${currentPokemon.id})">
+      <div class="card" style="background-color: ${backgroundColor};" onclick="openOverlay(${currentPokemon.id})">
           <div class="card-header">
             <span>${capitalizeFirstLetter(currentPokemon.name)}</span>
               <span>#${currentPokemon.id}</span>
@@ -28,7 +28,7 @@ function renderTypesTemplate(i) {
 
 // overlay-dialog
 // Template for the dialog card
-function renderDialogCardTemplate(currentPokemon) {
+function renderDialogCardTemplate(currentPokemon, backgroundColor) {
   return /*html*/ `
     <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
         <nav class="nav-pokemons" aria-label="Navigation through Pokemons">
@@ -60,7 +60,7 @@ function renderDialogCardTemplate(currentPokemon) {
                     </div>
                 </div>
             </div>
-            <div class="detail-info type-color-${currentPokemon.types[0].type.name}">
+            <div class="detail-info" style="background-color: ${backgroundColor};">
                 <nav class="nav-details" aria-label="Navigation through detail info">
                     <button id="about-btn" class="nav-details-btn" onclick="renderAbout(), setActiveDetailsTab('about-btn')">About</button>
                     <button id="stats-btn" class="nav-details-btn active" onclick="renderStats(), setActiveDetailsTab('stats-btn')">Stats</button>
@@ -126,7 +126,7 @@ function renderStatsTemplate() {
     </div>
     <div class="info-row">
       <span class="info-label">Defense</span>
-      <div class="range" style="--p:${currentPokemon["stats"][2]["base_stat"]}; --factor: 0.528%; --bar-color: ${secondTypeColor};">
+      <div class="range" style="--p:${currentPokemon["stats"][2]["base_stat"]}; --factor: 0.47%; --bar-color: ${secondTypeColor};">
         <div class="range-value">${currentPokemon["stats"][2]["base_stat"]}</div>  
         <div class="range__label"></div>
       </div>
@@ -165,7 +165,7 @@ function renderMovesTemplate(i) {
 // Template for the missingNo. card
 function renderMissingNoTemplate() {
   return /*html*/ `
-    <div class="card type-color-unknown" onclick="openOverlay(0)">
+    <div class="card type-color-unknown" title="Some glitch appeared">
       <div class="card-header">
         <span>missingNo.</span>
         <span>???</span>
@@ -175,7 +175,7 @@ function renderMissingNoTemplate() {
       </div>
       <div class="card-footer">
         <div id="types-container-unknown" class="types">
-          <a href="https://en.wikipedia.org/wiki/MissingNo.">
+          <a href="https://en.wikipedia.org/wiki/MissingNo." title="https://en.wikipedia.org/wiki/MissingNo.">
             <div class="type-unknown type-all"></div>
           </a>
         </div>

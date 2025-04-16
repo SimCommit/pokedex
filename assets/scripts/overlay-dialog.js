@@ -15,9 +15,10 @@ function closeOverlay() {
 
 // renders the dialog for the detailed card of the selected Pokemon
 async function renderDialogCard(id) {
-  currentPokemon = await getPokemonData(id);
   let container = document.getElementById("dialog-container");
-  container.innerHTML = renderDialogCardTemplate(currentPokemon);
+  currentPokemon = await getPokemonData(id);
+  const backgroundColor = typeColors[currentPokemon.types[0].type.name] || "#66aed7";
+  container.innerHTML = renderDialogCardTemplate(currentPokemon, backgroundColor);
   renderTypes("dialog-types-container");
   renderStats();
 }
@@ -95,7 +96,14 @@ function switchPokemon(modificator) {
 // Toggling default and shiny gif
 function toggleShinyGif() {
   let container = getElementHelper("dialog-gif-container");
+  checkIfShiny(container);
+  isShiny = !isShiny;
+  container.classList.add("glow");
+  setTimeout(() => container.classList.remove("glow"), 500);
+}
 
+// check if current gif is shiny or not
+function checkIfShiny(container){
   if (!isShiny) {
     setTimeout(
       () => (container.src = `${currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_shiny"]}`),
@@ -107,11 +115,6 @@ function toggleShinyGif() {
       100
     );
   }
-
-  isShiny = !isShiny;
-
-  container.classList.add("glow");
-  setTimeout(() => container.classList.remove("glow"), 500);
 }
 
 // Getting name of adjacent Pokemon
@@ -133,7 +136,7 @@ function getNameOfAdjacentPokemon(modificator) {
 }
 
 // Getting name of second type with fallback
-function getSecondTypeName(){
+function getSecondTypeName() {
   try {
     secondTypeName = currentPokemon.types[1].type.name;
   } catch (error) {
