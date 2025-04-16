@@ -119,7 +119,7 @@ function renderStatsTemplate() {
     </div>
     <div class="info-row">
       <span class="info-label">Attack</span>
-      <div class="range" style="--p:${currentPokemon["stats"][1]["base_stat"]}; --factor: 0.528%; --bar-color: ${secondTypeColor};">
+      <div class="range" style="--p:${currentPokemon["stats"][1]["base_stat"]}; --factor: 0.47%; --bar-color: ${secondTypeColor};">
         <div class="range-value">${currentPokemon["stats"][1]["base_stat"]}</div>  
         <div class="range__label"></div>
       </div>

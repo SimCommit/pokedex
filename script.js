@@ -28,12 +28,12 @@ const typeColors = {
   dragon: "#0B6DC3",
   dark: "#5A5465",
   fairy: "#EC8FE6",
-  unknown: "#FFFFFF"
+  unknown: "#FFFFFF",
 };
 
 /**
  * Initialization function
- * 
+ *
  */
 async function init() {
   showLoadingScreen();
@@ -43,7 +43,7 @@ async function init() {
 
 /**
  * Fetches data for a Pokémon
- * 
+ *
  * @param {number} id - This is the id of the pokemon that we want to fetch data for
  * @returns {Promise<object>} A JSON object of the current Pokémon
  */
@@ -59,7 +59,12 @@ async function getPokemonData(id) {
   }
 }
 
-// Rendering missingNo. in case a Pokemon and its data couldnt be found
+/**
+ * Renders the MissingNo. fallback view when a Pokémon or its data could not be found.
+ *
+ * This function replaces the overview content with a MissingNo. template
+ * and adjusts the UI by hiding or showing relevant elements.
+ */
 function renderMissingNo() {
   let container = getElementHelper("overview-container");
   container.innerHTML = renderMissingNoTemplate();
@@ -70,7 +75,15 @@ function renderMissingNo() {
   disableSearchBtn();
 }
 
-// Rendering overview of Pokemon, including if condition for hiding the load-btn as soon as the 151st Pokemon got rendered.
+/**
+ * Renders an overview of multiple Pokémon by ID range.
+ *
+ * This function fetches and renders individual Pokémon cards from start to end ID.
+ * It also includes a condition to hide the load button when the 151st Pokémon is rendered.
+ *
+ * @param {number} startPokemon - The starting Pokémon ID.
+ * @param {number} endPokemon - The ending Pokémon ID.
+ */
 async function renderOverview(startPokemon, endPokemon) {
   let container = getElementHelper("overview-container");
 
@@ -80,8 +93,14 @@ async function renderOverview(startPokemon, endPokemon) {
   hideLoadingScreen();
 }
 
-// Rendering a single overview Pokemon card
-async function renderOverviewSingleCard(id, container){
+/**
+ * Renders a single Pokémon overview card into the given container element.
+ *
+ * @param {number} id - The ID of the Pokémon to render.
+ * @param {HTMLElement} container - The HTML element where the card will be appended.
+ * @returns {Promise<void>}
+ */
+async function renderOverviewSingleCard(id, container) {
   currentPokemon = await getPokemonData(id);
   const backgroundColor = typeColors[currentPokemon.types[0].type.name] || "#66aed7";
 
@@ -92,7 +111,7 @@ async function renderOverviewSingleCard(id, container){
     renderMissingNo();
     return;
   }
-  
+
   renderTypes(`types-container-${currentPokemon.id}`);
 
   if (currentPokemon.id >= 151) {
@@ -100,7 +119,13 @@ async function renderOverviewSingleCard(id, container){
   }
 }
 
-// Rendering one or two types in the container provided (overview card/detail card)
+/**
+ * Renders one or two type icons of the current Pokémon into the given container.
+ *
+ * Works for both overview cards and detail views.
+ *
+ * @param {string} containerId - The ID of the HTML container element to render the types into.
+ */
 function renderTypes(containerId) {
   let container = getElementHelper(containerId);
   container.innerHTML = "";
@@ -110,9 +135,15 @@ function renderTypes(containerId) {
   }
 }
 
-/* Starts the rendering process with a new start and end point to add more Pokemon,
-prevents an endpoint outside the 1st Gen 
-prevents rendering from starting if the start point is equal to or higher than the end point */
+/**
+ * Starts the rendering process to load more Pokémon into the overview.
+ *
+ * Increases the current start and end range, while ensuring it stays within the bounds
+ * of the 1st generation (max ID 151). Also prevents loading if the start point
+ * exceeds the available Pokémon.
+ *
+ * @returns {void}
+ */
 function loadMorePokemon() {
   showLoadingScreen();
   startPokemon = endPokemon + 1;
@@ -131,7 +162,14 @@ function loadMorePokemon() {
   renderOverview(startPokemon, endPokemon);
 }
 
-// Creates an array with the 151 Pokemon and missingno at index 0 so that index = id for the search function
+/**
+ * Loads the search pool containing the first 151 Pokémon and prepends MissingNo at index 0.
+ *
+ * This ensures that the Pokémon array index matches the Pokémon ID,
+ * simplifying ID-based access in the search functionality.
+ *
+ * @returns {Promise<void>}
+ */
 async function loadSearchPool() {
   let Url = "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0";
   let response = await fetch(Url);
@@ -139,8 +177,11 @@ async function loadSearchPool() {
   searchPool = [missingno, ...unfinishedSearchPool.results];
 }
 
-/* Searches the pool of "152" Pokemon for matches with the value of the input fieldasync 
-also prevents searching with input length under 3 characters */
+/**
+ * Searches the pool of "152" Pokemon for matches with the value of the input field 
+also prevents searching with input length under 3 characters
+ * 
+ */
 function searchInPool() {
   let inputField = getElementHelper("search-input");
   let inputValue = inputField.value;
@@ -177,7 +218,8 @@ async function renderOverviewMatches() {
 async function renderOverviewSingleMatch(iMatches, container) {
   iMatchesToCurrentPokemonId = matches[iMatches].index;
   currentPokemon = await getPokemonData(iMatchesToCurrentPokemonId);
-  container.innerHTML += renderOverviewTemplate(currentPokemon);
+  const backgroundColor = typeColors[currentPokemon.types[0].type.name] || "#66aed7";
+  container.innerHTML += renderOverviewTemplate(currentPokemon, backgroundColor);
   renderTypes(`types-container-${currentPokemon.id}`);
 }
 
