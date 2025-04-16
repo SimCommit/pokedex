@@ -1,4 +1,5 @@
 let isShiny = false;
+let secondTypeName;
 
 // Functions for handling the overlay (open and close)
 async function openOverlay(id) {
@@ -41,11 +42,9 @@ function renderAboutAbilities(abilities) {
 // Renders the stats tab
 function renderStats() {
   let container = getElementHelper("detail-info-container");
+  secondTypeColor = typeColors[getSecondTypeName()];
   container.innerHTML = "";
-
-  for (let i = 0; i < currentPokemon.stats.length; i++) {
-    container.innerHTML += renderStatsTemplate(i);
-  }
+  container.innerHTML += renderStatsTemplate();
 }
 
 // Renders the moves tab
@@ -131,4 +130,15 @@ function getNameOfAdjacentPokemon(modificator) {
 
   let nameRef = capitalizeFirstLetter(searchPool[indexAdjacentPokemon].name);
   return nameRef;
+}
+
+// Getting name of second type with fallback
+function getSecondTypeName(){
+  try {
+    secondTypeName = currentPokemon.types[1].type.name;
+  } catch (error) {
+    secondTypeName = "unknown";
+  }
+
+  return secondTypeName;
 }

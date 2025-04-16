@@ -233,8 +233,8 @@
 }
 
 .info-label {
-    width: 45%;
-    padding-right: 8px;
+    width: 20%;
+    /* padding-right: 8px; */
 }
 
 .info-value {
@@ -290,14 +290,16 @@ body {
 
 .range {
     position: relative;
-    background-color: #333;
+    background-color: rgba(77, 80, 82, 0.9);
     width: 200px;
     height: 19px;
     transform: skew(0deg);
     border-radius: 4px;
+
+    --factor: 0.625%; /* 160 → ~100% */
     
     &:before {
-      --width: calc(var(--p) * 0.4%);
+      --width: calc(var(--p) * var(--factor));
       
       content: '';
       position: absolute;
@@ -306,7 +308,7 @@ body {
       width: 0;
       height: 100%;
       border-radius: 3px;
-      background-color: #AA6BC8;
+      background-color: var(--bar-color, #333333);
       z-index: 0;
       animation: load .5s forwards linear;
     }

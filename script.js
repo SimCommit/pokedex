@@ -4,9 +4,31 @@ let startPokemon = 1;
 let endPokemon = 1;
 let searchPool;
 
-let missingno = {
+const missingno = {
   name: "missingNo.",
   url: "https://en.wikipedia.org/wiki/MissingNo.",
+};
+
+const typeColors = {
+  normal: "#919AA2",
+  fighting: "#CE416B",
+  flying: "#8FA9DE",
+  poison: "#AA6BC8",
+  ground: "#D97845",
+  rock: "#C5B78C",
+  bug: "#91C12F",
+  ghost: "#5269AD",
+  steel: "#5A8EA2",
+  fire: "#FF9D54",
+  water: "#5090D6",
+  grass: "#63BC5A",
+  electric: "#F4D23C",
+  psychic: "#FA7179",
+  ice: "#73CEC0",
+  dragon: "#0B6DC3",
+  dark: "#5A5465",
+  fairy: "#EC8FE6",
+  unknown: "#3e3e3e"
 };
 
 // Initialization
