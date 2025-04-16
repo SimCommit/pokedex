@@ -32,14 +32,14 @@ function renderDialogCardTemplate(currentPokemon) {
   return /*html*/ `
     <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
         <nav class="nav-pokemons" aria-label="Navigation through Pokemons">
-            <button class="nav-btn" onclick="switchPokemon(-1)">
+            <button class="nav-btn" onclick="switchPokemon(-1)" title="${getNameOfAdjacentPokemon(-1)}">
               <div class="btn-prev">
                 <div class="btn-icon-a"></div>
                 <div class="btn-icon-b"></div>
               </div>
             </button>
             <span>#${currentPokemon.id}</span>
-            <button class="nav-btn" onclick="switchPokemon(1)">
+            <button class="nav-btn" onclick="switchPokemon(1)" title="${getNameOfAdjacentPokemon(1)}">
               <div class="btn-next">
                 <div class="btn-icon-b"></div>
                 <div class="btn-icon-a"></div>
@@ -54,7 +54,7 @@ function renderDialogCardTemplate(currentPokemon) {
                 <div class="dialoge-images">
                   <div id="dialog-types-container" class="types-dialog"></div>
                     <div class="dialog-gif-wrapper">
-                      <img id="dialog-gif-container" class="dialog-gif" onclick="toggleShinyGif(currentPokemon.id)" title="Click me!" src="${
+                      <img id="dialog-gif-container" class="dialog-gif" onclick="toggleShinyGif(currentPokemon.id)" title="Let me shine!" src="${
                         currentPokemon["sprites"]["versions"]["generation-v"]["black-white"]["animated"]["front_default"]
                       }" alt="picture of ${capitalizeFirstLetter(currentPokemon.name)}">
                     </div>
@@ -62,8 +62,8 @@ function renderDialogCardTemplate(currentPokemon) {
             </div>
             <div class="detail-info type-color-${currentPokemon.types[0].type.name}">
                 <nav class="nav-details" aria-label="Navigation through detail info">
-                    <button id="about-btn" class="nav-details-btn active" onclick="renderAbout(), setActiveDetailsTab('about-btn')">About</button>
-                    <button id="stats-btn" class="nav-details-btn" onclick="renderStats(), setActiveDetailsTab('stats-btn')">Stats</button>
+                    <button id="about-btn" class="nav-details-btn" onclick="renderAbout(), setActiveDetailsTab('about-btn')">About</button>
+                    <button id="stats-btn" class="nav-details-btn active" onclick="renderStats(), setActiveDetailsTab('stats-btn')">Stats</button>
                     <button id="moves-btn" class="nav-details-btn" onclick="renderMoves(), setActiveDetailsTab('moves-btn')">Moves</button>
                 </nav>
                 <div class="detail-info-wrapper outlined-text">
@@ -112,7 +112,9 @@ function renderStatsTemplate(i) {
   return /*html*/ `
     <div class="info-row">
       <span class="info-label">${capitalizeFirstLetter(currentPokemon["stats"][i]["stat"]["name"])}</span>
-      <span class="info-value">${currentPokemon["stats"][i]["base_stat"]}</span>
+      <div class="range" style="--p:${currentPokemon["stats"][i]["base_stat"]}">
+        <div class="range__label"></div>
+    </div>
     </div>
   `;
 }
