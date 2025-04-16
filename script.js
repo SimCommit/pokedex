@@ -178,9 +178,10 @@ async function loadSearchPool() {
 }
 
 /**
- * Searches the pool of "152" Pokemon for matches with the value of the input field 
-also prevents searching with input length under 3 characters
- * 
+ * Searches the pool of 152 Pokémon (including MissingNo) for name matches based on the user input.
+ *
+ * Prevents searching if the input has fewer than 3 characters.
+ * Updates the UI by enabling/disabling the search button and rendering or closing suggestions.
  */
 function searchInPool() {
   let inputField = getElementHelper("search-input");
@@ -198,8 +199,15 @@ function searchInPool() {
   }
 }
 
-/* Rendering the overview of Pokemon found by search function
-using the index from array of matches to determine the ID of currentPokemon */
+/**
+ * Renders the overview for all Pokémon found by the search function.
+ *
+ * Uses the index from the `matches` array to determine the ID of each Pokémon,
+ * and displays their overview cards in the main container.
+ * Also updates UI elements like the load and back buttons.
+ *
+ * @returns {Promise<void>}
+ */
 async function renderOverviewMatches() {
   showLoadingScreen();
   let container = getElementHelper("overview-container");
@@ -214,7 +222,16 @@ async function renderOverviewMatches() {
   showBackBtn();
 }
 
-// Process of rendering a single Pokemon
+/**
+ * Renders a single Pokémon card from the matches array into the given container.
+ *
+ * Retrieves the Pokémon by its index in the `matches` array, fetches its data,
+ * and appends the rendered card including its type badges.
+ *
+ * @param {number} iMatches - The index in the `matches` array to render.
+ * @param {HTMLElement} container - The HTML element where the card will be appended.
+ * @returns {Promise<void>}
+ */
 async function renderOverviewSingleMatch(iMatches, container) {
   iMatchesToCurrentPokemonId = matches[iMatches].index;
   currentPokemon = await getPokemonData(iMatchesToCurrentPokemonId);
@@ -223,7 +240,14 @@ async function renderOverviewSingleMatch(iMatches, container) {
   renderTypes(`types-container-${currentPokemon.id}`);
 }
 
-// pushing every match with inputRef into the array "matches"
+/**
+ * Pushes all Pokémon from the search pool whose name includes the input string into the `matches` array.
+ *
+ * Performs a case-sensitive substring match and stores both the index and the Pokémon data
+ * for later use in the search result rendering.
+ *
+ * @param {string} inputRef - The input string to match against Pokémon names.
+ */
 function pushMatchesIntoArray(inputRef) {
   for (let i = 0; i < searchPool.length; i++) {
     if (searchPool[i].name.includes(inputRef)) {
