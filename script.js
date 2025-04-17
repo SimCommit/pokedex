@@ -32,8 +32,12 @@ const typeColors = {
 };
 
 /**
- * Initialization function
+ * Initializes the application on page load.
  *
+ * Shows the loading screen, renders the initial batch of Pokémon,
+ * and prepares the search pool for user input.
+ *
+ * @returns {Promise<void>}
  */
 async function init() {
   showLoadingScreen();
@@ -42,10 +46,10 @@ async function init() {
 }
 
 /**
- * Fetches data for a Pokémon
+ * Fetches data for a specific Pokémon by ID from the PokéAPI.
  *
- * @param {number} id - This is the id of the pokemon that we want to fetch data for
- * @returns {Promise<object>} A JSON object of the current Pokémon
+ * @param {number} id - The ID of the Pokémon to fetch.
+ * @returns {Promise<object>} A promise that resolves to the Pokémon data.
  */
 async function getPokemonData(id) {
   let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
@@ -185,7 +189,7 @@ async function loadSearchPool() {
  */
 function searchInPool() {
   let inputField = getElementHelper("search-input");
-  let inputValue = inputField.value;
+  let inputValue = inputField.value.trim();
   emptyMatches();
 
   if (inputValue.length >= 3) {
@@ -256,7 +260,12 @@ function pushMatchesIntoArray(inputRef) {
   }
 }
 
-// Rendering suggestions into dropdown list container
+/**
+ * Renders search suggestions into the dropdown container.
+ *
+ * Iterates over the `matches` array and appends each Pokémon as a clickable
+ * list item. Each suggestion triggers a handler on click to load the selected Pokémon.
+ */
 function renderSuggestions() {
   let container = document.getElementById("dropdown-suggestions");
   container.innerHTML = "";
@@ -268,7 +277,13 @@ function renderSuggestions() {
   }
 }
 
-// Handling the logic when clicking on a search suggestion
+/**
+ * Handles the logic when a search suggestion is clicked.
+ *
+ * Opens the overlay for the selected Pokémon and resets the search UI.
+ *
+ * @param {number} matchId - The ID of the Pokémon selected from the search suggestions.
+ */
 function handleClickOnSuggestion(matchId) {
   openOverlay(matchId);
   emptySearchInput();
@@ -276,7 +291,14 @@ function handleClickOnSuggestion(matchId) {
   disableSearchBtn();
 }
 
-// Handling the logic when clicking on the search button
+/**
+ * Handles the logic when the search button is clicked.
+ *
+ * If no matches are found, it renders MissingNo as a fallback.
+ * Otherwise, it renders the matching Pokémon and resets the search UI.
+ *
+ * @returns {void}
+ */
 function handleClickOnSearchBtn() {
   if (matches.length === 0) {
     renderMissingNo();
@@ -289,8 +311,12 @@ function handleClickOnSearchBtn() {
   disableSearchBtn();
 }
 
-/* closes the dropdown list of search suggestions when the input field loses focus slightly delayed,
- so that onclick on a suggestion can work */
+/**
+ * Closes the dropdown list of search suggestions when the input field loses focus.
+ *
+ * Uses a slight delay to ensure that `onclick` events on suggestions can still register
+ * before the dropdown is removed.
+ */
 window.addEventListener("DOMContentLoaded", () => {
   getElementHelper("search-input").addEventListener("blur", () => {
     setTimeout(function () {
@@ -299,7 +325,12 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Function that can render from the start of the Pokedex, to get from the rendered search result back to default.
+/**
+ * Resets the view to the start of the Pokédex after a search.
+ *
+ * Clears the current content and restores the default state,
+ * starting from Pokémon ID 1 to 21. Also updates UI elements accordingly.
+ */
 function backToStart() {
   let container = document.getElementById("overview-container");
   showLoadingScreen();
@@ -309,74 +340,4 @@ function backToStart() {
   hideBackBtn();
   showLoadButton();
   renderOverview(startPokemon, endPokemon);
-}
-
-// Utility Functions
-// Getting element by id a bit easier
-function getElementHelper(id) {
-  let element = document.getElementById(id);
-  return element;
-}
-
-// Function to capitalize the first letter of a string. (Most of the data of the api is written completely in lower case)
-function capitalizeFirstLetter(stringToChange) {
-  return String(stringToChange).charAt(0).toUpperCase() + String(stringToChange).slice(1);
-}
-
-// Stopping propagation for the element on which it's placed
-function prevent(event) {
-  event.stopPropagation();
-}
-
-// Functions for handling the search button usability
-function disableSearchBtn() {
-  getElementHelper("search-btn").disabled = true;
-}
-
-function enableSearchBtn() {
-  getElementHelper("search-btn").disabled = false;
-}
-
-// Functions for handling the load button visibility
-function hideLoadBtn() {
-  getElementHelper("load-btn").classList.add("d-none");
-}
-
-function showLoadButton() {
-  getElementHelper("load-btn").classList.remove("d-none");
-}
-
-// Functions for handling the back button visibility
-function showBackBtn() {
-  getElementHelper("back-btn").classList.remove("d-none");
-}
-
-function hideBackBtn() {
-  getElementHelper("back-btn").classList.add("d-none");
-}
-
-// Functions for handling the back button visibility and scroll behavior
-function showLoadingScreen() {
-  getElementHelper("loading-container").classList.remove("d-none");
-  disableScrollingBody();
-}
-
-function hideLoadingScreen() {
-  getElementHelper("loading-container").classList.add("d-none");
-  enableScrollingBody();
-}
-
-// closes the dropdown list of search suggestions
-function closeSuggestions() {
-  getElementHelper("dropdown-suggestions").innerHTML = "";
-}
-
-// Emptying the value of the input field
-function emptySearchInput() {
-  getElementHelper("search-input").value = "";
-}
-
-// Emptying the array of matches
-function emptyMatches() {
-  matches = [];
 }
