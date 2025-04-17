@@ -12,9 +12,10 @@ function getElementHelper(id) {
 }
 
 /**
+ * Capitalizes the first letter of a given string.
  *
- * @param {string} stringToChange
- * @returns
+ * @param {string} stringToChange - The string to be transformed.
+ * @returns {string} The input string with the first letter in uppercase.
  */
 function capitalizeFirstLetter(stringToChange) {
   return String(stringToChange).charAt(0).toUpperCase() + String(stringToChange).slice(1);

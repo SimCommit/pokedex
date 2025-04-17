@@ -29,7 +29,7 @@
             <pre class="prettyprint source linenums"><code>let matches = [];
 let currentPokemon;
 let startPokemon = 1;
-let endPokemon = 1;
+let endPokemon = 21;
 let searchPool;
 
 const missingno = {
@@ -56,12 +56,16 @@ const typeColors = {
   dragon: "#0B6DC3",
   dark: "#5A5465",
   fairy: "#EC8FE6",
-  unknown: "#FFFFFF"
+  unknown: "#FFFFFF",
 };
 
 /**
- * Initialization function
- * 
+ * Initializes the application on page load.
+ *
+ * Shows the loading screen, renders the initial batch of Pokémon,
+ * and prepares the search pool for user input.
+ *
+ * @returns {Promise&lt;void>}
  */
 async function init() {
   showLoadingScreen();
@@ -70,10 +74,10 @@ async function init() {
 }
 
 /**
- * Fetches data for a Pokémon
- * 
- * @param {number} id - This is the id of the pokemon that we want to fetch data for
- * @returns {Promise&lt;object>} A JSON object of the current Pokémon
+ * Fetches data for a specific Pokémon by ID from the PokéAPI.
+ *
+ * @param {number} id - The ID of the Pokémon to fetch.
+ * @returns {Promise&lt;object>} A promise that resolves to the Pokémon data.
  */
 async function getPokemonData(id) {
   let url = `https://pokeapi.co/api/v2/pokemon/${id}`;
@@ -87,7 +91,12 @@ async function getPokemonData(id) {
   }
 }
 
-// Rendering missingNo. in case a Pokemon and its data couldnt be found
+/**
+ * Renders the MissingNo. fallback view when a Pokémon or its data could not be found.
+ *
+ * This function replaces the overview content with a MissingNo. template
+ * and adjusts the UI by hiding or showing relevant elements.
+ */
 function renderMissingNo() {
   let container = getElementHelper("overview-container");
   container.innerHTML = renderMissingNoTemplate();
@@ -98,7 +107,15 @@ function renderMissingNo() {
   disableSearchBtn();
 }
 
-// Rendering overview of Pokemon, including if condition for hiding the load-btn as soon as the 151st Pokemon got rendered.
+/**
+ * Renders an overview of multiple Pokémon by ID range.
+ *
+ * This function fetches and renders individual Pokémon cards from start to end ID.
+ * It also includes a condition to hide the load button when the 151st Pokémon is rendered.
+ *
+ * @param {number} startPokemon - The starting Pokémon ID.
+ * @param {number} endPokemon - The ending Pokémon ID.
+ */
 async function renderOverview(startPokemon, endPokemon) {
   let container = getElementHelper("overview-container");
 
@@ -108,8 +125,14 @@ async function renderOverview(startPokemon, endPokemon) {
   hideLoadingScreen();
 }
 
-// Rendering a single overview Pokemon card
-async function renderOverviewSingleCard(id, container){
+/**
+ * Renders a single Pokémon overview card into the given container element.
+ *
+ * @param {number} id - The ID of the Pokémon to render.
+ * @param {HTMLElement} container - The HTML element where the card will be appended.
+ * @returns {Promise&lt;void>}
+ */
+async function renderOverviewSingleCard(id, container) {
   currentPokemon = await getPokemonData(id);
   const backgroundColor = typeColors[currentPokemon.types[0].type.name] || "#66aed7";
 
@@ -120,7 +143,7 @@ async function renderOverviewSingleCard(id, container){
     renderMissingNo();
     return;
   }
-  
+
   renderTypes(`types-container-${currentPokemon.id}`);
 
   if (currentPokemon.id >= 151) {
@@ -128,7 +151,13 @@ async function renderOverviewSingleCard(id, container){
   }
 }
 
-// Rendering one or two types in the container provided (overview card/detail card)
+/**
+ * Renders one or two type icons of the current Pokémon into the given container.
+ *
+ * Works for both overview cards and detail views.
+ *
+ * @param {string} containerId - The ID of the HTML container element to render the types into.
+ */
 function renderTypes(containerId) {
   let container = getElementHelper(containerId);
   container.innerHTML = "";
@@ -138,9 +167,15 @@ function renderTypes(containerId) {
   }
 }
 
-/* Starts the rendering process with a new start and end point to add more Pokemon,
-prevents an endpoint outside the 1st Gen 
-prevents rendering from starting if the start point is equal to or higher than the end point */
+/**
+ * Starts the rendering process to load more Pokémon into the overview.
+ *
+ * Increases the current start and end range, while ensuring it stays within the bounds
+ * of the 1st generation (max ID 151). Also prevents loading if the start point
+ * exceeds the available Pokémon.
+ *
+ * @returns {void}
+ */
 function loadMorePokemon() {
   showLoadingScreen();
   startPokemon = endPokemon + 1;
@@ -159,7 +194,14 @@ function loadMorePokemon() {
   renderOverview(startPokemon, endPokemon);
 }
 
-// Creates an array with the 151 Pokemon and missingno at index 0 so that index = id for the search function
+/**
+ * Loads the search pool containing the first 151 Pokémon and prepends MissingNo at index 0.
+ *
+ * This ensures that the Pokémon array index matches the Pokémon ID,
+ * simplifying ID-based access in the search functionality.
+ *
+ * @returns {Promise&lt;void>}
+ */
 async function loadSearchPool() {
   let Url = "https://pokeapi.co/api/v2/pokemon?limit=151&amp;offset=0";
   let response = await fetch(Url);
@@ -167,11 +209,15 @@ async function loadSearchPool() {
   searchPool = [missingno, ...unfinishedSearchPool.results];
 }
 
-/* Searches the pool of "152" Pokemon for matches with the value of the input fieldasync 
-also prevents searching with input length under 3 characters */
+/**
+ * Searches the pool of 152 Pokémon (including MissingNo) for name matches based on the user input.
+ *
+ * Prevents searching if the input has fewer than 3 characters.
+ * Updates the UI by enabling/disabling the search button and rendering or closing suggestions.
+ */
 function searchInPool() {
   let inputField = getElementHelper("search-input");
-  let inputValue = inputField.value;
+  let inputValue = inputField.value.trim();
   emptyMatches();
 
   if (inputValue.length >= 3) {
@@ -185,8 +231,15 @@ function searchInPool() {
   }
 }
 
-/* Rendering the overview of Pokemon found by search function
-using the index from array of matches to determine the ID of currentPokemon */
+/**
+ * Renders the overview for all Pokémon found by the search function.
+ *
+ * Uses the index from the `matches` array to determine the ID of each Pokémon,
+ * and displays their overview cards in the main container.
+ * Also updates UI elements like the load and back buttons.
+ *
+ * @returns {Promise&lt;void>}
+ */
 async function renderOverviewMatches() {
   showLoadingScreen();
   let container = getElementHelper("overview-container");
@@ -201,15 +254,32 @@ async function renderOverviewMatches() {
   showBackBtn();
 }
 
-// Process of rendering a single Pokemon
+/**
+ * Renders a single Pokémon card from the matches array into the given container.
+ *
+ * Retrieves the Pokémon by its index in the `matches` array, fetches its data,
+ * and appends the rendered card including its type badges.
+ *
+ * @param {number} iMatches - The index in the `matches` array to render.
+ * @param {HTMLElement} container - The HTML element where the card will be appended.
+ * @returns {Promise&lt;void>}
+ */
 async function renderOverviewSingleMatch(iMatches, container) {
   iMatchesToCurrentPokemonId = matches[iMatches].index;
   currentPokemon = await getPokemonData(iMatchesToCurrentPokemonId);
-  container.innerHTML += renderOverviewTemplate(currentPokemon);
+  const backgroundColor = typeColors[currentPokemon.types[0].type.name] || "#66aed7";
+  container.innerHTML += renderOverviewTemplate(currentPokemon, backgroundColor);
   renderTypes(`types-container-${currentPokemon.id}`);
 }
 
-// pushing every match with inputRef into the array "matches"
+/**
+ * Pushes all Pokémon from the search pool whose name includes the input string into the `matches` array.
+ *
+ * Performs a case-sensitive substring match and stores both the index and the Pokémon data
+ * for later use in the search result rendering.
+ *
+ * @param {string} inputRef - The input string to match against Pokémon names.
+ */
 function pushMatchesIntoArray(inputRef) {
   for (let i = 0; i &lt; searchPool.length; i++) {
     if (searchPool[i].name.includes(inputRef)) {
@@ -218,7 +288,12 @@ function pushMatchesIntoArray(inputRef) {
   }
 }
 
-// Rendering suggestions into dropdown list container
+/**
+ * Renders search suggestions into the dropdown container.
+ *
+ * Iterates over the `matches` array and appends each Pokémon as a clickable
+ * list item. Each suggestion triggers a handler on click to load the selected Pokémon.
+ */
 function renderSuggestions() {
   let container = document.getElementById("dropdown-suggestions");
   container.innerHTML = "";
@@ -230,7 +305,13 @@ function renderSuggestions() {
   }
 }
 
-// Handling the logic when clicking on a search suggestion
+/**
+ * Handles the logic when a search suggestion is clicked.
+ *
+ * Opens the overlay for the selected Pokémon and resets the search UI.
+ *
+ * @param {number} matchId - The ID of the Pokémon selected from the search suggestions.
+ */
 function handleClickOnSuggestion(matchId) {
   openOverlay(matchId);
   emptySearchInput();
@@ -238,7 +319,14 @@ function handleClickOnSuggestion(matchId) {
   disableSearchBtn();
 }
 
-// Handling the logic when clicking on the search button
+/**
+ * Handles the logic when the search button is clicked.
+ *
+ * If no matches are found, it renders MissingNo as a fallback.
+ * Otherwise, it renders the matching Pokémon and resets the search UI.
+ *
+ * @returns {void}
+ */
 function handleClickOnSearchBtn() {
   if (matches.length === 0) {
     renderMissingNo();
@@ -251,8 +339,12 @@ function handleClickOnSearchBtn() {
   disableSearchBtn();
 }
 
-/* closes the dropdown list of search suggestions when the input field loses focus slightly delayed,
- so that onclick on a suggestion can work */
+/**
+ * Closes the dropdown list of search suggestions when the input field loses focus.
+ *
+ * Uses a slight delay to ensure that `onclick` events on suggestions can still register
+ * before the dropdown is removed.
+ */
 window.addEventListener("DOMContentLoaded", () => {
   getElementHelper("search-input").addEventListener("blur", () => {
     setTimeout(function () {
@@ -261,7 +353,12 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Function that can render from the start of the Pokedex, to get from the rendered search result back to default.
+/**
+ * Resets the view to the start of the Pokédex after a search.
+ *
+ * Clears the current content and restores the default state,
+ * starting from Pokémon ID 1 to 21. Also updates UI elements accordingly.
+ */
 function backToStart() {
   let container = document.getElementById("overview-container");
   showLoadingScreen();
@@ -271,76 +368,6 @@ function backToStart() {
   hideBackBtn();
   showLoadButton();
   renderOverview(startPokemon, endPokemon);
-}
-
-// Utility Functions
-// Getting element by id a bit easier
-function getElementHelper(id) {
-  let element = document.getElementById(id);
-  return element;
-}
-
-// Function to capitalize the first letter of a string. (Most of the data of the api is written completely in lower case)
-function capitalizeFirstLetter(stringToChange) {
-  return String(stringToChange).charAt(0).toUpperCase() + String(stringToChange).slice(1);
-}
-
-// Stopping propagation for the element on which it's placed
-function prevent(event) {
-  event.stopPropagation();
-}
-
-// Functions for handling the search button usability
-function disableSearchBtn() {
-  getElementHelper("search-btn").disabled = true;
-}
-
-function enableSearchBtn() {
-  getElementHelper("search-btn").disabled = false;
-}
-
-// Functions for handling the load button visibility
-function hideLoadBtn() {
-  getElementHelper("load-btn").classList.add("d-none");
-}
-
-function showLoadButton() {
-  getElementHelper("load-btn").classList.remove("d-none");
-}
-
-// Functions for handling the back button visibility
-function showBackBtn() {
-  getElementHelper("back-btn").classList.remove("d-none");
-}
-
-function hideBackBtn() {
-  getElementHelper("back-btn").classList.add("d-none");
-}
-
-// Functions for handling the back button visibility and scroll behavior
-function showLoadingScreen() {
-  getElementHelper("loading-container").classList.remove("d-none");
-  disableScrollingBody();
-}
-
-function hideLoadingScreen() {
-  getElementHelper("loading-container").classList.add("d-none");
-  enableScrollingBody();
-}
-
-// closes the dropdown list of search suggestions
-function closeSuggestions() {
-  getElementHelper("dropdown-suggestions").innerHTML = "";
-}
-
-// Emptying the value of the input field
-function emptySearchInput() {
-  getElementHelper("search-input").value = "";
-}
-
-// Emptying the array of matches
-function emptyMatches() {
-  matches = [];
 }</code></pre>
         </article>
     </section>
@@ -351,13 +378,13 @@ function emptyMatches() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#getPokemonData">getPokemonData</a></li><li><a href="global.html#init">init</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#backToStart">backToStart</a></li><li><a href="global.html#capitalizeFirstLetter">capitalizeFirstLetter</a></li><li><a href="global.html#getElementHelper">getElementHelper</a></li><li><a href="global.html#getPokemonData">getPokemonData</a></li><li><a href="global.html#handleClickOnSearchBtn">handleClickOnSearchBtn</a></li><li><a href="global.html#handleClickOnSuggestion">handleClickOnSuggestion</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#loadMorePokemon">loadMorePokemon</a></li><li><a href="global.html#loadSearchPool">loadSearchPool</a></li><li><a href="global.html#prevent">prevent</a></li><li><a href="global.html#pushMatchesIntoArray">pushMatchesIntoArray</a></li><li><a href="global.html#renderMissingNo">renderMissingNo</a></li><li><a href="global.html#renderOverview">renderOverview</a></li><li><a href="global.html#renderOverviewMatches">renderOverviewMatches</a></li><li><a href="global.html#renderOverviewSingleCard">renderOverviewSingleCard</a></li><li><a href="global.html#renderOverviewSingleMatch">renderOverviewSingleMatch</a></li><li><a href="global.html#renderSuggestions">renderSuggestions</a></li><li><a href="global.html#renderTypes">renderTypes</a></li><li><a href="global.html#searchInPool">searchInPool</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Apr 16 2025 23:19:29 GMT+0200 (Mitteleuropäische Sommerzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Apr 17 2025 13:26:53 GMT+0200 (Mitteleuropäische Sommerzeit)
 </footer>
 
 <script> prettyPrint(); </script>
