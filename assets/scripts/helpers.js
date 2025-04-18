@@ -1,3 +1,12 @@
+// helpers.js
+
+/**
+ * @fileoverview Utility functions for DOM interaction and UI behavior in the Pokédex web app.
+ *
+ * This file includes small, reusable helpers such as element selection, input clearing,
+ * button visibility toggling, scroll control, and event propagation handling.
+ */
+
 /**
  * Returns an HTML element by its ID.
  *
@@ -114,4 +123,18 @@ function emptySearchInput() {
  */
 function emptyMatches() {
   matches = [];
+}
+
+/**
+ * Disables scrolling on the body element while the overlay is open.
+ */
+function disableScrollingBody() {
+  document.body.classList.add("overflow-hidden");
+}
+
+/**
+ * Enables scrolling on the body element after the overlay is closed.
+ */
+function enableScrollingBody() {
+  document.body.classList.remove("overflow-hidden");
 }

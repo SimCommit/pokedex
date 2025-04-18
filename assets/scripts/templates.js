@@ -1,4 +1,22 @@
-// HTML template of overview card
+// templates.js
+
+/**
+ * @fileoverview HTML template functions for rendering UI elements in the Pokédex web app.
+ *
+ * This file provides reusable template strings for rendering Pokémon overview cards,
+ * detail views (about, stats, moves), type icons, abilities, and the MissingNo fallback.
+ */
+
+/**
+ * Returns the HTML template string for a single Pokémon overview card.
+ *
+ * The card displays the Pokémon's name, ID, image, and includes a type container
+ * for dynamic content. The background color is determined by the primary type.
+ *
+ * @param {object} currentPokemon - The Pokémon object to render.
+ * @param {string} backgroundColor - The background color based on the Pokémon's type.
+ * @returns {string} The HTML markup for the overview card.
+ */
 function renderOverviewTemplate(currentPokemon, backgroundColor) {
   return /*html*/ `
       <div class="card" style="background-color: ${backgroundColor};" onclick="openOverlay(${currentPokemon.id})">
@@ -19,15 +37,35 @@ function renderOverviewTemplate(currentPokemon, backgroundColor) {
       `;
 }
 
-// Template for rendering Types
+/**
+ * Returns the HTML template for a single type icon of the current Pokémon.
+ *
+ * Used for rendering one of possibly multiple type icons inside a card or detail view.
+ *
+ * @param {number} i - The index of the type in the current Pokémon's types array.
+ * @returns {string} The HTML markup for the type icon.
+ */
 function renderTypesTemplate(i) {
   return /*html*/ `
     <div class="type-${currentPokemon.types[i].type.name} type-all"></div>
   `;
 }
 
-// overlay-dialog
-// Template for the dialog card
+/**
+ * Returns the HTML template for the Pokémon detail dialog overlay.
+ *
+ * The dialog includes:
+ * - Navigation buttons to switch between adjacent Pokémon
+ * - A shiny toggle GIF image
+ * - Type icons
+ * - A tabbed section for About, Stats, and Moves
+ *
+ * The background color for the detail section is based on the Pokémon's primary type.
+ *
+ * @param {object} currentPokemon - The Pokémon object containing all necessary data.
+ * @param {string} backgroundColor - The color used as background for the lower detail section.
+ * @returns {string} The complete HTML markup for the dialog overlay.
+ */
 function renderDialogCardTemplate(currentPokemon, backgroundColor) {
   return /*html*/ `
     <div class="dialog" style="background-color: ;"  onclick="prevent(event)">
@@ -75,7 +113,15 @@ function renderDialogCardTemplate(currentPokemon, backgroundColor) {
     `;
 }
 
-// Template fot the about tab
+/**
+ * Returns the HTML template for the "About" tab in the Pokémon detail dialog.
+ *
+ * Displays basic information such as species, height, weight, and an empty container
+ * for the abilities list, which is rendered separately.
+ *
+ * @param {object} currentPokemon - The Pokémon object containing species, height, and weight data.
+ * @returns {string} The HTML markup for the About tab.
+ */
 function renderAboutTemplate(currentPokemon) {
   return /*html*/ `
       <div class="info-row">
@@ -100,14 +146,29 @@ function renderAboutTemplate(currentPokemon) {
     `;
 }
 
-// Template for abilities subcategory of about
+/**
+ * Returns the HTML template for a single ability in the "About" tab.
+ *
+ * Formats the ability name as a list item with a capitalized label.
+ *
+ * @param {string} abilityName - The name of the ability to display.
+ * @returns {string} The HTML markup for a single ability list item.
+ */
 function renderAboutAbilitiesTemplate(abilityName) {
   return /*html*/ `
       <li>${capitalizeFirstLetter(abilityName)}</li>
     `;
 }
 
-// Template for the stats tab
+/**
+ * Returns the HTML template for the "Stats" tab in the Pokémon detail dialog.
+ *
+ * Displays all six base stats (HP, Attack, Defense, Sp. Atk, Sp. Def, Speed)
+ * as styled range bars using dynamic inline CSS variables and values.
+ * The bar color is determined by the secondary type of the current Pokémon.
+ *
+ * @returns {string} The HTML markup for the stats tab with range visualizations.
+ */
 function renderStatsTemplate() {
   return /*html*/ `
     <div class="info-row">
@@ -155,14 +216,28 @@ function renderStatsTemplate() {
   `;
 }
 
-// Template for the moves tab
+/**
+ * Returns the HTML template for a single move in the "Moves" tab.
+ *
+ * Capitalizes the move name and wraps it in a paragraph element for display.
+ *
+ * @param {number} i - The index of the move in the current Pokémon's moves array.
+ * @returns {string} The HTML markup for a single move entry.
+ */
 function renderMovesTemplate(i) {
   return /*html*/ `
         <p class="move-name">${capitalizeFirstLetter(currentPokemon["moves"][i]["move"]["name"])}</p>
       `;
 }
 
-// Template for the missingNo. card
+/**
+ * Returns the HTML template for the MissingNo. fallback card.
+ *
+ * Displayed when a Pokémon cannot be found or loaded properly.
+ * Includes a glitch-style design and a link to the Wikipedia article for MissingNo.
+ *
+ * @returns {string} The HTML markup for the MissingNo. fallback card.
+ */
 function renderMissingNoTemplate() {
   return /*html*/ `
     <div class="card type-color-unknown" title="Some glitch appeared">

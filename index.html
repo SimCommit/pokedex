@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="./assets/styles/queries.css">
 
     <script src="./assets/scripts/templates.js"></script>
-    <script src="./assets/scripts/utility-functions.js"></script>
+    <script src="./assets/scripts/helpers.js"></script>
     <script src="./script.js"></script>
-    <script src="./assets/scripts/overlay-dialog.js"></script>
+    <script src="./assets/scripts/overlays.js"></script>
 
     <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
@@ -42,22 +42,18 @@
     <main>
 
         <div id="overview-container" class="grid-overview maximal-width general-padding-width">
-            <!-- Hier werden ca. 20 Pokémon-Karten gerendert -->
         </div>
 
         <div id="overlay" class="overlay d-none" onclick="closeOverlay()">
-            <!-- Overlay-Dialog für die Detailansicht eines Pokémon -->
             <div id="dialog-container" class="dialog-wrapper"></div>
         </div>
 
         <div class="load maximal-width general-padding-width">
-            <!-- Buttons zum Laden von Pokemon -->
             <button id="load-btn" onclick="loadMorePokemon()">Load more Pokemon</button>
             <button id="back-btn" class="d-none" onclick="backToStart()">Back to Start</button>
         </div>
 
         <div id="loading-container" class="d-none">
-            <!-- Loadingscreen -->
             <div class="loading">
                 <div class="loader-wrapper">
                     <div class="loader-background"></div>

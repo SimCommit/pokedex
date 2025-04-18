@@ -1,7 +1,16 @@
+// script.js
+
+/**
+ * @fileoverview Main application logic for the Pokédex web app.
+ *
+ * This file handles initial setup, loading and rendering of Pokémon cards,
+ * search functionality, event handling, and interaction with the PokéAPI.
+ */
+
 let matches = [];
 let currentPokemon;
 let startPokemon = 1;
-let endPokemon = 21;
+let endPokemon = 1;
 let searchPool;
 
 const missingno = {
@@ -230,7 +239,7 @@ async function renderOverviewMatches() {
  * Renders a single Pokémon card from the matches array into the given container.
  *
  * Retrieves the Pokémon by its index in the `matches` array, fetches its data,
- * and appends the rendered card including its type badges.
+ * and appends the rendered card including its type icons.
  *
  * @param {number} iMatches - The index in the `matches` array to render.
  * @param {HTMLElement} container - The HTML element where the card will be appended.
