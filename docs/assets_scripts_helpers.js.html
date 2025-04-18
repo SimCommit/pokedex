@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: assets/scripts/helpers.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,404 +17,157 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
-
-    
-
-
-
-    
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>assets/scripts/helpers.js</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">Utility functions for DOM interaction and UI behavior in the Pokédex web app.This file includes small, reusable helpers such as element selection, input clearing,button visibility toggling, scroll control, and event propagation handling.</div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_scripts_helpers.js.html">assets/scripts/helpers.js</a>, <a href="assets_scripts_helpers.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>assets/scripts/overlays.js</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">Manages all overlay-related UI behavior in the Pokédex web app.Includes logic for the loading overlay and the Pokémon detail overlay (dialog),including rendering, toggling, navigation, and scroll locking.</div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_scripts_overlays.js.html">assets/scripts/overlays.js</a>, <a href="assets_scripts_overlays.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>assets/scripts/templates.js</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">HTML template functions for rendering UI elements in the Pokédex web app.This file provides reusable template strings for rendering Pokémon overview cards,detail views (about, stats, moves), type icons, abilities, and the MissingNo fallback.</div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="assets_scripts_templates.js.html">assets/scripts/templates.js</a>, <a href="assets_scripts_templates.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>script.js</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">Main application logic for the Pokédex web app.This file handles initial setup, loading and rendering of Pokémon cards,search functionality, event handling, and interaction with the PokéAPI.</div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line3">line 3</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <h1 class="page-title">Source: assets/scripts/helpers.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// helpers.js
+
+/**
+ * @fileoverview Utility functions for DOM interaction and UI behavior in the Pokédex web app.
+ *
+ * This file includes small, reusable helpers such as element selection, input clearing,
+ * button visibility toggling, scroll control, and event propagation handling.
+ */
+
+/**
+ * Returns an HTML element by its ID.
+ *
+ * Simplifies `document.getElementById` calls throughout the code.
+ *
+ * @param {string} id - The ID of the HTML element to retrieve.
+ * @returns {HTMLElement} The matching HTML element.
+ */
+function getElementHelper(id) {
+  let element = document.getElementById(id);
+  return element;
+}
+
+/**
+ * Capitalizes the first letter of a given string.
+ *
+ * @param {string} stringToChange - The string to be transformed.
+ * @returns {string} The input string with the first letter in uppercase.
+ */
+function capitalizeFirstLetter(stringToChange) {
+  return String(stringToChange).charAt(0).toUpperCase() + String(stringToChange).slice(1);
+}
+
+/**
+ * Prevents the event from bubbling up to parent elements.
+ *
+ * Can be used in inline event handlers like `onclick` to stop parent elements from reacting to the same event.
+ *
+ * @param {Event} event - The event object to stop from propagating.
+ */
+function prevent(event) {
+  event.stopPropagation();
+}
+
+/**
+ * Disables the search button.
+ */
+function disableSearchBtn() {
+  getElementHelper("search-btn").disabled = true;
+}
+
+/**
+ * Enables the search button.
+ */
+function enableSearchBtn() {
+  getElementHelper("search-btn").disabled = false;
+}
+
+/**
+ * Hides the load button.
+ */
+function hideLoadBtn() {
+  getElementHelper("load-btn").classList.add("d-none");
+}
+
+/**
+ * Shows the load button.
+ */
+function showLoadButton() {
+  getElementHelper("load-btn").classList.remove("d-none");
+}
+
+/**
+ * Shows the back button.
+ */
+function showBackBtn() {
+  getElementHelper("back-btn").classList.remove("d-none");
+}
+
+/**
+ * Hides the back button.
+ */
+function hideBackBtn() {
+  getElementHelper("back-btn").classList.add("d-none");
+}
+
+/**
+ * Shows the loading screen and disables body scrolling.
+ */
+function showLoadingScreen() {
+  getElementHelper("loading-container").classList.remove("d-none");
+  disableScrollingBody();
+}
+
+/**
+ * Hides the loading screen and enables body scrolling.
+ */
+function hideLoadingScreen() {
+  getElementHelper("loading-container").classList.add("d-none");
+  enableScrollingBody();
+}
+
+/**
+ * Closes the dropdown list of search suggestions.
+ *
+ * This function clears the content of the suggestion container.
+ * It is used when the input field loses focus or when the user selects a suggestion.
+ */
+function closeSuggestions() {
+  getElementHelper("dropdown-suggestions").innerHTML = "";
+}
+
+/**
+ * Clears the value of the search input field.
+ */
+function emptySearchInput() {
+  getElementHelper("search-input").value = "";
+}
+
+/**
+ * Clears the array of search matches.
+ *
+ * Resets the `matches` array to an empty state before a new search.
+ */
+function emptyMatches() {
+  matches = [];
+}
+
+/**
+ * Disables scrolling on the body element while the overlay is open.
+ */
+function disableScrollingBody() {
+  document.body.classList.add("overflow-hidden");
+}
+
+/**
+ * Enables scrolling on the body element after the overlay is closed.
+ */
+function enableScrollingBody() {
+  document.body.classList.remove("overflow-hidden");
+}</code></pre>
+        </article>
+    </section>
 
 
 
