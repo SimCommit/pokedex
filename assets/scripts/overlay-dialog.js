@@ -18,6 +18,7 @@ async function renderDialogCard(id) {
   let container = document.getElementById("dialog-container");
   currentPokemon = await getPokemonData(id);
   const backgroundColor = typeColors[currentPokemon.types[0].type.name] || "#66aed7";
+  isShiny = false;
   container.innerHTML = renderDialogCardTemplate(currentPokemon, backgroundColor);
   renderTypes("dialog-types-container");
   renderStats();

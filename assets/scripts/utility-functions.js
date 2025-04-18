@@ -32,55 +32,86 @@ function prevent(event) {
   event.stopPropagation();
 }
 
-// Functions for handling the search button usability
+/**
+ * Disables the search button.
+ */
 function disableSearchBtn() {
   getElementHelper("search-btn").disabled = true;
 }
 
+/**
+ * Enables the search button.
+ */
 function enableSearchBtn() {
   getElementHelper("search-btn").disabled = false;
 }
 
-// Functions for handling the load button visibility
+/**
+ * Hides the load button.
+ */
 function hideLoadBtn() {
   getElementHelper("load-btn").classList.add("d-none");
 }
 
+/**
+ * Shows the load button.
+ */
 function showLoadButton() {
   getElementHelper("load-btn").classList.remove("d-none");
 }
 
-// Functions for handling the back button visibility
+/**
+ * Shows the back button.
+ */
 function showBackBtn() {
   getElementHelper("back-btn").classList.remove("d-none");
 }
 
+/**
+ * Hides the back button.
+ */
 function hideBackBtn() {
   getElementHelper("back-btn").classList.add("d-none");
 }
 
-// Functions for handling the back button visibility and scroll behavior
+/**
+ * Shows the loading screen and disables body scrolling.
+ */
 function showLoadingScreen() {
   getElementHelper("loading-container").classList.remove("d-none");
   disableScrollingBody();
 }
 
+/**
+ * Hides the loading screen and enables body scrolling.
+ */
 function hideLoadingScreen() {
   getElementHelper("loading-container").classList.add("d-none");
   enableScrollingBody();
 }
 
-// closes the dropdown list of search suggestions
+/**
+ * Closes the dropdown list of search suggestions.
+ *
+ * This function clears the content of the suggestion container.
+ * It is used when the input field loses focus or when the user selects a suggestion.
+ */
 function closeSuggestions() {
   getElementHelper("dropdown-suggestions").innerHTML = "";
 }
 
-// Emptying the value of the input field
+/**
+ * Clears the value of the search input field.
+ */
 function emptySearchInput() {
   getElementHelper("search-input").value = "";
 }
 
-// Emptying the array of matches
+/**
+ * Clears the array of search matches.
+ *
+ * Resets the `matches` array to an empty state before a new search.
+ */
 function emptyMatches() {
   matches = [];
 }
