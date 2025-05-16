@@ -299,25 +299,6 @@
     border-radius: 4px;
     overflow: hidden;
     --factor: 0.625%;
-    
-    &:before {
-        --width: calc(var(--p) * var(--factor));
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 31px;
-        width: 0;
-        height: 100%;
-        border-radius: 3px 3px 3px 0;
-        background-color: var(--bar-color, #333333);
-        z-index: 1;
-        animation: load 0.5s forwards linear;
-    }
-        
-    &__label {
-      transform: skew(-30deg) translateY(-100%);
-      line-height: 1.5;
-    }
   }
   
   @keyframes load {
@@ -325,6 +306,25 @@
       width: var(--width);
     }
   }
+
+  .range::before {
+  --width: calc(var(--p) * var(--factor));
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 31px;
+  width: 0;
+  height: 100%;
+  border-radius: 3px 3px 3px 0;
+  background-color: var(--bar-color, #333333);
+  z-index: 1;
+  animation: load 0.5s forwards linear;
+}
+
+.range__label {
+  transform: skew(-30deg) translateY(-100%);
+  line-height: 1.5;
+}
 
 /* Loading overlay */
 .loading {
