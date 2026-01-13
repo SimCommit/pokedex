@@ -2,6 +2,20 @@
 
 A Pokédex web app featuring the first 151 Pokémon with search, pagination, and detailed views.
 
+## Live-Demo
+https://pokedex.simon-fuchs.net/
+
+## Documentation
+https://simcommit.github.io/pokedex/
+
+## Screenshots
+
+### Gallery
+![Overview gallery](./docs/screenshots/pokedex-screenshot-gallery-1.png)
+
+### Details
+![Pokémon details](./docs/screenshots/pokedex-screenshot-details-1.png)
+
 ## Features
 - Overview gallery with incremental loading  
   (21 Pokémon per batch, load more on demand)
@@ -14,15 +28,3 @@ A Pokédex web app featuring the first 151 Pokémon with search, pagination, and
   - Moves list
 - Animated Pokémon sprite in the detail view
 - Toggle between normal and shiny form via click on animated sprite
-
-## Documentation
-JSDoc documentation:  
-https://simcommit.github.io/pokedex/
-
-## Screenshots
-
-### Gallery
-![Overview gallery](./docs/screenshots/pokedex-screenshot-gallery-1.png)
-
-### Details
-![Pokémon details](./docs/screenshots/pokedex-screenshot-details-1.png)
